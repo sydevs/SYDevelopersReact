@@ -1,11 +1,9 @@
-import { ArrowLeftIcon } from '@heroicons/react/24/solid'
-
 export default function Page() {
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">
       <div className="mb-8 text-center">
         <img
-          src="https://atlas.sydevelopers.com/favicon.png"
+          src="/images/sahaj-atlas/logo.webp"
           alt="Sahaj Atlas Logo"
           className="mx-auto mb-4 h-24 w-24 rounded-full border"
         />
@@ -15,7 +13,7 @@ export default function Page() {
             href="https://atlas.sydevelopers.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline"
+            className="text-indigo-600 hover:underline"
           >
             atlas.sydevelopers.com
           </a>
@@ -41,7 +39,7 @@ export default function Page() {
         <div>
           <h2 className="mb-2 text-xl font-semibold">A Reuseable World Map</h2>
           <p className="mb-3">
-            We've created a map where seekers can search for programs worldwide. It is
+            We&apos;ve created a map where seekers can search for programs worldwide. It is
             mobile-friendly, easy to search, and has a slick modern design. Seekers can register for
             the class and view images of the class if available.
           </p>
@@ -49,8 +47,8 @@ export default function Page() {
             This map is designed so that it can be added to any Sahaj website. The style of the map
             can be adjusted match the website, and the map can be restricted to only show one
             country or region. Our hope is that national collectives will start using this map for
-            their country's website. Then they will be committed to keeping it up to date, and all
-            international Sahaj projects will benefit.
+            their country&apos;s website. Then they will be committed to keeping it up to date, and
+            all international Sahaj projects will benefit.
           </p>
           <p className="mb-3">
             To make the map easier to adopt, seekers can be directed to register on Meetup,
@@ -98,7 +96,7 @@ export default function Page() {
             <li>
               <a
                 href="https://wemeditate.com/map?preview=true"
-                className="text-blue-600 hover:underline"
+                className="text-indigo-600 hover:underline"
               >
                 Sahaj Atlas on We Meditate
               </a>{' '}
@@ -107,19 +105,19 @@ export default function Page() {
             <li>
               <a
                 href="https://atlas.sydevelopers.com/statistics"
-                className="text-blue-600 hover:underline"
+                className="text-indigo-600 hover:underline"
               >
                 Sahaj Atlas Statistics
               </a>
             </li>
             <li>
-              <a href="https://github.com/sydevs/Atlas" className="text-blue-600 hover:underline">
+              <a href="https://github.com/sydevs/Atlas" className="text-indigo-600 hover:underline">
                 Sahaj Atlas on GitHub
               </a>{' '}
               (help us with programming)
             </li>
             <li>
-              <a href="https://www.sydevelopers.com" className="text-blue-600 hover:underline">
+              <a href="https://www.sydevelopers.com" className="text-indigo-600 hover:underline">
                 Donate to Sahaj Atlas
               </a>
             </li>
@@ -130,18 +128,11 @@ export default function Page() {
           <p className="text-sm">
             If you have further questions, would like to help with development, or would like help
             embedding the map on your website, please write to{' '}
-            <a href="mailto:contact@sydevelopers.com" className="text-blue-600 hover:underline">
+            <a href="mailto:contact@sydevelopers.com" className="text-indigo-600 hover:underline">
               contact@sydevelopers.com
             </a>
           </p>
         </div>
-
-        <p className="mt-6">
-          <a href="/" className="inline-flex items-center text-sm text-blue-600 hover:underline">
-            <ArrowLeftIcon className="mr-1 h-4 w-4" />
-            Back to Home
-          </a>
-        </p>
       </div>
     </div>
   )

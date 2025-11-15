@@ -1,11 +1,9 @@
-import { ArrowLeftIcon } from '@heroicons/react/24/solid'
-
 export default function Page() {
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">
       <div className="mb-8 text-center">
         <img
-          src="https://wemeditate.com/favicon.png"
+          src="/images/wemeditate/logo.webp"
           alt="We Meditate Logo"
           className="mx-auto mb-4 h-24 w-24 rounded-full border"
         />
@@ -15,7 +13,7 @@ export default function Page() {
             href="https://wemeditate.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline"
+            className="text-indigo-600 hover:underline"
           >
             wemeditate.com
           </a>
@@ -26,6 +24,11 @@ export default function Page() {
         <p>We Meditate is an international website promoting Sahaja Yoga.</p>
 
         <div>
+          <img
+            src="/images/wemeditate/developer-activity.svg"
+            alt="Developer Activity"
+            className="float-right ml-4 mb-4 w-64 hidden md:block"
+          />
           <h2 className="mb-2 text-xl font-semibold">How is We Meditate different?</h2>
           <p className="mb-3">
             The internet is flooded with Sahaj websites, but very few of them feature professional
@@ -33,10 +36,10 @@ export default function Page() {
             quality websites, none fully exploit the potential of modern day digital marketing.
           </p>
           <p className="mb-3">
-            We Meditate aims to assist a seeker's journey to recognising the value of meditation and
-            eventually joining a local meditation class, from discovering the website via Google
-            search, from social media or from a yogi; to meditating and learning online; and finally
-            to being encouraged to come to a local meeting.
+            We Meditate aims to assist a seeker&apos;s journey to recognising the value of
+            meditation and eventually joining a local meditation class, from discovering the website
+            via Google search, from social media or from a yogi; to meditating and learning online;
+            and finally to being encouraged to come to a local meeting.
           </p>
           <p>
             We Meditate is also intended to compliment other existing projects and international
@@ -47,7 +50,12 @@ export default function Page() {
           </p>
         </div>
 
-        <div>
+        <div className="clear-both">
+          <img
+            src="/images/wemeditate/developer-activity.svg"
+            alt="Supporting Resources"
+            className="float-right ml-4 mb-4 w-64 hidden md:block"
+          />
           <h2 className="mb-2 text-xl font-semibold">Supporting Resource for Public Programs</h2>
           <p className="mb-3">
             One of the reasons why newcomers do not establish themselves in Sahaja Yoga is that they
@@ -91,7 +99,12 @@ export default function Page() {
           </ul>
         </div>
 
-        <div>
+        <div className="clear-both">
+          <img
+            src="/images/wemeditate/search-engine.svg"
+            alt="Search Engine"
+            className="float-left mr-4 mb-4 w-64 hidden md:block"
+          />
           <h2 className="mb-2 text-xl font-semibold">Guiding People to Public Programs</h2>
           <p className="mb-3">
             One of the primary goals of We Meditate is to funnel seekers who arrive on the site via
@@ -114,7 +127,12 @@ export default function Page() {
           </p>
         </div>
 
-        <div>
+        <div className="clear-both">
+          <img
+            src="/images/wemeditate/world.svg"
+            alt="International"
+            className="float-right ml-4 mb-4 w-64 hidden md:block"
+          />
           <h2 className="mb-2 text-xl font-semibold">International Translation</h2>
           <p className="mb-3">
             We Meditate is developed from the ground up to be easily translatable into any language.
@@ -122,14 +140,19 @@ export default function Page() {
             Spanish, French, Ukrainian, Armenian, etc) by local collectives.
           </p>
           <p>
-            Many smaller collectives don't have the resources to create a countrywide collective,
-            and others can benefit from an actively maintained website. We Meditate is a truly
+            Many smaller collectives don&apos;t have the resources to create a countrywide
+            collective, and others can benefit from an actively maintained website. We Meditate is a
             international project, pooling the resources of yogis worldwide for the design,
             development, content production, analytics and maintenance of the site.
           </p>
         </div>
 
-        <div>
+        <div className="clear-both">
+          <img
+            src="/images/wemeditate/analytics.svg"
+            alt="Analytics"
+            className="float-left mr-4 mb-4 w-64 hidden md:block"
+          />
           <h2 className="mb-2 text-xl font-semibold">Analytics & Sahaja Yoga Promotion</h2>
           <p>
             The beauty of the digital world is the ability to understand the users and how they
@@ -139,18 +162,18 @@ export default function Page() {
           </p>
         </div>
 
-        <div>
+        <div className="clear-both">
           <h2 className="mb-2 text-xl font-semibold">Links</h2>
           <ul className="list-inside list-disc space-y-1">
             <li>
-              <a href="https://wemeditate.com" className="text-blue-600 hover:underline">
+              <a href="https://wemeditate.com" className="text-indigo-600 hover:underline">
                 We Meditate website
               </a>
             </li>
             <li>
               <a
                 href="https://www.instagram.com/wemeditate.co"
-                className="text-blue-600 hover:underline"
+                className="text-indigo-600 hover:underline"
               >
                 We Meditate on Instagram
               </a>
@@ -158,14 +181,14 @@ export default function Page() {
             <li>
               <a
                 href="https://github.com/sydevs/WeMeditate"
-                className="text-blue-600 hover:underline"
+                className="text-indigo-600 hover:underline"
               >
                 We Meditate on GitHub
               </a>{' '}
               (help us with programming)
             </li>
             <li>
-              <a href="https://www.sydevelopers.com" className="text-blue-600 hover:underline">
+              <a href="https://www.sydevelopers.com" className="text-indigo-600 hover:underline">
                 Donate to We Meditate
               </a>
             </li>
@@ -176,18 +199,11 @@ export default function Page() {
           <p className="text-sm">
             If you have further questions or would help with development, translation or content,
             please write to{' '}
-            <a href="mailto:admin@wemeditate.co" className="text-blue-600 hover:underline">
+            <a href="mailto:admin@wemeditate.co" className="text-indigo-600 hover:underline">
               admin@wemeditate.co
             </a>
           </p>
         </div>
-
-        <p className="mt-6">
-          <a href="/" className="inline-flex items-center text-sm text-blue-600 hover:underline">
-            <ArrowLeftIcon className="mr-1 h-4 w-4" />
-            Back to Home
-          </a>
-        </p>
       </div>
     </div>
   )

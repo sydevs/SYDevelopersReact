@@ -2,40 +2,40 @@ import { useData } from 'vike-react/useData'
 import { Card, CardContent } from '../../../components/ui/card'
 import { Badge } from '../../../components/ui/badge'
 import { Alert, AlertDescription, AlertTitle } from '../../../components/ui/alert'
-import { ArrowLeftIcon, EnvelopeIcon } from '@heroicons/react/24/solid'
+import { EnvelopeIcon } from '@heroicons/react/24/solid'
+import { Markdown } from '../../../components/Markdown'
+import { getHeroicon, getCategoryColors } from '../../../lib/heroicons'
 import type { Data } from './+data'
 
 export default function Page() {
   const { job } = useData<Data>()
+  const colors = getCategoryColors(job.category)
+  const JobIcon = getHeroicon(job.icon || 'briefcase', 'solid')
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">
-      <p className="mb-4">
-        <a href="/jobs" className="inline-flex items-center text-sm text-blue-600 hover:underline">
-          <ArrowLeftIcon className="mr-1 h-4 w-4" />
-          Back to Jobs
-        </a>
-      </p>
+      <div className="mb-6 flex items-center gap-3">
+        <JobIcon className={`h-12 w-12 ${colors.icon}`} />
+        <div className="flex-1">
+          <Badge className={colors.badge}>{job.category}</Badge>
+          <h1 className="mt-1 text-3xl font-bold">{job.name}</h1>
+        </div>
+      </div>
 
-      <Badge className="mb-4">{job.category}</Badge>
-      <h1 className="mb-2 text-3xl font-bold">{job.name}</h1>
-      <p className="mb-6 text-lg text-muted-foreground">{job.brief}</p>
+      <p className="mb-6 text-lg text-gray-600">{job.brief}</p>
 
-      <Card>
+      <Card className={`${colors.border}`}>
         <CardContent className="p-6">
-          <div
-            className="prose prose-sm max-w-none"
-            dangerouslySetInnerHTML={{ __html: job.description }}
-          />
+          <Markdown content={job.description} />
         </CardContent>
       </Card>
 
-      <Alert className="mt-8 border-blue-200 bg-blue-50">
-        <EnvelopeIcon className="h-4 w-4 text-blue-600" />
+      <Alert className="mt-8 border-indigo-200 bg-indigo-50">
+        <EnvelopeIcon className="h-4 w-4 text-indigo-600" />
         <AlertTitle>Interested?</AlertTitle>
         <AlertDescription>
-          If you'd like to apply for this role, please email us at{' '}
-          <a href="mailto:contact@sydevelopers.com" className="text-blue-600 hover:underline">
+          If you&apos;d like to apply for this role, please email us at{' '}
+          <a href="mailto:contact@sydevelopers.com" className="text-indigo-600 hover:underline">
             contact@sydevelopers.com
           </a>
         </AlertDescription>

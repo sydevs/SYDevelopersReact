@@ -13,7 +13,7 @@ export default function Page() {
         No private information is stored by <strong>www.sydevelopers.com</strong> (in fact this
         website has no database). All data handled for the purposes of payment processing is stored
         by Stripe, Inc. and handled in accordance with their{' '}
-        <a href="https://stripe.com/gb/privacy" className="text-blue-600 hover:underline">
+        <a href="https://stripe.com/gb/privacy" className="text-indigo-600 hover:underline">
           privacy policy.
         </a>
       </p>
@@ -27,7 +27,7 @@ export default function Page() {
       <p className="mb-3">
         You will always be able to cancel your recurring donations through this site. If you have
         any trouble, please write to us at{' '}
-        <a href="mailto:contact@sydevelopers.com" className="text-blue-600 hover:underline">
+        <a href="mailto:contact@sydevelopers.com" className="text-indigo-600 hover:underline">
           contact@sydevelopers.com
         </a>
       </p>

@@ -70,8 +70,8 @@ export default function Page() {
                     </p>
                     <p className="mt-1 text-sm">{project.description}</p>
                     <a
-                      href={`/${project.identifier}`}
-                      className="mt-2 inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
+                      href={`/projects/${project.identifier}`}
+                      className="mt-2 inline-flex items-center gap-1 text-sm text-indigo-600 hover:underline"
                     >
                       Learn More
                       <ArrowRightIcon className="h-3 w-3" />
