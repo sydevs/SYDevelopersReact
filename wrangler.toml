@@ -1,10 +1,12 @@
-# Wrangler configuration for Pages Functions (local development)
-# This file is used for `wrangler pages dev` to serve the functions/ directory
+# Wrangler configuration for Cloudflare Pages
+# When running `wrangler pages dev -- vike dev`, this config enables:
+# - Automatic detection of functions/ directory
+# - Environment variables from .dev.vars
+# - Cloudflare Workers compatibility
 
 name = "sydevelopers"
 compatibility_date = "2025-09-06"
 compatibility_flags = ["nodejs_compat"]
 
-# For Pages Functions, we use pages_build_output_dir instead of main
-# The functions/ directory will be automatically detected
-pages_build_output_dir = "."
+# Note: No pages_build_output_dir when using proxy mode (-- vike dev)
+# The functions/ directory is automatically detected from the current directory

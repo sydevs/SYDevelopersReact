@@ -10,5 +10,8 @@ export default {
   title: 'My Vike App',
   description: 'Demo showcasing Vike',
 
-  extends: [vikeReact, vikePhoton],
+  // Note: vikePhoton is for production builds (Cloudflare Workers/SSR)
+  // For local dev, use `pnpm dev` which runs without Photon
+  // For production, use `pnpm build` which includes Photon
+  extends: process.env.NODE_ENV === 'production' ? [vikeReact, vikePhoton] : [vikeReact],
 } satisfies Config
