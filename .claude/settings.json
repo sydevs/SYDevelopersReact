@@ -1,0 +1,23 @@
+{
+  "hooks": {
+    "eslint-autofix": {
+      "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/eslint-autofix.js",
+      "type": "PostToolUse",
+      "tools": ["Write", "Edit"]
+    },
+    "security-scanner": {
+      "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/security-scanner.sh",
+      "type": "PreToolUse",
+      "tools": ["Bash", "Write", "Edit"]
+    },
+    "build-validator": {
+      "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/build-validator.js",
+      "type": "PostToolUse",
+      "tools": ["Write", "Edit"]
+    },
+    "notify-stop": {
+      "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/notify-stop.sh",
+      "type": "Stop"
+    }
+  }
+}

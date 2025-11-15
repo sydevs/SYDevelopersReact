@@ -1,20 +1,25 @@
-import eslint from "@eslint/js";
-import prettier from "eslint-plugin-prettier/recommended";
-import react from "eslint-plugin-react";
-import globals from "globals";
-import tseslint, { type ConfigArray } from "typescript-eslint";
+import eslint from '@eslint/js'
+import prettier from 'eslint-plugin-prettier/recommended'
+import react from 'eslint-plugin-react'
+import globals from 'globals'
+import tseslint, { type ConfigArray } from 'typescript-eslint'
+// @ts-expect-error - No types available
+import unusedImports from 'eslint-plugin-unused-imports'
 
 export default tseslint.config(
   {
     ignores: [
-      "dist/*",
+      'dist/*',
       // Temporary compiled files
-      "**/*.ts.build-*.mjs",
+      '**/*.ts.build-*.mjs',
 
       // JS files at the root of the project
-      "*.js",
-      "*.cjs",
-      "*.mjs",
+      '*.js',
+      '*.cjs',
+      '*.mjs',
+
+      // Claude Code hooks and configs
+      ".claude/**/*",
     ],
   },
   eslint.configs.recommended,
@@ -23,25 +28,44 @@ export default tseslint.config(
     languageOptions: {
       parserOptions: {
         warnOnUnsupportedTypeScriptVersion: false,
-        sourceType: "module",
-        ecmaVersion: "latest",
+        sourceType: 'module',
+        ecmaVersion: 'latest',
       },
     },
   },
   {
+    plugins: {
+      'unused-imports': unusedImports,
+    },
     rules: {
-      "@typescript-eslint/no-unused-vars": [
-        1,
+      // Console warnings (good for production code)
+      'no-console': 'warn',
+
+      // TypeScript rules
+      '@typescript-eslint/ban-ts-comment': 'warn',
+      '@typescript-eslint/no-empty-object-type': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
         {
-          argsIgnorePattern: "^_",
+          vars: 'all',
+          args: 'after-used',
+          ignoreRestSiblings: false,
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^(_|ignore)',
         },
       ],
-      "@typescript-eslint/no-namespace": 0,
+      '@typescript-eslint/no-namespace': 0,
+
+      // Unused imports auto-removal
+      'unused-imports/no-unused-imports': 'warn',
     },
   },
 
   {
-    files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],
+    files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
     ...react.configs.flat.recommended,
     languageOptions: {
       ...react.configs.flat.recommended.languageOptions,
@@ -53,12 +77,12 @@ export default tseslint.config(
 
     settings: {
       react: {
-        version: "detect",
+        version: 'detect',
       },
     },
   } as ConfigArray[number],
 
-  react.configs.flat["jsx-runtime"] as ConfigArray[number],
+  react.configs.flat['jsx-runtime'] as ConfigArray[number],
 
   prettier as ConfigArray[number],
-);
+)
