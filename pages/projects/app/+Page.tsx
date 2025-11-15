@@ -56,7 +56,7 @@ export default function Page() {
             Although this will not be ready in the first iteration of the app, it will be possible
             to use the app to direct seekers to attend local public programs. The first step would
             be to integrate the app with the{' '}
-            <a href="/atlas" className="text-indigo-600 hover:underline">
+            <a href="/atlas" className="text-sky-600 hover:underline">
               Sahaj Atlas
             </a>{' '}
             project, in order to list all public programs world wide.
@@ -71,7 +71,7 @@ export default function Page() {
         <div className="border-t pt-6">
           <p className="text-sm">
             If you have further questions or would like to help with development, please write to{' '}
-            <a href="mailto:contact@sydevelopers.com" className="text-indigo-600 hover:underline">
+            <a href="mailto:contact@sydevelopers.com" className="text-sky-600 hover:underline">
               contact@sydevelopers.com
             </a>
           </p>

@@ -35,7 +35,7 @@ export default function Page() {
 
       {showSuccess && (
         <Alert className="mb-4 border-indigo-200 bg-indigo-50">
-          <CheckCircleIcon className="h-4 w-4 text-indigo-600" />
+          <CheckCircleIcon className="h-4 w-4 text-sky-600" />
           <AlertTitle>Donation successful</AlertTitle>
           <AlertDescription>Thank you for your contribution!</AlertDescription>
         </Alert>
@@ -43,7 +43,7 @@ export default function Page() {
 
       {showCancel && (
         <Alert className="mb-4 border-red-200 bg-red-50">
-          <XCircleIcon className="h-4 w-4 text-red-600" />
+          <XCircleIcon className="h-4 w-4 text-red-400" />
           <AlertTitle>Donation cancelled</AlertTitle>
           <AlertDescription>
             Your donation has been cancelled, no money will be charged.
@@ -53,7 +53,7 @@ export default function Page() {
 
       <div className="border-t border-red-200 pt-6 mb-6">
         <div className="mb-6 flex items-start justify-between">
-          <h2 className="text-2xl font-bold text-red-600">Fundraising</h2>
+          <h2 className="text-2xl font-bold text-red-400">Fundraising</h2>
           <div className="text-right">
             <div className="text-xs text-gray-600">Target</div>
             <div className="text-3xl font-bold">${totalExpenses.toFixed(0)}</div>
@@ -96,22 +96,30 @@ export default function Page() {
         <div className="clear-both my-6 flex flex-col sm:flex-row gap-4 items-center justify-center">
           <div className="text-center">
             <p className="mb-2 text-sm font-medium">Monthly Donation</p>
-            <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-            <stripe-buy-button
-              buy-button-id="buy_btn_1STkr7K5E1L5TSuqjuFbdUKO"
-              publishable-key="pk_live_51HQqi7K5E1L5TSuqteyptETR4hx20IfM3XD1OOjCR9iu9SGDqMMpxW7ahtoDtkSE9GIZ6a8kSOsEluBHiqmR4shl00VTFGdkvi"
-            />
+            <Button asChild>
+              <a
+                href="https://donate.stripe.com/14A14ogjdfoI6zjfut33W03"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Donate Monthly
+              </a>
+            </Button>
           </div>
 
           <div className="text-gray-600">or</div>
 
           <div className="text-center">
             <p className="mb-2 text-sm font-medium">One-Time Donation</p>
-            <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-            <stripe-buy-button
-              buy-button-id="buy_btn_1STk1QK5E1L5TSuqNdkTV2km"
-              publishable-key="pk_live_51HQqi7K5E1L5TSuqteyptETR4hx20IfM3XD1OOjCR9iu9SGDqMMpxW7ahtoDtkSE9GIZ6a8kSOsEluBHiqmR4shl00VTFGdkvi"
-            />
+            <Button asChild>
+              <a
+                href="https://donate.stripe.com/eVqdRa9UP90kaPzeqp33W02"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Donate Once
+              </a>
+            </Button>
           </div>
         </div>
 
@@ -122,7 +130,7 @@ export default function Page() {
         </div>
       </div>
 
-      <h2 className="border-t pt-6 mb-4 text-2xl font-bold text-red-600">Expenses by Project</h2>
+      <h2 className="border-t pt-6 mb-4 text-2xl font-bold text-red-400">Expenses by Project</h2>
       <div className="space-y-4">
         {projects.map((project) => {
           if (!project.identifier) return null
@@ -205,15 +213,4 @@ export default function Page() {
       </div>
     </div>
   )
-}
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'stripe-buy-button': {
-        'buy-button-id': string
-        'publishable-key': string
-      }
-    }
-  }
 }

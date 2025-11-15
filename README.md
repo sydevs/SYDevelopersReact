@@ -1,98 +1,196 @@
-Generated with [vike.dev/new](https://vike.dev/new) ([version 514](https://www.npmjs.com/package/create-vike/v/0.0.514)) using this command:
+# SY Developers - React/Vike Migration
 
-```sh
-pnpm create vike@latest --react --tailwindcss --shadcn-ui --cloudflare --eslint --prettier --sentry
+Modern React application built with Vike (SSG), deployed to Cloudflare Pages.
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- pnpm
+- Airtable account with API key
+- Stripe account
+
+### Installation
+
+```bash
+# Install dependencies
+pnpm install
+
+# Copy environment template
+cp .env.local.example .env.local
+
+# Edit .env.local and add your API keys
 ```
 
-## Contents
+### Development
 
-* [Vike](#vike)
+```bash
+pnpm dev
+```
 
-  * [Plus files](#plus-files)
-  * [Routing](#routing)
-  * [SSR](#ssr)
-  * [HTML Streaming](#html-streaming)
+Visit `http://localhost:3000`
 
-* [Photon](#photon)
+### Build
 
-* [Sentry Browser / Error Tracking & Performance Monitoring](#sentry-browser--error-tracking--performance-monitoring)
+```bash
+pnpm build
+```
 
-* [shadcn/ui](#shadcnui)
+### Preview Production Build
 
-  * [Configuration](#configuration)
-  * [Add Components to Your Project](#add-components-to-your-project)
+```bash
+pnpm preview
+```
 
-## Vike
+## 📁 Project Structure
 
-This app is ready to start. It's powered by [Vike](https://vike.dev) and [React](https://react.dev/learn).
+```
+├── pages/                  # Vike pages (SSG)
+│   ├── index/             # Homepage
+│   ├── funds/             # Donations page
+│   ├── jobs/              # Job listings
+│   ├── policy/            # Policy page
+│   └── projects/          # Project pages
+├── components/            # React components
+│   ├── ui/               # shadcn/ui components
+│   ├── Navigation.tsx    # Header navigation
+│   └── DonationStats.tsx # Client-side donation stats
+├── lib/                   # Utilities
+│   ├── airtable.ts       # Airtable data fetchers
+│   ├── stripe-client.ts  # Stripe client utilities
+│   └── utils.ts          # shadcn utils
+├── types/                 # TypeScript types
+│   ├── airtable.ts       # Airtable record types
+│   └── stripe.ts         # Stripe types
+├── functions/            # Cloudflare Functions
+│   └── api/
+│       └── donation-stats.ts  # Stripe API proxy
+└── public/               # Static assets
+    ├── robots.txt        # SEO (disallow all)
+    └── images/           # Images
+```
 
-### Plus files
+## 🔧 Tech Stack
 
-[The + files are the interface](https://vike.dev/config) between Vike and your code.
+- **Framework:** Vike (SSG mode)
+- **UI Library:** React 19
+- **Styling:** Tailwind CSS 4
+- **Components:** shadcn/ui
+- **Icons:** Heroicons
+- **Data:** Airtable (build-time fetch)
+- **Payments:** Stripe Buy Buttons
+- **Deployment:** Cloudflare Pages
+- **Language:** TypeScript
 
-* [`+config.ts`](https://vike.dev/settings) — Settings (e.g. `<title>`)
-* [`+Page.tsx`](https://vike.dev/Page) — The `<Page>` component
-* [`+data.ts`](https://vike.dev/data) — Fetching data (for your `<Page>` component)
-* [`+Layout.tsx`](https://vike.dev/Layout) — The `<Layout>` component (wraps your `<Page>` components)
-* [`+Head.tsx`](https://vike.dev/Head) - Sets `<head>` tags
-* [`/pages/_error/+Page.tsx`](https://vike.dev/error-page) — The error page (rendered when an error occurs)
-* [`+onPageTransitionStart.ts`](https://vike.dev/onPageTransitionStart) and `+onPageTransitionEnd.ts` — For page transition animations
+## 🌐 Data Fetching
 
-### Routing
+### Build-time (Airtable)
 
-[Vike's built-in router](https://vike.dev/routing) lets you choose between:
+- Jobs
+- Projects
+- Teams/People
+- Expenses
 
-* [Filesystem Routing](https://vike.dev/filesystem-routing) (the URL of a page is determined based on where its `+Page.jsx` file is located on the filesystem)
-* [Route Strings](https://vike.dev/route-string)
-* [Route Functions](https://vike.dev/route-function)
+### Client-side (Cloudflare Function)
 
-### SSR
+- Donation statistics (last 30 days)
+- Recent donations
 
-SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all or specific pages.
+## 💳 Stripe Integration
 
-### HTML Streaming
+Uses Stripe Buy Buttons for donations:
 
-You can [enable/disable HTML streaming](https://vike.dev/stream) for all or specific pages.
+- **Monthly donations:** `buy_btn_1STkr7K5E1L5TSuqjuFbdUKO`
+- **One-time donations:** `buy_btn_1STk1QK5E1L5TSuqNdkTV2km`
 
-## Photon
+No server-side Stripe code needed (Buy Buttons handle everything).
 
-[Photon](https://photonjs.dev) is a next-generation server and deployment toolkit.
-It supports popular deployments ([self-hosted](https://photonjs.dev/self-hosted), [Cloudflare](https://photonjs.dev/cloudflare), [Vercel](https://photonjs.dev/vercel), and [more](https://photonjs.dev/deploy))
-and popular servers ([Hono](https://photonjs.dev/hono), [Express](https://photonjs.dev/express), [Fastify](https://photonjs.dev/fastify), and [more](https://photonjs.dev/server)).
+## 📊 Donation Stats API
 
-## Sentry Browser / Error Tracking & Performance Monitoring
+The `/api/donation-stats` endpoint is a Cloudflare Function that:
 
-This app is integrated with [Sentry](https://sentry.io) for error tracking.
+1. Fetches transactions from Stripe API (last 30 days)
+2. Calculates monthly vs one-time donations
+3. Returns recent charges with country info
+4. Called client-side from Funds page
 
-> \[!NOTE]
-> Sentry Error Tracking is **only activated in production** (`import.meta.env.PROD === true`)!
+## 🚢 Deployment
 
-**Testing Sentry** receiving Errors:
+### Cloudflare Pages
 
-1. Build & Start the app `pnpm build && pnpm preview`.
-2. open Testpage in browser: http://localhost:3000/sentry.
-3. check your [Sentry Dashboard](https://sentry.io) for new Errors.
+1. Connect GitHub repository to Cloudflare Pages
+2. Build settings:
+   - Build command: `pnpm build`
+   - Build output directory: `dist/client`
+3. Environment variables:
+   - `AIRTABLE_KEY`
+   - `AIRTABLE_BASE`
+   - `STRIPE_PUBLISHABLE_KEY`
+   - `STRIPE_SECRET_KEY` (for Function)
 
-## shadcn/ui
+### Manual Deployment
 
-Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.
+```bash
+# Build the site
+pnpm build
 
-### Configuration
+# Deploy via wrangler
+npx wrangler pages deploy dist/client
+```
 
-see [shadcn/ui theming](https://ui.shadcn.com/docs/theming)
+## 📝 Environment Variables
 
-Base Configuration can be found in `components.json` file.
+### Required for Build
 
-> \[!NOTE]
-> changes to the `components.json` file **will not** be reflected in existing components. Only new components will be affected.
+- `AIRTABLE_KEY` - Airtable API key
+- `AIRTABLE_BASE` - Airtable base ID
+- `STRIPE_PUBLISHABLE_KEY` - Stripe publishable key
 
-### Add Components to Your Project
+### Required for Functions
 
-**Example:** add a component to your project.
-`pnpm shadcn add button`
+- `STRIPE_SECRET_KEY` - Stripe secret key (set in Cloudflare dashboard)
 
-use the `<Button />` component in your project:
-`import { Button } from "@/components/ui/button";`
+## 🔄 Updating Content
 
-more [shadcn/ui components](https://ui.shadcn.com/docs/components/accordion)
+### Jobs/Projects
 
+1. Update data in Airtable
+2. Trigger rebuild:
+   - Manual: Push to GitHub or trigger deploy hook
+   - Automated: (Future) Airtable webhook → Cloudflare deploy hook
+
+## 🎨 Components
+
+### shadcn/ui Components Used
+
+- Button
+- Card
+- Badge
+- Accordion
+- Progress
+- Alert
+
+### Custom Components
+
+- `Navigation` - Header with links
+- `DonationStats` - Real-time donation statistics
+
+## 📋 TODO
+
+- [ ] Copy project page content from old site
+- [ ] Optimize and convert images to WebP
+- [ ] Setup Airtable webhook for auto-rebuilds
+- [ ] Add analytics (if needed)
+
+## 🤝 Contributing
+
+This is an internal project for Sahaja Yoga web developers.
+
+## 📞 Contact
+
+For questions: contact@sydevelopers.com
+
+## 🔒 License
+
+Private - All rights reserved

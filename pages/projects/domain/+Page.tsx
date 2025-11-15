@@ -116,7 +116,7 @@ export default function Page() {
           </p>
           <p>
             You can read more about the We Meditate Project{' '}
-            <a href="/wemeditate" className="text-indigo-600 hover:underline">
+            <a href="/wemeditate" className="text-sky-600 hover:underline">
               here
             </a>
             .
@@ -127,7 +127,7 @@ export default function Page() {
           <p className="font-semibold">Please consider donating towards this effort.</p>
           <p className="text-sm">
             If you would like to donate, or have any questions, please write to{' '}
-            <a href="mailto:admin@wemeditate.co" className="text-indigo-600 hover:underline">
+            <a href="mailto:admin@wemeditate.co" className="text-sky-600 hover:underline">
               admin@wemeditate.co
             </a>
             .

@@ -1,9 +1,29 @@
 import { useData } from 'vike-react/useData'
 import { Card, CardContent } from '../../../components/ui/card'
 import { Badge } from '../../../components/ui/badge'
-import { ChevronRightIcon, UserGroupIcon } from '@heroicons/react/24/solid'
+import {
+  ChevronRightIcon,
+  WrenchScrewdriverIcon,
+  PencilSquareIcon,
+  NewspaperIcon,
+  DevicePhoneMobileIcon,
+  VideoCameraIcon,
+  ShareIcon,
+} from '@heroicons/react/24/solid'
 import { getHeroicon, getCategoryColors } from '../../../lib/heroicons'
 import type { Data } from './+data'
+
+// Map team names to appropriate icons
+const getTeamIcon = (teamName: string) => {
+  const teamLower = teamName.toLowerCase()
+  if (teamLower === 'technical') return WrenchScrewdriverIcon
+  if (teamLower === 'past writers') return PencilSquareIcon
+  if (teamLower === 'editorial') return NewspaperIcon
+  if (teamLower === 'app development') return DevicePhoneMobileIcon
+  if (teamLower === 'live meditations') return VideoCameraIcon
+  if (teamLower === 'social media') return ShareIcon
+  return WrenchScrewdriverIcon // Default fallback
+}
 
 export default function Page() {
   const { jobsByCategory, teams } = useData<Data>()
@@ -18,7 +38,7 @@ export default function Page() {
           href="https://wemeditate.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-indigo-600 hover:underline"
+          className="text-sky-600 hover:underline"
         >
           We Meditate
         </a>{' '}
@@ -36,22 +56,41 @@ export default function Page() {
       </ul>
 
       <h3 className="mb-4 border-t pt-6 text-xl font-bold">Our Current Team</h3>
-      <div className="mb-8 space-y-2">
-        {Object.entries(teams).map(([team, people]) => (
-          <div key={team} className="flex items-start gap-4">
-            <div className="flex min-w-[150px] items-center gap-2">
-              <UserGroupIcon className="h-5 w-5 text-gray-500" />
-              <span className="font-medium">{team}</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {people.map((person, i) => (
-                <Badge key={i} variant="outline">
-                  {person.name.split(' ')[0]} - {person.shortCountry}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        ))}
+      <div className="mb-8 overflow-x-auto">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="border-b-2 border-gray-200">
+              <th className="whitespace-nowrap pb-3 pr-4 text-left font-semibold text-gray-700">
+                Team
+              </th>
+              <th className="pb-3 text-left font-semibold text-gray-700">Members</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(teams).map(([team, people]) => {
+              const TeamIcon = getTeamIcon(team)
+              return (
+                <tr key={team} className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="whitespace-nowrap py-3 pr-4">
+                    <div className="flex items-center gap-2">
+                      <TeamIcon className="mr-2 h-5 w-5 text-sky-600" />
+                      <span className="font-medium">{team}</span>
+                    </div>
+                  </td>
+                  <td className="py-3">
+                    <div className="flex flex-wrap gap-2">
+                      {people.map((person, i) => (
+                        <Badge key={i} variant="outline">
+                          {person.name.split(' ')[0]} - {person.shortCountry}
+                        </Badge>
+                      ))}
+                    </div>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
       </div>
 
       <h2 className="mb-4 border-t pt-6 text-xl font-bold">Jobs</h2>

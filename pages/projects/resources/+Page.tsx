@@ -13,7 +13,7 @@ export default function Page() {
             href="http://www.sahajaresources.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-indigo-600 hover:underline"
+            className="text-sky-600 hover:underline"
           >
             sahajaresources.com
           </a>
@@ -120,7 +120,7 @@ export default function Page() {
           <h2 className="mb-2 text-xl font-semibold">Links</h2>
           <ul className="list-inside list-disc space-y-1">
             <li>
-              <a href="http://www.sahajaresources.com/" className="text-indigo-600 hover:underline">
+              <a href="http://www.sahajaresources.com/" className="text-sky-600 hover:underline">
                 Sahaj Resources website
               </a>
             </li>
@@ -130,7 +130,7 @@ export default function Page() {
         <div className="border-t pt-6">
           <p className="text-sm">
             If you have further questions, please write to{' '}
-            <a href="mailto:contact@sydevelopers.com" className="text-indigo-600 hover:underline">
+            <a href="mailto:contact@sydevelopers.com" className="text-sky-600 hover:underline">
               contact@sydevelopers.com
             </a>
           </p>

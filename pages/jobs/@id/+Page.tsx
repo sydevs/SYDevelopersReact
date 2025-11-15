@@ -31,11 +31,11 @@ export default function Page() {
       </Card>
 
       <Alert className="mt-8 border-indigo-200 bg-indigo-50">
-        <EnvelopeIcon className="h-4 w-4 text-indigo-600" />
+        <EnvelopeIcon className="h-4 w-4 text-sky-600" />
         <AlertTitle>Interested?</AlertTitle>
         <AlertDescription>
           If you&apos;d like to apply for this role, please email us at{' '}
-          <a href="mailto:contact@sydevelopers.com" className="text-indigo-600 hover:underline">
+          <a href="mailto:contact@sydevelopers.com" className="text-sky-600 hover:underline">
             contact@sydevelopers.com
           </a>
         </AlertDescription>

@@ -31,7 +31,7 @@ export function DonationStats({ totalExpenses }: Props) {
       <div className="space-y-2">
         <div className="relative h-3 overflow-hidden rounded-full bg-gray-200">
           <div
-            className="h-full bg-red-500 transition-all"
+            className="h-full bg-red-400 transition-all"
             style={{ width: `${funding.monthlyPercent}%` }}
           />
         </div>

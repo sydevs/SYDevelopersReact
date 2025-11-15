@@ -1,4 +1,10 @@
+# Wrangler configuration for Pages Functions (local development)
+# This file is used for `wrangler pages dev` to serve the functions/ directory
+
 name = "sydevelopers"
 compatibility_date = "2025-09-06"
 compatibility_flags = ["nodejs_compat"]
-main = "virtual:photon:cloudflare:server-entry"
+
+# For Pages Functions, we use pages_build_output_dir instead of main
+# The functions/ directory will be automatically detected
+pages_build_output_dir = "."

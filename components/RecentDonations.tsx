@@ -30,7 +30,7 @@ export function RecentDonations() {
           return (
             <div key={i} className="text-sm">
               {flag && <span className="mr-2">{flag.emoji}</span>}
-              <strong>${(charge.amount / 100).toFixed(2)}</strong>
+              <strong>${charge.amount.toFixed(2)}</strong>
               <span className="ml-2 text-gray-600">
                 {new Date(charge.created * 1000).toLocaleDateString()}
               </span>

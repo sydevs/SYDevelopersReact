@@ -13,7 +13,7 @@ export default function Page() {
             href="https://wemeditate.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-indigo-600 hover:underline"
+            className="text-sky-600 hover:underline"
           >
             wemeditate.com
           </a>
@@ -166,14 +166,14 @@ export default function Page() {
           <h2 className="mb-2 text-xl font-semibold">Links</h2>
           <ul className="list-inside list-disc space-y-1">
             <li>
-              <a href="https://wemeditate.com" className="text-indigo-600 hover:underline">
+              <a href="https://wemeditate.com" className="text-sky-600 hover:underline">
                 We Meditate website
               </a>
             </li>
             <li>
               <a
                 href="https://www.instagram.com/wemeditate.co"
-                className="text-indigo-600 hover:underline"
+                className="text-sky-600 hover:underline"
               >
                 We Meditate on Instagram
               </a>
@@ -181,14 +181,14 @@ export default function Page() {
             <li>
               <a
                 href="https://github.com/sydevs/WeMeditate"
-                className="text-indigo-600 hover:underline"
+                className="text-sky-600 hover:underline"
               >
                 We Meditate on GitHub
               </a>{' '}
               (help us with programming)
             </li>
             <li>
-              <a href="https://www.sydevelopers.com" className="text-indigo-600 hover:underline">
+              <a href="https://www.sydevelopers.com" className="text-sky-600 hover:underline">
                 Donate to We Meditate
               </a>
             </li>
@@ -199,7 +199,7 @@ export default function Page() {
           <p className="text-sm">
             If you have further questions or would help with development, translation or content,
             please write to{' '}
-            <a href="mailto:admin@wemeditate.co" className="text-indigo-600 hover:underline">
+            <a href="mailto:admin@wemeditate.co" className="text-sky-600 hover:underline">
               admin@wemeditate.co
             </a>
           </p>

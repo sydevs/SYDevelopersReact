@@ -26,7 +26,7 @@ export default function Page() {
               <HeartIcon className="h-12 w-12 text-red-400" />
               <div className="flex-1">
                 <h3 className="text-lg font-semibold">Donations</h3>
-                <p className="text-sm font-medium text-red-600">Support our projects</p>
+                <p className="text-sm font-medium text-red-400">Support our projects</p>
               </div>
               <ChevronRightIcon className="h-6 w-6 text-muted-foreground" />
             </CardContent>
@@ -71,7 +71,7 @@ export default function Page() {
                     <p className="mt-1 text-sm">{project.description}</p>
                     <a
                       href={`/projects/${project.identifier}`}
-                      className="mt-2 inline-flex items-center gap-1 text-sm text-indigo-600 hover:underline"
+                      className="mt-2 inline-flex items-center gap-1 text-sm text-sky-600 hover:underline"
                     >
                       Learn More
                       <ArrowRightIcon className="h-3 w-3" />

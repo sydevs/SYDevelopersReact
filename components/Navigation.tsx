@@ -23,8 +23,8 @@ export function Navigation() {
             href="/"
             className={`flex items-center gap-2 ${
               isActive('/')
-                ? 'font-bold text-indigo-600'
-                : 'font-normal text-gray-700 hover:text-indigo-600'
+                ? 'font-bold text-sky-600'
+                : 'font-normal text-gray-700 hover:text-sky-600'
             }`}
           >
             {isActive('/') ? (
@@ -38,8 +38,8 @@ export function Navigation() {
             href="/funds"
             className={`flex items-center gap-2 ${
               isActive('/funds')
-                ? 'font-bold text-red-600'
-                : 'font-normal text-gray-700 hover:text-red-600'
+                ? 'font-bold text-red-400'
+                : 'font-normal text-gray-700 hover:text-red-400'
             }`}
           >
             {isActive('/funds') ? (

@@ -13,7 +13,7 @@ export default function Page() {
             href="https://atlas.sydevelopers.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-indigo-600 hover:underline"
+            className="text-sky-600 hover:underline"
           >
             atlas.sydevelopers.com
           </a>
@@ -96,7 +96,7 @@ export default function Page() {
             <li>
               <a
                 href="https://wemeditate.com/map?preview=true"
-                className="text-indigo-600 hover:underline"
+                className="text-sky-600 hover:underline"
               >
                 Sahaj Atlas on We Meditate
               </a>{' '}
@@ -105,19 +105,19 @@ export default function Page() {
             <li>
               <a
                 href="https://atlas.sydevelopers.com/statistics"
-                className="text-indigo-600 hover:underline"
+                className="text-sky-600 hover:underline"
               >
                 Sahaj Atlas Statistics
               </a>
             </li>
             <li>
-              <a href="https://github.com/sydevs/Atlas" className="text-indigo-600 hover:underline">
+              <a href="https://github.com/sydevs/Atlas" className="text-sky-600 hover:underline">
                 Sahaj Atlas on GitHub
               </a>{' '}
               (help us with programming)
             </li>
             <li>
-              <a href="https://www.sydevelopers.com" className="text-indigo-600 hover:underline">
+              <a href="https://www.sydevelopers.com" className="text-sky-600 hover:underline">
                 Donate to Sahaj Atlas
               </a>
             </li>
@@ -128,7 +128,7 @@ export default function Page() {
           <p className="text-sm">
             If you have further questions, would like to help with development, or would like help
             embedding the map on your website, please write to{' '}
-            <a href="mailto:contact@sydevelopers.com" className="text-indigo-600 hover:underline">
+            <a href="mailto:contact@sydevelopers.com" className="text-sky-600 hover:underline">
               contact@sydevelopers.com
             </a>
           </p>
