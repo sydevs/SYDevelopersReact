@@ -23,7 +23,10 @@ export default function Page() {
 
       <Card>
         <CardContent className="p-6">
-          <div className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: job.description }} />
+          <div
+            className="prose prose-sm max-w-none"
+            dangerouslySetInnerHTML={{ __html: job.description }}
+          />
         </CardContent>
       </Card>
 

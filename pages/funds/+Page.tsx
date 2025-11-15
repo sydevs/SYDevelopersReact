@@ -1,11 +1,22 @@
 import { useData } from 'vike-react/useData'
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '../../components/ui/accordion'
 import { Alert, AlertDescription, AlertTitle } from '../../components/ui/alert'
 import { Button } from '../../components/ui/button'
 import { DonationStats } from '../../components/DonationStats'
-import { ArrowLeftIcon, HeartIcon, BriefcaseIcon, ArrowRightIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid'
+import {
+  ArrowLeftIcon,
+  BriefcaseIcon,
+  ArrowRightIcon,
+  CheckCircleIcon,
+  XCircleIcon,
+} from '@heroicons/react/24/solid'
 import type { Data } from './+data'
 
 export default function Page() {
@@ -24,7 +35,9 @@ export default function Page() {
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">Sahaj Web Projects</h1>
-      <p className="mb-4">This page lists a set of connected digital projects created to help promote Sahaja Yoga.</p>
+      <p className="mb-4">
+        This page lists a set of connected digital projects created to help promote Sahaja Yoga.
+      </p>
       <p className="mb-6">
         <a href="/" className="inline-flex items-center text-sm text-blue-600 hover:underline">
           <ArrowLeftIcon className="h-4 w-4 mr-1" />
@@ -44,7 +57,9 @@ export default function Page() {
         <Alert className="mb-4 border-red-200 bg-red-50">
           <XCircleIcon className="h-4 w-4 text-red-600" />
           <AlertTitle>Donation cancelled</AlertTitle>
-          <AlertDescription>Your donation has been cancelled, no money will be charged.</AlertDescription>
+          <AlertDescription>
+            Your donation has been cancelled, no money will be charged.
+          </AlertDescription>
         </Alert>
       )}
 
@@ -59,7 +74,9 @@ export default function Page() {
         </div>
 
         <p className="mb-4">
-          A great deal of time is contributed voluntarily to make these projects a reality. However there are also costs to running these services (for images, videos, web addresses, etc). As more seekers and yogis use the site, the costs will also slowly grow.
+          A great deal of time is contributed voluntarily to make these projects a reality. However
+          there are also costs to running these services (for images, videos, web addresses, etc).
+          As more seekers and yogis use the site, the costs will also slowly grow.
         </p>
 
         <div className="my-6 flex flex-col sm:flex-row gap-4 items-center justify-center">
@@ -85,11 +102,14 @@ export default function Page() {
         </div>
 
         <p className="mb-4">
-          If you are able to contribute some money to the upkeep of these projects, it will be much appreciated. You can learn more about each project in the list below.
+          If you are able to contribute some money to the upkeep of these projects, it will be much
+          appreciated. You can learn more about each project in the list below.
         </p>
 
         <p className="text-sm italic mb-6">
-          As always, Sahaja Yoga is completely free of charge. We are collecting donations for this project only to cover the costs of running it. All yogis involved in the project volunteer their time without renumeration.
+          As always, Sahaja Yoga is completely free of charge. We are collecting donations for this
+          project only to cover the costs of running it. All yogis involved in the project volunteer
+          their time without renumeration.
         </p>
 
         <DonationStats totalExpenses={totalExpenses} />
@@ -99,7 +119,8 @@ export default function Page() {
             <CardContent className="p-4">
               <h3 className="font-semibold mb-2 text-sm">Contribute Your Time</h3>
               <p className="text-sm mb-3">
-                We also need help making these projects a success. Help us with photography, writing, editing, social media, graphic design, coding, and more.
+                We also need help making these projects a success. Help us with photography,
+                writing, editing, social media, graphic design, coding, and more.
               </p>
               <a href="/jobs">
                 <Button variant="outline" size="sm" className="w-full">
@@ -115,7 +136,10 @@ export default function Page() {
             <CardContent className="p-4">
               <h3 className="font-semibold mb-2 text-sm">Partnership</h3>
               <p className="text-sm mb-3">
-                We Meditate is an international project, run by yogis from various countries for the advancement of Sahaja Yoga online. For legal and accounting purposes, we have partnered with <strong>Life Eternal Trust UK</strong>, which was started by Shri Mataji in 1985.
+                We Meditate is an international project, run by yogis from various countries for the
+                advancement of Sahaja Yoga online. For legal and accounting purposes, we have
+                partnered with <strong>Life Eternal Trust UK</strong>, which was started by Shri
+                Mataji in 1985.
               </p>
             </CardContent>
           </Card>
@@ -154,7 +178,9 @@ export default function Page() {
                                 <tr key={i} className="border-b last:border-0">
                                   <td className="py-2">
                                     <div className="font-medium">{expense.name}</div>
-                                    <div className="text-xs text-muted-foreground">{expense.description}</div>
+                                    <div className="text-xs text-muted-foreground">
+                                      {expense.description}
+                                    </div>
                                   </td>
                                   <td className="py-2 text-right">
                                     {expense.type === 'Monthly' ? (
@@ -197,7 +223,8 @@ export default function Page() {
       <div className="border-t mt-8 pt-6">
         <h3 className="text-lg font-semibold mb-2">Other Sahaj Web Projects</h3>
         <p className="mb-4 text-sm">
-          Above are the projects currently managed in connection with sydevelopers.com. You can find a complete list of high quality digital Sahaj projects on the resources website.
+          Above are the projects currently managed in connection with sydevelopers.com. You can find
+          a complete list of high quality digital Sahaj projects on the resources website.
         </p>
         <a href="http://www.sahajaresources.com/digital" target="_blank" rel="noopener noreferrer">
           <Button variant="default">

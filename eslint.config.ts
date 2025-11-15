@@ -3,7 +3,6 @@ import prettier from 'eslint-plugin-prettier/recommended'
 import react from 'eslint-plugin-react'
 import globals from 'globals'
 import tseslint, { type ConfigArray } from 'typescript-eslint'
-// @ts-expect-error - No types available
 import unusedImports from 'eslint-plugin-unused-imports'
 
 export default tseslint.config(
@@ -19,7 +18,7 @@ export default tseslint.config(
       '*.mjs',
 
       // Claude Code hooks and configs
-      ".claude/**/*",
+      '.claude/**/*',
     ],
   },
   eslint.configs.recommended,

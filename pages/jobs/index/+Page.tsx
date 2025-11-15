@@ -26,21 +26,21 @@ export default function Page() {
         <a
           href="https://wemeditate.com"
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
           className="text-blue-600 hover:underline"
         >
           We Meditate
         </a>{' '}
-        and its related projects, but there's much more than we can manage alone!
+        and its related projects, but there&apos;s much more than we can manage alone!
       </p>
       <ul className="mb-4 list-inside list-disc space-y-1">
         <li>
-          If you're ready to take responsibility to make part of this project successful, please get in touch.
-          Enthusiasm is as important as skill.
+          If you&apos;re ready to take responsibility to make part of this project successful,
+          please get in touch. Enthusiasm is as important as skill.
         </li>
         <li>
-          If you need resume-worthy work, look no further. You're being given meaningful responsibility and a
-          great opportunity to develop skills.
+          If you need resume-worthy work, look no further. You&apos;re being given meaningful
+          responsibility and a great opportunity to develop skills.
         </li>
       </ul>
       <p className="mb-6">
@@ -83,7 +83,9 @@ export default function Page() {
 
       {Object.entries(jobsByCategory).map(([category, jobs]) => (
         <div key={category} id={category.toLowerCase().replace(/\s+/g, '-')} className="mb-8">
-          <h3 className="mb-2 text-sm font-semibold text-muted-foreground">{category.toUpperCase()}</h3>
+          <h3 className="mb-2 text-sm font-semibold text-muted-foreground">
+            {category.toUpperCase()}
+          </h3>
           {category.toLowerCase() === 'development' && (
             <p className="mb-3 text-sm text-muted-foreground">
               For most of these roles we expect that you have some prior skills.

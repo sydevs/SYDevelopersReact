@@ -1,8 +1,87 @@
-import Airtable from 'airtable'
 import type { Job, Project, Person, Expense, Teams } from '../types/airtable'
 
-const client = new Airtable({ apiKey: import.meta.env.AIRTABLE_KEY as string })
-const base = client.base(import.meta.env.AIRTABLE_BASE as string)
+// Use Cloudflare's native fetch API for Airtable (compatible with Workers)
+const AIRTABLE_API_URL = 'https://api.airtable.com/v0'
+
+interface AirtableRecord {
+  id: string
+  fields: Record<string, any>
+}
+
+interface AirtableResponse {
+  records: AirtableRecord[]
+  offset?: string
+}
+
+async function airtableFetch(
+  tableName: string,
+  options: {
+    filterByFormula?: string
+    sort?: Array<{ field: string; direction: 'asc' | 'desc' }>
+  } = {}
+): Promise<AirtableRecord[]> {
+  const apiKey = import.meta.env.AIRTABLE_KEY as string
+  const baseId = import.meta.env.AIRTABLE_BASE as string
+
+  if (!apiKey || !baseId) {
+    throw new Error(
+      'Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local'
+    )
+  }
+
+  const params = new URLSearchParams()
+  if (options.filterByFormula) {
+    params.append('filterByFormula', options.filterByFormula)
+  }
+  if (options.sort) {
+    options.sort.forEach((s, i) => {
+      params.append(`sort[${i}][field]`, s.field)
+      params.append(`sort[${i}][direction]`, s.direction)
+    })
+  }
+
+  const url = `${AIRTABLE_API_URL}/${baseId}/${encodeURIComponent(tableName)}?${params}`
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+  })
+
+  if (!response.ok) {
+    const errorText = await response.text()
+    throw new Error(`Airtable API error: ${response.status} ${errorText}`)
+  }
+
+  const data: AirtableResponse = await response.json()
+  return data.records
+}
+
+async function airtableFindRecord(tableName: string, recordId: string): Promise<AirtableRecord> {
+  const apiKey = import.meta.env.AIRTABLE_KEY as string
+  const baseId = import.meta.env.AIRTABLE_BASE as string
+
+  if (!apiKey || !baseId) {
+    throw new Error(
+      'Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local'
+    )
+  }
+
+  const url = `${AIRTABLE_API_URL}/${baseId}/${encodeURIComponent(tableName)}/${recordId}`
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+  })
+
+  if (!response.ok) {
+    const errorText = await response.text()
+    throw new Error(`Airtable API error: ${response.status} ${errorText}`)
+  }
+
+  return response.json()
+}
 
 const COLORS = [
   'red',
@@ -18,37 +97,42 @@ const COLORS = [
 ]
 
 export async function fetchJobs(): Promise<Job[]> {
-  const records = await base('Jobs')
-    .select({
+  try {
+    console.log('Fetching jobs from Airtable...')
+    const records = await airtableFetch('Jobs', {
       filterByFormula: 'Public = 1',
       sort: [{ field: 'Category', direction: 'asc' }],
     })
-    .all()
 
-  return records.map((r) => ({
-    id: r.id,
-    name: r.get('Name') as string,
-    category: r.get('Category') as string,
-    brief: r.get('Brief') as string,
-    description: r.get('Description') as string,
-    icon: r.get('Icon') as string,
-    priority: r.get('Priority') as string | undefined,
-    public: true,
-  }))
+    console.log(`Fetched ${records.length} jobs`)
+    return records.map((r) => ({
+      id: r.id,
+      name: r.fields.Name as string,
+      category: r.fields.Category as string,
+      brief: r.fields.Brief as string,
+      description: r.fields.Description as string,
+      icon: r.fields.Icon as string,
+      priority: r.fields.Priority as string | undefined,
+      public: true,
+    }))
+  } catch (error) {
+    console.error('Error fetching jobs from Airtable:', error)
+    return []
+  }
 }
 
 export async function fetchJob(id: string): Promise<Job | null> {
   try {
-    const record = await base('Jobs').find(id)
+    const record = await airtableFindRecord('Jobs', id)
     return {
       id: record.id,
-      name: record.get('Name') as string,
-      category: record.get('Category') as string,
-      brief: record.get('Brief') as string,
-      description: record.get('Description') as string,
-      icon: record.get('Icon') as string,
-      priority: record.get('Priority') as string | undefined,
-      public: record.get('Public') as boolean,
+      name: record.fields.Name as string,
+      category: record.fields.Category as string,
+      brief: record.fields.Brief as string,
+      description: record.fields.Description as string,
+      icon: record.fields.Icon as string,
+      priority: record.fields.Priority as string | undefined,
+      public: record.fields.Public as boolean,
     }
   } catch (error) {
     console.error('Error fetching job:', error)
@@ -57,71 +141,72 @@ export async function fetchJob(id: string): Promise<Job | null> {
 }
 
 export async function fetchProjects(): Promise<Project[]> {
-  const projectRecords = await base('Projects')
-    .select({
+  try {
+    console.log('Fetching projects from Airtable...')
+    const projectRecords = await airtableFetch('Projects', {
       filterByFormula: "Type = 'Internal'",
       sort: [{ field: 'Monthly', direction: 'desc' }],
     })
-    .all()
 
-  const projects = await Promise.all(
-    projectRecords.map(async (project) => {
-      const expenseIds = project.get('Expenses') as string[] | undefined
-      let expenses: Expense[] = []
+    console.log(`Fetched ${projectRecords.length} projects`)
+    const projects = await Promise.all(
+      projectRecords.map(async (project) => {
+        const expenseIds = project.fields.Expenses as string[] | undefined
+        let expenses: Expense[] = []
 
-      if (expenseIds?.length) {
-        const expenseRecords = await base('Expenses')
-          .select({
+        if (expenseIds?.length) {
+          const expenseRecords = await airtableFetch('Expenses', {
             filterByFormula: `FIND(RECORD_ID(), "${expenseIds.join(',')}")`,
             sort: [{ field: 'Monthly', direction: 'desc' }],
           })
-          .all()
 
-        expenses = expenseRecords.map((r) => ({
-          name: r.get('Name') as string,
-          description: r.get('Description') as string,
-          type: r.get('Type') as 'Monthly' | 'Yearly',
-          monthly: (r.get('Monthly') as number) || 0,
-          yearly: (r.get('Yearly') as number) || 0,
-        }))
-      }
+          expenses = expenseRecords.map((r) => ({
+            name: r.fields.Name as string,
+            description: r.fields.Description as string,
+            type: r.fields.Type as 'Monthly' | 'Yearly',
+            monthly: (r.fields.Monthly as number) || 0,
+            yearly: (r.fields.Yearly as number) || 0,
+          }))
+        }
 
-      return {
-        id: project.id,
-        name: project.get('Name') as string,
-        identifier: project.get('Identifier') as string,
-        description: project.get('Description') as string,
-        url: project.get('URL') as string,
-        icon: project.get('Icon') as Array<{ url: string }>,
-        monthly: (project.get('Monthly') as number) || 0,
-        expenses,
-      }
-    }),
-  )
+        return {
+          id: project.id,
+          name: project.fields.Name as string,
+          identifier: project.fields.Identifier as string,
+          description: project.fields.Description as string,
+          url: project.fields.URL as string,
+          icon: project.fields.Icon as Array<{ url: string }>,
+          monthly: (project.fields.Monthly as number) || 0,
+          expenses,
+        }
+      }),
+    )
 
-  return projects
+    return projects
+  } catch (error) {
+    console.error('Error fetching projects from Airtable:', error)
+    return []
+  }
 }
 
 export async function fetchTeams(): Promise<Teams> {
-  const records = await base('People')
-    .select({
-      filterByFormula: 'Public = 1',
-      sort: [{ field: 'Teams', direction: 'asc' }],
-    })
-    .all()
+  const records = await airtableFetch('People', {
+    filterByFormula: 'Public = 1',
+    sort: [{ field: 'Teams', direction: 'asc' }],
+  })
 
   const teams: Teams = {}
 
   records.forEach((r, i) => {
-    const teamsList = r.get('Teams') as string[]
-    const name = r.get('Name') as string
+    const teamsList = r.fields.Teams as string[]
+    const name = r.fields.Name as string
     const nameParts = name.split(' ')
 
     const person: Person = {
       name: nameParts.map((n, idx) => (idx > 0 ? n[0] : n)).join(' '),
       initials: nameParts.map((n) => n[0]).join(''),
-      country: r.get('Country') as string,
-      shortCountry: r.get('Short Country') as string,
+      country: r.fields.Country as string,
+      shortCountry: r.fields['Short Country'] as string,
       teams: teamsList,
       color: COLORS[i % 10],
     }

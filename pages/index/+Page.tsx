@@ -1,6 +1,11 @@
 import { useData } from 'vike-react/useData'
 import { Card, CardContent } from '../../components/ui/card'
-import { HeartIcon, BriefcaseIcon, ChevronRightIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
+import {
+  HeartIcon,
+  BriefcaseIcon,
+  ChevronRightIcon,
+  ArrowRightIcon,
+} from '@heroicons/react/24/solid'
 import type { Data } from './+data'
 
 export default function Page() {
@@ -9,7 +14,7 @@ export default function Page() {
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">
       <div className="text-center mb-8">
-        <img src="/images/logo.png" alt="Logo" className="mx-auto mb-4 h-32 w-32" />
+        <img src="/images/logo.webp" alt="Logo" className="mx-auto mb-4 h-32 w-32" />
         <div className="text-sm text-muted-foreground mb-2">CONTRIBUTE TO</div>
         <h1 className="text-4xl font-bold">SAHAJ WEB PROJECTS</h1>
       </div>
@@ -21,9 +26,7 @@ export default function Page() {
               <HeartIcon className="h-12 w-12 text-red-400" />
               <div className="flex-1">
                 <h3 className="text-lg font-semibold">Donations</h3>
-                <p className="text-sm font-medium text-red-600">
-                  Support our projects
-                </p>
+                <p className="text-sm font-medium text-red-600">Support our projects</p>
               </div>
               <ChevronRightIcon className="h-6 w-6 text-muted-foreground" />
             </CardContent>

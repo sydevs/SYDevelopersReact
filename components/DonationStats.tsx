@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Progress } from './ui/progress'
-import { fetchDonationStats, calculateFunding, formatCurrency } from '../lib/stripe-client'
+import { fetchDonationStats, calculateFunding } from '../lib/stripe-client'
 import type { DonationStats } from '../types/stripe'
 
 interface Props {
