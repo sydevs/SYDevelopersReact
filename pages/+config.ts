@@ -1,5 +1,4 @@
 import type { Config } from 'vike/types'
-import vikePhoton from 'vike-photon/config'
 import vikeReact from 'vike-react/config'
 
 // Default config (can be overridden by pages)
@@ -7,11 +6,15 @@ import vikeReact from 'vike-react/config'
 
 export default {
   // https://vike.dev/head-tags
-  title: 'My Vike App',
-  description: 'Demo showcasing Vike',
+  title: 'SYDevelopers',
+  description: 'Fundraising website for SYDevelopers',
 
-  // Note: vikePhoton is for production builds (Cloudflare Workers/SSR)
-  // For local dev, use `pnpm dev` which runs without Photon
-  // For production, use `pnpm build` which includes Photon
-  extends: process.env.NODE_ENV === 'production' ? [vikeReact, vikePhoton] : [vikeReact],
+  // Enable SSG (Static Site Generation)
+  // Pages are pre-rendered at build time to static HTML
+  prerender: true,
+
+  // vikePhoton is NOT needed for SSG!
+  // It's only for SSR (Server-Side Rendering) with Cloudflare Workers
+  // Cloudflare Pages Functions in functions/ work independently
+  extends: [vikeReact],
 } satisfies Config

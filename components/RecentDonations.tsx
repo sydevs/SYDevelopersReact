@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { fetchDonationStats } from '../lib/stripe-client'
 import type { DonationStats } from '../types/stripe'
-import { getCountryFlagEmoji } from 'country-flag-emoji'
 
 export function RecentDonations() {
   const [stats, setStats] = useState<DonationStats | null>(null)
@@ -25,18 +24,15 @@ export function RecentDonations() {
     <div>
       <h3 className="mb-3 text-sm font-semibold">Recent Donations</h3>
       <div className="space-y-2">
-        {stats.recentCharges.slice(0, 10).map((charge, i) => {
-          const flag = charge.country ? getCountryFlagEmoji(charge.country) : null
-          return (
-            <div key={i} className="text-sm">
-              {flag && <span className="mr-2">{flag.emoji}</span>}
-              <strong>${charge.amount.toFixed(2)}</strong>
-              <span className="ml-2 text-gray-600">
-                {new Date(charge.created * 1000).toLocaleDateString()}
-              </span>
-            </div>
-          )
-        })}
+        {stats.recentCharges.slice(0, 10).map((charge, i) => (
+          <div key={i} className="text-sm">
+            <span className="mr-2 text-gray-500">{charge.country}</span>
+            <strong>${charge.amount.toFixed(2)}</strong>
+            <span className="ml-2 text-gray-600">
+              {new Date(charge.created * 1000).toLocaleDateString()}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   )

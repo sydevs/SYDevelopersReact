@@ -1,13 +1,12 @@
 {
   "scripts": {
-    "dev": "NODE_ENV=development vike dev",
-    "dev:with-functions": "NODE_ENV=production vike build && wrangler pages dev dist/client",
-    "build": "NODE_ENV=production vike build",
+    "dev": "vike dev",
+    "dev:with-functions": "vike build && npx wrangler pages dev dist/client",
+    "build": "vike build",
     "preview": "vike preview",
     "lint": "eslint .",
-    "prod": "NODE_ENV=production vike build && wrangler dev ./dist/server/index.js -c ./dist/server/wrangler.json",
     "shadcn": "npx shadcn@latest",
-    "deploy": "NODE_ENV=production vike build && wrangler deploy"
+    "deploy": "vike build && wrangler pages deploy dist/client"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
