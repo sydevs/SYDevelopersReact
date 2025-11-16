@@ -3,7 +3,7 @@ AIRTABLE_KEY=your_airtable_api_key_here
 AIRTABLE_BASE=your_airtable_base_id_here
 
 # Stripe Configuration (Public Key)
-STRIPE_PUBLISHABLE_KEY=pk_live_51HQqi7K5E1L5TSuqteyptETR4hx20IfM3XD1OOjCR9iu9SGDqMMpxW7ahtoDtkSE9GIZ6a8kSOsEluBHiqmR4shl00VTFGdkvi
+STRIPE_PUBLISHABLE_KEY=pk_live_your_public_key_here
 
 # Stripe Configuration (Secret Key - for Cloudflare Function only)
 # This should be set in Cloudflare Pages dashboard, not in this file
