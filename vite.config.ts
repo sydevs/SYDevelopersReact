@@ -1,14 +1,25 @@
 import tailwindcss from '@tailwindcss/vite'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 import react from '@vitejs/plugin-react'
-import { config } from 'dotenv'
+import { config as loadDotenv } from 'dotenv'
+import { existsSync } from 'fs'
 import { resolve } from 'path'
 import vike from 'vike/plugin'
 import { defineConfig } from 'vite'
 
-// Load .dev.vars for local development
+// Load .dev.vars for local development (if it exists)
 // In production (Cloudflare Pages), process.env is already populated from dashboard
-config({ path: resolve(process.cwd(), '.dev.vars') })
+const devVarsPath = resolve(process.cwd(), '.dev.vars')
+if (existsSync(devVarsPath)) {
+  loadDotenv({ path: devVarsPath })
+}
+
+// Debug: Log environment variables during config load
+console.log('[Vite Config] Environment variables at config load time:')
+console.log('[Vite Config] AIRTABLE_KEY:', process.env.AIRTABLE_KEY ? '✓ Set' : '✗ Missing')
+console.log('[Vite Config] AIRTABLE_BASE:', process.env.AIRTABLE_BASE ? '✓ Set' : '✗ Missing')
+console.log('[Vite Config] NODE_ENV:', process.env.NODE_ENV)
+console.log('[Vite Config] CF_PAGES:', process.env.CF_PAGES)
 
 export default defineConfig({
   plugins: [
@@ -32,11 +43,10 @@ export default defineConfig({
     },
   },
 
-  // Map import.meta.env to process.env for all environments
-  // Local dev: loaded from .dev.vars above
-  // Cloudflare Pages: loaded from dashboard environment variables
+  // Explicitly map process.env to import.meta.env using define
+  // This works for both local (.dev.vars loaded above) and Cloudflare (dashboard env vars in process.env)
   define: {
-    'import.meta.env.AIRTABLE_KEY': JSON.stringify(process.env.AIRTABLE_KEY),
-    'import.meta.env.AIRTABLE_BASE': JSON.stringify(process.env.AIRTABLE_BASE),
+    'import.meta.env.AIRTABLE_KEY': JSON.stringify(process.env.AIRTABLE_KEY || ''),
+    'import.meta.env.AIRTABLE_BASE': JSON.stringify(process.env.AIRTABLE_BASE || ''),
   },
 })
