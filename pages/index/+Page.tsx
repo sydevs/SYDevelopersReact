@@ -55,7 +55,7 @@ export default function Page() {
           <Button asChild variant="default" size="lg">
             <a href="/funds">
               <Heart className="mr-2 h-5 w-5" />
-              Donate Now
+              Donate
             </a>
           </Button>
           {!loading && stats && (
@@ -71,7 +71,7 @@ export default function Page() {
               Volunteer
             </a>
           </Button>
-          <div className="text-sm italic text-muted-foreground mt-2">
+          <div className="text-sm italic text-muted-foreground text-center mt-1">
             {jobs.length} {jobs.length === 1 ? 'job needed' : 'jobs needed'}
           </div>
         </div>

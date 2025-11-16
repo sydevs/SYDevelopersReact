@@ -2,8 +2,24 @@ import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { Skeleton } from '@/components/ui/skeleton'
+import getSymbolFromCurrency from 'currency-symbol-map'
+import countries from 'i18n-iso-countries'
+import enLocale from 'i18n-iso-countries/langs/en.json'
 import { fetchDonationStats } from '../lib/stripe-client'
 import type { DonationStats } from '../types/stripe'
+
+// Register English locale for country names
+countries.registerLocale(enLocale)
+
+function getCurrencySymbol(currency: string): string {
+  const symbol = getSymbolFromCurrency(currency.toUpperCase())
+  return symbol || currency.toUpperCase() + ' '
+}
+
+function getCountryName(code: string): string {
+  const name = countries.getName(code, 'en')
+  return name || code
+}
 
 function getRelativeTime(timestamp: number): string {
   const now = Date.now()
@@ -70,11 +86,14 @@ export function RecentDonations() {
           <TableBody>
             {stats.recentCharges.slice(0, 5).map((charge, i) => (
               <TableRow key={i} className="border-0">
-                <TableCell className="py-1.5 px-2 text-xs font-medium">{charge.country}</TableCell>
-                <TableCell className="py-1.5 px-2 text-xs text-right">
-                  ${charge.amount.toFixed(2)}
+                <TableCell className="py-1.5 px-2 text-xs">
+                  From <span className="font-semibold">{getCountryName(charge.country)}</span>
                 </TableCell>
-                <TableCell className="py-1.5 px-2 text-xs text-right text-muted-foreground">
+                <TableCell className="py-1.5 px-2 text-xs text-right">
+                  {getCurrencySymbol(charge.currency)}
+                  {charge.amount.toFixed(2)}
+                </TableCell>
+                <TableCell className="py-1.5 px-2 text-xs text-right text-muted-foreground whitespace-nowrap">
                   {getRelativeTime(charge.created)}
                 </TableCell>
               </TableRow>

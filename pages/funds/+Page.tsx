@@ -129,17 +129,22 @@ export default function Page() {
               </div>
             </PopoverContent>
           </Popover>
+
+          <p className="text-sm text-muted-foreground text-center">
+            Write to use at <a href="mailto:contact@sydevelopers.com">contact@sydevelopers.com</a>{' '}
+            if you need to cancel a monthly donation.
+          </p>
         </CardContent>
       </Card>
 
       <div className="flex flex-col md:flex-row items-start gap-4">
         {/* Recent Donations */}
-        <div className="basis-1/2 w-full">
+        <div className="basis-3/5 w-full">
           <RecentDonations />
         </div>
 
         {/* Volunteer CTA */}
-        <Alert className="basis-1/2">
+        <Alert className="basis-2/5">
           <Briefcase className="h-4 w-4" />
           <AlertTitle>Contribute Your Time</AlertTitle>
           <AlertDescription className="mt-2 flex flex-col gap-3">
