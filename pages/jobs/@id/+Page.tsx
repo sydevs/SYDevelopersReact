@@ -1,41 +1,60 @@
 import { useData } from 'vike-react/useData'
-import { Card, CardContent } from '../../../components/ui/card'
-import { Badge } from '../../../components/ui/badge'
-import { Alert, AlertDescription, AlertTitle } from '../../../components/ui/alert'
-import { EnvelopeIcon } from '@heroicons/react/24/solid'
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import { Mail, ArrowLeft } from 'lucide-react'
 import { Markdown } from '../../../components/Markdown'
-import { getHeroicon, getCategoryColors } from '../../../lib/heroicons'
 import type { Data } from './+data'
 
 export default function Page() {
   const { job } = useData<Data>()
-  const colors = getCategoryColors(job.category)
-  const JobIcon = getHeroicon(job.icon || 'briefcase', 'solid')
 
   return (
-    <div className="container mx-auto max-w-3xl px-4 py-8">
-      <div className="mb-6 flex items-center gap-3">
-        <JobIcon className={`h-12 w-12 ${colors.icon}`} />
-        <div className="flex-1">
-          <Badge className={colors.badge}>{job.category}</Badge>
-          <h1 className="mt-1 text-3xl font-bold">{job.name}</h1>
+    <div className="container max-w-4xl mx-auto px-4 py-8 space-y-8">
+      {/* Back button */}
+      <Button asChild variant="ghost" size="sm">
+        <a href="/jobs" className="gap-2">
+          <ArrowLeft className="h-4 w-4" />
+          Back to Jobs
+        </a>
+      </Button>
+
+      {/* Header */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <Badge>{job.category}</Badge>
+          {job.priority && (
+            <Badge variant={job.priority === 'Critical' ? 'destructive' : 'secondary'}>
+              {job.priority}
+            </Badge>
+          )}
         </div>
+        <h1 className="text-3xl md:text-4xl font-bold">{job.name}</h1>
+        {job.brief && <p className="text-lg text-muted-foreground">{job.brief}</p>}
       </div>
 
-      <p className="mb-6 text-lg text-gray-600">{job.brief}</p>
-
-      <Card className={`${colors.border}`}>
-        <CardContent className="p-6">
+      {/* Description */}
+      <Card>
+        <CardContent className="pt-6">
           <Markdown content={job.description} />
         </CardContent>
       </Card>
 
-      <Alert className="mt-8 border-indigo-200 bg-indigo-50">
-        <EnvelopeIcon className="h-4 w-4 text-sky-600" />
-        <AlertTitle>Interested?</AlertTitle>
-        <AlertDescription>
-          If you&apos;d like to apply for this role, please email us at{' '}
-          <a href="mailto:contact@sydevelopers.com" className="text-sky-600 hover:underline">
+      {/* Contact CTA */}
+      <Alert>
+        <Mail className="h-4 w-4" />
+        <AlertTitle>Interested in this position?</AlertTitle>
+        <AlertDescription className="mt-2 flex flex-col gap-4">
+          <p>
+            If you'd like to apply for this role, please email us with your background and
+            why you'd be a good fit.
+          </p>
+          <a
+            href="mailto:contact@sydevelopers.com"
+            className="text-primary hover:underline font-medium flex items-center gap-2"
+          >
+            <Mail className="h-4 w-4" />
             contact@sydevelopers.com
           </a>
         </AlertDescription>

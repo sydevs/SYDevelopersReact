@@ -1,4 +1,4 @@
-import { CheckIcon } from '@heroicons/react/24/solid'
+import { Check } from 'lucide-react'
 
 export default function Page() {
   return (
@@ -31,7 +31,7 @@ export default function Page() {
 
         <ul className="space-y-3">
           <li className="flex gap-3">
-            <CheckIcon className="mt-1 h-5 w-5 shrink-0 text-green-600" />
+            <Check className="mt-1 h-5 w-5 shrink-0 text-green-600" />
             <div>
               <strong>Familiarity</strong>
               <p className="text-sm text-muted-foreground">
@@ -43,7 +43,7 @@ export default function Page() {
             </div>
           </li>
           <li className="flex gap-3">
-            <CheckIcon className="mt-1 h-5 w-5 shrink-0 text-green-600" />
+            <Check className="mt-1 h-5 w-5 shrink-0 text-green-600" />
             <div>
               <strong>Protection</strong>
               <p className="text-sm text-muted-foreground">
@@ -56,7 +56,7 @@ export default function Page() {
             </div>
           </li>
           <li className="flex gap-3">
-            <CheckIcon className="mt-1 h-5 w-5 shrink-0 text-green-600" />
+            <Check className="mt-1 h-5 w-5 shrink-0 text-green-600" />
             <div>
               <strong>Google Optimisation and Credibility</strong>
               <p className="text-sm text-muted-foreground">
