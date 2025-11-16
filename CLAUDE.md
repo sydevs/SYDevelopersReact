@@ -12,8 +12,9 @@ SY Developers website - a React application built with Vike (SSG mode), deployed
 
 ```bash
 # Development
-pnpm dev                          # Start dev server (localhost:3000)
-pnpm dev:with-functions          # Dev with Cloudflare Functions (production mode)
+pnpm dev                          # Start dev server with Functions (localhost:8788)
+                                  # Runs: wrangler pages dev -- vike dev
+                                  # Includes both pages AND Cloudflare Functions
 
 # Building
 pnpm build                        # Production build (outputs to dist/client)
@@ -57,23 +58,33 @@ Routes are defined by directory structure in `pages/`:
 - `pages/projects/wemeditate/+Page.tsx` → `/projects/wemeditate`
 
 **Key files per route:**
+
 - `+Page.tsx` - React component
 - `+data.ts` - Data fetching (runs at build time)
 - `+config.ts` - Route configuration (optional)
 
 **Global files:**
+
 - `pages/+Layout.tsx` - Shared layout wrapper
 - `pages/+Head.tsx` - HTML `<head>` tags
 - `pages/+config.ts` - Global Vike configuration
 
 ### Vike Configuration (Important)
 
-[pages/+config.ts:16](pages/+config.ts#L16) - The app uses different configurations for dev vs production:
+[pages/+config.ts](pages/+config.ts) - This app uses **pure SSG (Static Site Generation)**:
 
-- **Development:** Uses `vikeReact` only (no SSR)
-- **Production:** Uses `vikeReact + vikePhoton` (enables Cloudflare Workers)
+```typescript
+export default {
+  prerender: true,      // Enable static site generation
+  extends: [vikeReact], // No vikePhoton - not needed for SSG
+}
+```
 
-This is controlled by `NODE_ENV` and means local dev is faster but production builds differently.
+**Key points:**
+- All pages are pre-rendered at build time into static HTML
+- No SSR (Server-Side Rendering) - no vikePhoton needed
+- Pages are served as static files from Cloudflare Pages
+- Functions run separately as serverless edge functions
 
 ### Cloudflare Functions
 
@@ -83,9 +94,14 @@ Functions live in `functions/` directory and are deployed alongside static asset
 - Accessed via `/api/donation-stats` URL
 - Run on Cloudflare Workers (edge compute)
 - Uses `PagesFunction<Env>` type for environment variables
-- Requires `STRIPE_SECRET_KEY` env var (set in Cloudflare dashboard)
+- Requires `STRIPE_SECRET_KEY` env var (see Environment Variables section)
 
-**Important:** Functions only work in production builds or when using `dev:with-functions`.
+**Local Development:**
+- Functions work automatically when running `pnpm dev`
+- The dev command uses `wrangler pages dev -- vike dev`
+- Wrangler serves Functions while proxying page requests to Vike
+- Server runs on `http://localhost:8788` (not 3000)
+- Requires `.dev.vars` file with secrets (see Environment Variables section)
 
 ### Airtable Data Fetching
 
@@ -109,7 +125,11 @@ The only server-side Stripe code is [functions/api/donation-stats.ts](functions/
 
 ## Environment Variables
 
-### Local Development (.env.local)
+This project uses **two separate environment files** for different purposes:
+
+### Build-time Variables (.env.local)
+
+These are used during the Vite build process and are embedded into the static assets:
 
 ```bash
 AIRTABLE_KEY=your_key
@@ -119,13 +139,36 @@ STRIPE_PUBLISHABLE_KEY=pk_live_...
 
 Copy from [.env.local.example](.env.local.example) to get started.
 
+**How it works:**
+- Vite's `define` option in [vite.config.ts](vite.config.ts) maps `process.env.*` to `import.meta.env.*`
+- Variables are available in code as `import.meta.env.AIRTABLE_KEY`
+- These are baked into the static build at compile time
+
+### Function Runtime Secrets (.dev.vars)
+
+This file contains secrets for Cloudflare Functions during local development:
+
+```bash
+STRIPE_SECRET_KEY=sk_live_...
+```
+
+**Important:**
+- This file is gitignored and should NEVER be committed
+- Only needed for local development with Functions
+- In production, set `STRIPE_SECRET_KEY` as encrypted secret in Cloudflare dashboard
+- Not processed by Vite - only used by wrangler at runtime
+
 ### Cloudflare Pages (Production)
 
-Set in Cloudflare dashboard:
+Set in Cloudflare dashboard under **Settings → Environment Variables**:
+
+**Build-time (regular variables):**
 - `AIRTABLE_KEY` - Required for builds
 - `AIRTABLE_BASE` - Required for builds
 - `STRIPE_PUBLISHABLE_KEY` - Required for builds
-- `STRIPE_SECRET_KEY` - Required for Functions (NOT in .env.local)
+
+**Function runtime (encrypted secret):**
+- `STRIPE_SECRET_KEY` - Required for Functions, set as encrypted secret
 
 ## Code Patterns
 
@@ -155,7 +198,9 @@ export type Data = Awaited<ReturnType<typeof data>>
 
 export async function data(_pageContext: PageContextServer) {
   // Fetch from Airtable here
-  return { /* your data */ }
+  return {
+    /* your data */
+  }
 }
 ```
 
@@ -185,6 +230,7 @@ import { fetchJobs } from '@/lib/airtable'
 ### Sentry Integration
 
 Sentry is configured for error tracking:
+
 - Plugin: [vite.config.ts:11-15](vite.config.ts#L11-L15)
 - Sourcemaps enabled for production
 

@@ -26,10 +26,10 @@ cp .env.local.example .env.local
 ### Development
 
 ```bash
-pnpm dev
+pnpm dev  # Runs both Vike AND Cloudflare Functions
 ```
 
-Visit `http://localhost:3000`
+Visit `http://localhost:8788` (note: wrangler uses port 8788, not 3000)
 
 ### Build
 
@@ -73,7 +73,7 @@ pnpm preview
 
 ## 🔧 Tech Stack
 
-- **Framework:** Vike (SSG mode)
+- **Framework:** Vike (SSG mode - pure static site generation)
 - **UI Library:** React 19
 - **Styling:** Tailwind CSS 4
 - **Components:** shadcn/ui
@@ -82,6 +82,8 @@ pnpm preview
 - **Payments:** Stripe Buy Buttons
 - **Deployment:** Cloudflare Pages
 - **Language:** TypeScript
+
+**Architecture:** This is a **pure SSG (Static Site Generation)** app, not SSR. All pages are pre-rendered at build time into static HTML files. Cloudflare Functions run separately as serverless edge functions for the donation stats API.
 
 ## 🌐 Data Fetching
 
@@ -141,15 +143,25 @@ npx wrangler pages deploy dist/client
 
 ## 📝 Environment Variables
 
-### Required for Build
+### Build-time Variables (in .env.local)
+
+These are used during the build process and embedded into static assets:
 
 - `AIRTABLE_KEY` - Airtable API key
 - `AIRTABLE_BASE` - Airtable base ID
 - `STRIPE_PUBLISHABLE_KEY` - Stripe publishable key
 
-### Required for Functions
+Copy from `.env.local.example` to get started.
 
-- `STRIPE_SECRET_KEY` - Stripe secret key (set in Cloudflare dashboard)
+### Function Runtime Secrets (in .dev.vars for local dev)
+
+These are used by Cloudflare Functions at runtime:
+
+- `STRIPE_SECRET_KEY` - Stripe secret key
+
+**Important:**
+- `.dev.vars` is for local development only (gitignored)
+- In production, set `STRIPE_SECRET_KEY` as encrypted secret in Cloudflare dashboard
 
 ## 🔄 Updating Content
 
@@ -175,13 +187,6 @@ npx wrangler pages deploy dist/client
 
 - `Navigation` - Header with links
 - `DonationStats` - Real-time donation statistics
-
-## 📋 TODO
-
-- [ ] Copy project page content from old site
-- [ ] Optimize and convert images to WebP
-- [ ] Setup Airtable webhook for auto-rebuilds
-- [ ] Add analytics (if needed)
 
 ## 🤝 Contributing
 
