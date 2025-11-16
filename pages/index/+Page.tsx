@@ -1,13 +1,6 @@
 import { useData } from 'vike-react/useData'
 import { useEffect, useState } from 'react'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Heart, Briefcase, ExternalLink } from 'lucide-react'
@@ -49,9 +42,7 @@ export default function Page() {
           <AvatarImage src="/images/logo.webp" alt="Sahaj Web Projects Logo" />
         </Avatar>
         <div className="space-y-2">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Sahaj Web Projects
-          </h1>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Sahaj Web Projects</h1>
           <p className="text-base text-muted-foreground max-w-2xl">
             Contribute to our projects and help spread Sahaja Yoga around the world
           </p>
@@ -94,10 +85,7 @@ export default function Page() {
             if (!project.identifier) return null
 
             return (
-              <Card
-                key={project.id}
-                className="flex flex-col hover:shadow-lg transition-shadow"
-              >
+              <Card key={project.id} className="flex flex-col hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="flex items-center gap-4 mb-2">
                     {project.icon[0]?.url && (
@@ -110,9 +98,7 @@ export default function Page() {
                     )}
                     <CardTitle className="text-xl">{project.name}</CardTitle>
                   </div>
-                  <CardDescription>
-                    {project.description}
-                  </CardDescription>
+                  <CardDescription>{project.description}</CardDescription>
                 </CardHeader>
                 <CardFooter className="mt-auto flex gap-2">
                   <Button asChild variant="outline" className="flex-1">

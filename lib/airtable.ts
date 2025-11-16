@@ -18,14 +18,14 @@ async function airtableFetch(
   options: {
     filterByFormula?: string
     sort?: Array<{ field: string; direction: 'asc' | 'desc' }>
-  } = {}
+  } = {},
 ): Promise<AirtableRecord[]> {
   const apiKey = import.meta.env.AIRTABLE_KEY as string
   const baseId = import.meta.env.AIRTABLE_BASE as string
 
   if (!apiKey || !baseId) {
     throw new Error(
-      'Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local'
+      'Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local',
     )
   }
 
@@ -63,7 +63,7 @@ async function airtableFindRecord(tableName: string, recordId: string): Promise<
 
   if (!apiKey || !baseId) {
     throw new Error(
-      'Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local'
+      'Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local',
     )
   }
 

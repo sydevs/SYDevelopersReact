@@ -56,15 +56,16 @@ export default function Page() {
           <a href="https://wemeditate.com" target="_blank" rel="noopener noreferrer">
             We Meditate
           </a>{' '}
-          and its <a href="/">related projects</a> , but there's much more than we can manage alone!
+          and its <a href="/">related projects</a> , but there&apos;s much more than we can manage
+          alone!
         </p>
         <ul className="space-y-2 text-foreground/80 list-disc pl-5">
           <li>
-            If you're ready to take responsibility to make part of this project successful, please
-            get in touch. Enthusiasm is as important as skill.
+            If you&apos;re ready to take responsibility to make part of this project successful,
+            please get in touch. Enthusiasm is as important as skill.
           </li>
           <li>
-            If you need resume-worthy work, look no further. You're being given meaningful
+            If you need resume-worthy work, look no further. You&apos;re being given meaningful
             responsibility and a great opportunity to develop skills.
           </li>
         </ul>

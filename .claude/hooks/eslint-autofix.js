@@ -9,57 +9,65 @@
  * - Reports unfixable issues to Claude for correction
  */
 
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+const { execSync } = require('child_process')
+const fs = require('fs')
+const path = require('path')
 
 // Read hook input from stdin
-let input = '';
+let input = ''
 process.stdin.on('data', (chunk) => {
-  input += chunk;
-});
+  input += chunk
+})
 
 process.stdin.on('end', () => {
   try {
-    const data = JSON.parse(input);
-    const { toolName, parameters } = data;
+    const data = JSON.parse(input)
+    const { toolName, parameters } = data
 
     // Only process Write and Edit tools
     if (!['Write', 'Edit'].includes(toolName)) {
-      process.stdout.write(JSON.stringify({
-        continue: true,
-        suppressOutput: true
-      }));
-      return;
+      process.stdout.write(
+        JSON.stringify({
+          continue: true,
+          suppressOutput: true,
+        }),
+      )
+      return
     }
 
-    const filePath = parameters.file_path;
+    const filePath = parameters.file_path
     if (!filePath) {
-      process.stdout.write(JSON.stringify({
-        continue: true,
-        suppressOutput: true
-      }));
-      return;
+      process.stdout.write(
+        JSON.stringify({
+          continue: true,
+          suppressOutput: true,
+        }),
+      )
+      return
     }
 
     // Only lint supported file types
-    const ext = path.extname(filePath);
-    const supportedExtensions = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs'];
+    const ext = path.extname(filePath)
+    const supportedExtensions = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs']
     if (!supportedExtensions.includes(ext)) {
-      process.stdout.write(JSON.stringify({
-        continue: true,
-        suppressOutput: true
-      }));
-      return;
+      process.stdout.write(
+        JSON.stringify({
+          continue: true,
+          suppressOutput: true,
+        }),
+      )
+      return
     }
 
     // Check if file exists
     if (!fs.existsSync(filePath)) {
-      process.stdout.write(JSON.stringify({
-        continue: true,
-        suppressOutput: true
-      }));
-      return;
+      process.stdout.write(
+        JSON.stringify({
+          continue: true,
+          suppressOutput: true,
+        }),
+      )
+      return
     }
 
     try {
@@ -67,39 +75,45 @@ process.stdin.on('end', () => {
       execSync(`pnpm eslint --fix "${filePath}"`, {
         cwd: process.env.CLAUDE_PROJECT_DIR,
         stdio: 'pipe',
-        encoding: 'utf-8'
-      });
+        encoding: 'utf-8',
+      })
 
       // Success - file was linted and auto-fixed
-      process.stdout.write(JSON.stringify({
-        continue: true,
-        suppressOutput: true
-      }));
-
+      process.stdout.write(
+        JSON.stringify({
+          continue: true,
+          suppressOutput: true,
+        }),
+      )
     } catch (error) {
       // ESLint found unfixable issues
-      const output = error.stdout || error.stderr || error.message;
+      const output = error.stdout || error.stderr || error.message
 
       if (output.includes('error') || output.includes('warning')) {
         // Parse and report linting errors to Claude
-        process.stdout.write(JSON.stringify({
-          continue: true,
-          additionalContext: `ESLint found issues in ${path.basename(filePath)}:\n\n${output}\n\nPlease review and fix these linting errors.`
-        }));
+        process.stdout.write(
+          JSON.stringify({
+            continue: true,
+            additionalContext: `ESLint found issues in ${path.basename(filePath)}:\n\n${output}\n\nPlease review and fix these linting errors.`,
+          }),
+        )
       } else {
         // Silent success for warnings only
-        process.stdout.write(JSON.stringify({
-          continue: true,
-          suppressOutput: true
-        }));
+        process.stdout.write(
+          JSON.stringify({
+            continue: true,
+            suppressOutput: true,
+          }),
+        )
       }
     }
-
   } catch (error) {
     // JSON parsing or other errors - don't block
-    process.stdout.write(JSON.stringify({
-      continue: true,
-      suppressOutput: true
-    }));
+    process.stdout.write(
+      JSON.stringify({
+        continue: true,
+        suppressOutput: true,
+      }),
+    )
   }
-});
+})

@@ -1,16 +1,6 @@
 import { useEffect, useState } from 'react'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from '@/components/ui/table'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { Skeleton } from '@/components/ui/skeleton'
 import { fetchDonationStats } from '../lib/stripe-client'
 import type { DonationStats } from '../types/stripe'
@@ -80,9 +70,7 @@ export function RecentDonations() {
           <TableBody>
             {stats.recentCharges.slice(0, 5).map((charge, i) => (
               <TableRow key={i} className="border-0">
-                <TableCell className="py-1.5 px-2 text-xs font-medium">
-                  {charge.country}
-                </TableCell>
+                <TableCell className="py-1.5 px-2 text-xs font-medium">{charge.country}</TableCell>
                 <TableCell className="py-1.5 px-2 text-xs text-right">
                   ${charge.amount.toFixed(2)}
                 </TableCell>

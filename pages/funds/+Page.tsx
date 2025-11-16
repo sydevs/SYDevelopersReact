@@ -2,13 +2,7 @@ import { useData } from 'vike-react/useData'
 import { useEffect, useState } from 'react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Accordion,
   AccordionContent,
@@ -16,12 +10,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from '@/components/ui/table'
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { Separator } from '@/components/ui/separator'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { DonationStats } from '../../components/DonationStats'
@@ -59,9 +48,7 @@ export default function Page() {
         </Avatar>
         <div>
           <h1 className="text-2xl md:text-3xl font-bold">Sahaj Web Funding</h1>
-          <p className="text-muted-foreground">
-            Donate to fund projects that spread Sahaja Yoga
-          </p>
+          <p className="text-muted-foreground">Donate to fund projects that spread Sahaja Yoga</p>
         </div>
       </div>
 
@@ -89,16 +76,15 @@ export default function Page() {
       {/* Fundraising Context */}
       <div className="prose prose-sm max-w-none space-y-4">
         <p className="text-muted-foreground">
-          A great deal of time is contributed voluntarily to make these projects a reality.
-          However, there are also costs to running these services (for images, videos, web
-          addresses, etc). As more seekers and yogis use the site, the costs will also
-          slowly grow.
+          A great deal of time is contributed voluntarily to make these projects a reality. However,
+          there are also costs to running these services (for images, videos, web addresses, etc).
+          As more seekers and yogis use the site, the costs will also slowly grow.
         </p>
 
         <p className="text-muted-foreground">
-          As always, Sahaja Yoga is completely free of charge. We are collecting donations
-          for this project only to cover the costs of running it. All yogis involved in the
-          project volunteer their time without renumeration.
+          As always, Sahaja Yoga is completely free of charge. We are collecting donations for this
+          project only to cover the costs of running it. All yogis involved in the project volunteer
+          their time without renumeration.
         </p>
       </div>
 
@@ -158,8 +144,8 @@ export default function Page() {
           <AlertTitle>Contribute Your Time</AlertTitle>
           <AlertDescription className="mt-2 flex flex-col gap-3">
             <p>
-              We also need help making these projects a success. Help us with photography,
-              writing, editing, social media, graphic design, coding, and more.
+              We also need help making these projects a success. Help us with photography, writing,
+              editing, social media, graphic design, coding, and more.
             </p>
             <Button asChild variant="outline" className="w-fit">
               <a href="/jobs">View Available Positions</a>
@@ -177,19 +163,12 @@ export default function Page() {
         <Accordion type="multiple" className="space-y-4">
           {projects.map((project) => {
             if (!project.identifier) return null
-            const monthlyExpenses = project.expenses.reduce(
-              (sum, e) => sum + (e.monthly || 0),
-              0,
-            )
+            const monthlyExpenses = project.expenses.reduce((sum, e) => sum + (e.monthly || 0), 0)
 
             if (monthlyExpenses === 0) return null
 
             return (
-              <AccordionItem
-                key={project.id}
-                value={project.id}
-                className="border rounded-lg px-4"
-              >
+              <AccordionItem key={project.id} value={project.id} className="border rounded-lg px-4">
                 <AccordionTrigger className="hover:no-underline">
                   <div className="flex items-center justify-between w-full pr-4">
                     <span className="font-semibold">{project.name}</span>
@@ -222,18 +201,14 @@ export default function Page() {
                                     <div className="text-sm font-semibold">
                                       ${expense.monthly.toFixed(2)}
                                     </div>
-                                    <div className="text-xs text-muted-foreground">
-                                      / month
-                                    </div>
+                                    <div className="text-xs text-muted-foreground">/ month</div>
                                   </div>
                                 ) : (
                                   <div>
                                     <div className="text-sm font-semibold">
                                       ${expense.yearly.toFixed(2)}
                                     </div>
-                                    <div className="text-xs text-muted-foreground">
-                                      / year
-                                    </div>
+                                    <div className="text-xs text-muted-foreground">/ year</div>
                                   </div>
                                 )}
                               </TableCell>
@@ -255,9 +230,8 @@ export default function Page() {
         <AlertTitle>Other Sahaj Web Projects</AlertTitle>
         <AlertDescription className="mt-2 flex flex-col gap-3">
           <p>
-            Above are the projects currently managed in connection with sydevelopers.com.
-            You can find a complete list of high quality digital Sahaj projects on the
-            resources website.
+            Above are the projects currently managed in connection with sydevelopers.com. You can
+            find a complete list of high quality digital Sahaj projects on the resources website.
           </p>
           <Button asChild variant="outline" className="w-fit">
             <a

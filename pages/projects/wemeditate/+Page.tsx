@@ -37,23 +37,23 @@ export default function Page() {
           <h2 className="text-2xl font-bold">How is We Meditate different?</h2>
           <div className="space-y-4 text-muted-foreground">
             <p>
-              The internet is flooded with Sahaj websites, but very few of them feature
-              professional quality design and engaging, well-produced visual and textual
-              content. Amongst the high quality websites, none fully exploit the potential of
-              modern day digital marketing.
+              The internet is flooded with Sahaj websites, but very few of them feature professional
+              quality design and engaging, well-produced visual and textual content. Amongst the
+              high quality websites, none fully exploit the potential of modern day digital
+              marketing.
             </p>
             <p>
-              We Meditate aims to assist a seeker's journey to recognising the value of
+              We Meditate aims to assist a seeker&apos;s journey to recognising the value of
               meditation and eventually joining a local meditation class, from discovering the
               website via Google search, from social media or from a yogi; to meditating and
               learning online; and finally to being encouraged to come to a local meeting.
             </p>
             <p>
-              We Meditate is also intended to compliment other existing projects and
-              international websites. Free Meditation, for example, offers more of a community
-              aspect. It is much better if the first page of Google results has several top
-              quality Sahaj websites, rather than just one, and these projects can support each
-              other by linking to each other.
+              We Meditate is also intended to compliment other existing projects and international
+              websites. Free Meditation, for example, offers more of a community aspect. It is much
+              better if the first page of Google results has several top quality Sahaj websites,
+              rather than just one, and these projects can support each other by linking to each
+              other.
             </p>
           </div>
         </div>
@@ -66,14 +66,14 @@ export default function Page() {
               streaming it may be possible to establish a Sahaja presence fully online, but we
               fundamentally believe that people ultimately need to attend in-person meetings and
               that seekers will stay with the practice much more easily if they have the regular
-              company and attention of an experienced collective. Thus, We Meditate's primary
-              purpose is as a resource to introduce seekers to the value of meditation and help
-              them establish a practice, with the understanding that they will soon attend
-              programs in their local area.
+              company and attention of an experienced collective. Thus, We Meditate&apos;s primary
+              purpose is as a resource to introduce seekers to the value of meditation and help them
+              establish a practice, with the understanding that they will soon attend programs in
+              their local area.
             </p>
             <p>
-              Although Sahaja Yoga itself is free, We Meditate requires donations and volunteer
-              work to cover infrastructure and development costs.
+              Although Sahaja Yoga itself is free, We Meditate requires donations and volunteer work
+              to cover infrastructure and development costs.
             </p>
           </div>
         </div>
@@ -88,11 +88,7 @@ export default function Page() {
               </a>
             </Button>
             <Button asChild variant="outline" className="justify-start">
-              <a
-                href="https://github.com/sydevs/Atlas"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://github.com/sydevs/Atlas" target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="mr-2 h-4 w-4" />
                 Atlas Project on GitHub
               </a>

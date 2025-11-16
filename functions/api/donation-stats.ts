@@ -1,10 +1,11 @@
+import type { EventContext } from '@cloudflare/workers-types'
 import Stripe from 'stripe'
 
 export interface Env {
   STRIPE_SECRET_KEY: string
 }
 
-export const onRequest: PagesFunction<Env> = async (context) => {
+export const onRequest = async (context: EventContext<Env, string, Record<string, unknown>>) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
@@ -19,7 +20,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
   try {
     const stripe = new Stripe(context.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2024-11-20.acacia',
+      apiVersion: '2025-10-29.clover',
     })
 
     // Fetch balance transactions from last 30 days
@@ -32,7 +33,6 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
     // Fetch recent charges for display
     const charges = await stripe.charges.list({
-      paid: true,
       limit: 10,
     })
 

@@ -47,8 +47,8 @@ export default function Page() {
         <AlertTitle>Interested in this position?</AlertTitle>
         <AlertDescription className="mt-2 flex flex-col gap-4">
           <p>
-            If you'd like to apply for this role, please email us with your background and
-            why you'd be a good fit.
+            If you&apos;d like to apply for this role, please email us with your background and why
+            you&apos;d be a good fit.
           </p>
           <a
             href="mailto:contact@sydevelopers.com"

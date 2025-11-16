@@ -19,6 +19,9 @@ export default tseslint.config(
 
       // Claude Code hooks and configs
       '.claude/**/*',
+
+      // Wrangler build artifacts
+      '.wrangler/**/*',
     ],
   },
   eslint.configs.recommended,
@@ -78,6 +81,11 @@ export default tseslint.config(
       react: {
         version: 'detect',
       },
+    },
+
+    rules: {
+      // Disable prop-types since we use TypeScript
+      'react/prop-types': 'off',
     },
   } as ConfigArray[number],
 

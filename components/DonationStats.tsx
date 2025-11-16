@@ -70,9 +70,7 @@ export function DonationStats({ totalExpenses }: Props) {
           </div>
         </div>
         <div className="text-sm">
-          <span className="font-semibold text-foreground">
-            ${stats.totalDonations.toFixed(2)}
-          </span>{' '}
+          <span className="font-semibold text-foreground">${stats.totalDonations.toFixed(2)}</span>{' '}
           donated in the last 30 days
         </div>
       </div>
