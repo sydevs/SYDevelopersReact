@@ -88,9 +88,13 @@ export default function Page() {
               </a>
             </Button>
             <Button asChild variant="outline" className="justify-start">
-              <a href="https://github.com/sydevs/Atlas" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://github.com/sydevs/WeMeditate"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <ExternalLink className="mr-2 h-4 w-4" />
-                Atlas Project on GitHub
+                GitHub Project
               </a>
             </Button>
           </div>
