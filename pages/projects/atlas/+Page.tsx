@@ -37,10 +37,9 @@ export default function Page() {
           <h2 className="text-2xl font-bold">What is Sahaj Atlas?</h2>
           <div className="space-y-4 text-muted-foreground">
             <p>
-              There are many Sahaj websites out there with old public program information. Even
-              when the information is updated, it quickly becomes outdated again. On top of that
-              most website show the programs in a long difficult to navigate list - as opposed a
-              map.
+              There are many Sahaj websites out there with old public program information. Even when
+              the information is updated, it quickly becomes outdated again. On top of that most
+              website show the programs in a long difficult to navigate list - as opposed a map.
             </p>
             <p>
               Realisation tours, and international Sahaj websites need a reliable place to refer
@@ -59,18 +58,18 @@ export default function Page() {
             </p>
             <p>
               This map is designed so that it can be added to any Sahaj website. The style of the
-              map can be adjusted match the website, and the map can be restricted to only show
-              one country or region. Our hope is that national collectives will start using this
-              map for their country&apos;s website. Then they will be committed to keeping it up
-              to date, and all international Sahaj projects will benefit.
+              map can be adjusted match the website, and the map can be restricted to only show one
+              country or region. Our hope is that national collectives will start using this map for
+              their country&apos;s website. Then they will be committed to keeping it up to date,
+              and all international Sahaj projects will benefit.
             </p>
             <p>
               To make the map easier to adopt, seekers can be directed to register on Meetup,
               Eventbrite, or Facebook instead of registering on the map directly.
             </p>
             <p>
-              For more advanced technical usage, the data of Sahaj Atlas can also be accessed via
-              an API.
+              For more advanced technical usage, the data of Sahaj Atlas can also be accessed via an
+              API.
             </p>
           </div>
         </div>
@@ -79,16 +78,16 @@ export default function Page() {
           <h2 className="text-2xl font-bold">Database Management</h2>
           <div className="space-y-4 text-muted-foreground">
             <p>
-              New programs can be entered into the database using a custom administrative website.
-              A manager can be set up for each country, who can then delegate access to specific
+              New programs can be entered into the database using a custom administrative website. A
+              manager can be set up for each country, who can then delegate access to specific
               regions to other yogis. This way each country and local collective can manage the
               events in their area.
             </p>
             <p>
-              To make sure the map stays up to date an automatic email will be sent to local
-              program managers every 2 months or so. In this email they will be asked to confirm
-              that the program details are still correct. Programs which are not confirmed will be
-              removed from the map until they are updated.
+              To make sure the map stays up to date an automatic email will be sent to local program
+              managers every 2 months or so. In this email they will be asked to confirm that the
+              program details are still correct. Programs which are not confirmed will be removed
+              from the map until they are updated.
             </p>
           </div>
         </div>
@@ -151,8 +150,8 @@ export default function Page() {
 
         <div className="text-muted-foreground">
           <p>
-            If you have questions, would like to help with development, or need help embedding
-            the map on your website, please email{' '}
+            If you have questions, would like to help with development, or need help embedding the
+            map on your website, please email{' '}
             <a href="mailto:contact@sydevelopers.com" className="text-primary hover:underline">
               contact@sydevelopers.com
             </a>
