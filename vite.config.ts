@@ -14,13 +14,6 @@ if (existsSync(devVarsPath)) {
   loadDotenv({ path: devVarsPath })
 }
 
-// Debug: Log environment variables during config load
-console.log('[Vite Config] Environment variables at config load time:')
-console.log('[Vite Config] AIRTABLE_KEY:', process.env.AIRTABLE_KEY ? '✓ Set' : '✗ Missing')
-console.log('[Vite Config] AIRTABLE_BASE:', process.env.AIRTABLE_BASE ? '✓ Set' : '✗ Missing')
-console.log('[Vite Config] NODE_ENV:', process.env.NODE_ENV)
-console.log('[Vite Config] CF_PAGES:', process.env.CF_PAGES)
-
 export default defineConfig({
   plugins: [
     vike(),

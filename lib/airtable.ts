@@ -96,6 +96,20 @@ const COLORS = [
   'pink',
 ]
 
+/**
+ * Maps project identifiers to their local image paths
+ */
+function getProjectIconPath(identifier: string): string {
+  const iconMap: Record<string, string> = {
+    wemeditate: '/images/wemeditate/logo.webp',
+    atlas: '/images/sahaj-atlas/logo.webp',
+    app: '/images/mobile-app/logo.svg',
+    resources: '/images/resources/logo.webp',
+  }
+
+  return iconMap[identifier] || ''
+}
+
 export async function fetchJobs(): Promise<Job[]> {
   try {
     console.log('Fetching jobs from Airtable...')
@@ -169,13 +183,17 @@ export async function fetchProjects(): Promise<Project[]> {
           }))
         }
 
+        // Map project identifier to local icon path
+        const identifier = project.fields.Identifier as string
+        const localIconPath = getProjectIconPath(identifier)
+
         return {
           id: project.id,
           name: project.fields.Name as string,
-          identifier: project.fields.Identifier as string,
+          identifier,
           description: project.fields.Description as string,
           url: project.fields.URL as string,
-          icon: project.fields.Icon as Array<{ url: string }>,
+          icon: localIconPath,
           monthly: (project.fields.Monthly as number) || 0,
           expenses,
         }

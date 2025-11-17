@@ -23,6 +23,10 @@ export default function Page() {
   const [showSuccess, setShowSuccess] = useState(false)
   const [showCancel, setShowCancel] = useState(false)
 
+  // Calculate buffer fund (10% of total expenses)
+  const bufferFund = totalExpenses * 0.1
+  const totalWithBuffer = totalExpenses + bufferFund
+
   useEffect(() => {
     if (typeof window === 'undefined') return
 
@@ -48,7 +52,9 @@ export default function Page() {
         </Avatar>
         <div>
           <h1 className="text-2xl md:text-3xl font-bold">Sahaj Web Funding</h1>
-          <p className="text-muted-foreground">Donate to fund projects that spread Sahaja Yoga</p>
+          <p className="text-muted-foreground">
+            Donate to cover the costs of We Meditate and related projects
+          </p>
         </div>
       </div>
 
@@ -92,13 +98,15 @@ export default function Page() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-baseline gap-2">
-            <span className="text-4xl font-bold">${totalExpenses.toFixed(0)}</span>
+            <span className="text-4xl font-bold">${totalWithBuffer.toFixed(0)}</span>
             <span className="text-lg text-muted-foreground">/ month</span>
           </CardTitle>
-          <CardDescription>Monthly operating costs for all projects</CardDescription>
+          <CardDescription>
+            Monthly operating costs for all projects (including 10% buffer)
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <DonationStats totalExpenses={totalExpenses} />
+          <DonationStats totalExpenses={totalWithBuffer} />
 
           {/* Donation CTA */}
           <Popover>
@@ -131,8 +139,11 @@ export default function Page() {
           </Popover>
 
           <p className="text-sm text-muted-foreground text-center">
-            Write to use at <a href="mailto:contact@sydevelopers.com">contact@sydevelopers.com</a>{' '}
-            if you need to cancel a monthly donation.
+            Contact us at{' '}
+            <a className="underline" href="mailto:contact@sydevelopers.com">
+              contact@sydevelopers.com
+            </a>{' '}
+            if you need you need to cancel a monthly donation.
           </p>
         </CardContent>
       </Card>
@@ -153,7 +164,7 @@ export default function Page() {
               editing, social media, graphic design, coding, and more.
             </p>
             <Button asChild variant="outline" className="w-fit">
-              <a href="/jobs">View Available Positions</a>
+              <a href="/jobs">View Jobs</a>
             </Button>
           </AlertDescription>
         </Alert>
@@ -227,6 +238,21 @@ export default function Page() {
             )
           })}
         </Accordion>
+
+        {/* Buffer Fund - Non-expandable entry */}
+        <div className="border rounded-lg px-4 py-3 -mt-2">
+          <div className="flex items-center justify-between w-full pr-4">
+            <div className="flex-1">
+              <div className="font-semibold">Buffer Fund</div>
+              <div className="text-sm text-muted-foreground italic">
+                10% reserve to cover unexpected costs and ensure project stability
+              </div>
+            </div>
+            <span className="text-muted-foreground whitespace-nowrap ml-4">
+              ${bufferFund.toFixed(2)} / month
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Other Projects CTA */}

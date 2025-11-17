@@ -15,7 +15,7 @@ export interface Project {
   identifier: string
   description: string
   url: string
-  icon: Array<{ url: string }>
+  icon: string
   monthly: number
   expenses: Expense[]
 }

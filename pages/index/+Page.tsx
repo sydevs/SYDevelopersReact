@@ -88,9 +88,9 @@ export default function Page() {
               <Card key={project.id} className="flex flex-col hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="flex items-center gap-4 mb-2">
-                    {project.icon[0]?.url && (
+                    {project.icon && (
                       <img
-                        src={project.icon[0].url}
+                        src={project.icon}
                         alt={project.name}
                         className="w-12 h-12 rounded-lg object-cover"
                         loading="lazy"

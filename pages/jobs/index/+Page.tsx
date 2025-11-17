@@ -35,7 +35,7 @@ export default function Page() {
     .sort((a, b) => a.name.localeCompare(b.name))
 
   return (
-    <div className="container max-w-6xl mx-auto px-4 py-8 space-y-12">
+    <>
       {/* Hero Section */}
       <div className="flex items-center gap-4">
         <Avatar className="w-16 h-16">
@@ -182,6 +182,6 @@ export default function Page() {
           </TabsContent>
         ))}
       </Tabs>
-    </div>
+    </>
   )
 }
