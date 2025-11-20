@@ -265,11 +265,7 @@ export default function Page() {
             find a complete list of high quality digital Sahaj projects on the resources website.
           </p>
           <Button asChild variant="outline" className="w-fit">
-            <a
-              href="http://www.sahajaresources.com/digital"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="http://sahajaresources.com/projects" target="_blank" rel="noopener noreferrer">
               View All Web Projects
             </a>
           </Button>
