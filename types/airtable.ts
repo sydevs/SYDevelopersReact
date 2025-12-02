@@ -6,6 +6,7 @@ export interface Job {
   description: string
   icon: string
   priority?: string
+  project?: string
   public: boolean
 }
 
