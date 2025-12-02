@@ -55,11 +55,11 @@ export default function Page() {
       {/* About Section */}
       <div className="prose prose-sm max-w-none space-y-4">
         <p className="text-foreground/80">
-          Many yogis volunteer for{" "}
-          <a href="https://wemeditate.com" target="_blank" rel="noopener noreferrer">
-            We Meditate
+          Many yogis volunteer for numerous projects for{" "}
+          <a href="/" rel="noopener noreferrer">
+            Sahaj Projects
           </a>{" "}
-          and its <a href="/">related projects</a> , but there&apos;s much more than we can manage alone!
+          , but there&apos;s much more than we can manage alone!
         </p>
         <ul className="space-y-2 text-foreground/80 list-disc pl-5">
           <li>
@@ -71,7 +71,7 @@ export default function Page() {
             great opportunity to develop skills.
           </li>
         </ul>
-        <Button asChild variant="outline" className="gap-2">
+        <Button asChild variant="outline" className="gap-2 bg-inherit">
           <a href="/jobs/teams">
             <Users className="h-4 w-4" />
             Meet Our Team
@@ -87,7 +87,7 @@ export default function Page() {
           {/* Filter Dropdown */}
           <Popover open={filterOpen} onOpenChange={setFilterOpen}>
             <PopoverTrigger asChild>
-              <Button variant="outline" className="gap-2">
+              <Button variant="outline" className="gap-2 bg-inherit cursor-pointer">
                 <Filter className="h-4 w-4" />
                 {selectedProject ? (
                   <span className="flex items-center gap-2">
@@ -101,7 +101,7 @@ export default function Page() {
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-56 p-2" align="end">
+            <PopoverContent className="w-auto p-2" align="end">
               <div className="space-y-1">
                 <button
                   onClick={() => {
