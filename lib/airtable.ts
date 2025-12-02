@@ -113,7 +113,7 @@ function getProjectIconPath(identifier: string): string {
 export async function fetchJobs(): Promise<Job[]> {
   try {
     console.log('Fetching jobs from Airtable...')
-    const records = await airtableFetch('Jobs', {
+    const records = await airtableFetch('JobsV2', {
       filterByFormula: 'Public = 1',
       sort: [{ field: 'Category', direction: 'asc' }],
     })
@@ -127,6 +127,7 @@ export async function fetchJobs(): Promise<Job[]> {
       description: r.fields.Description as string,
       icon: r.fields.Icon as string,
       priority: r.fields.Priority as string | undefined,
+      project: r.fields.Project as string | undefined,
       public: true,
     }))
   } catch (error) {
