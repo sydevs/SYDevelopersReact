@@ -4,8 +4,8 @@ export interface Job {
   category: string
   brief: string
   description: string
-  icon: string
   priority?: string
+  project?: string
   public: boolean
 }
 

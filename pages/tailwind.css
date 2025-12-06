@@ -28,6 +28,7 @@
     --input: oklch(0.92 0.005 50);
     --ring: oklch(0.75 0.1 200);
     --radius: 0.625rem;
+    --nav-background: oklch(0.96 0.003 50);
   }
 
   .dark {
@@ -52,6 +53,7 @@
     --border: oklch(0.3 0 0);
     --input: oklch(0.3 0 0);
     --ring: oklch(0.65 0.14 200);
+    --nav-background: oklch(0.25 0.003 50);
   }
 
   @theme inline {
@@ -74,6 +76,7 @@
     --color-border: var(--border);
     --color-input: var(--input);
     --color-ring: var(--ring);
+    --color-nav-background: var(--nav-background);
 
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
