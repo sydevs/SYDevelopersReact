@@ -1,98 +1,98 @@
-import type { Job, Project, Person, Expense, Teams } from "../types/airtable";
+import type { Job, Project, Person, Expense, Teams } from '../types/airtable'
 
 // Use Cloudflare's native fetch API for Airtable (compatible with Workers)
-const AIRTABLE_API_URL = "https://api.airtable.com/v0";
+const AIRTABLE_API_URL = 'https://api.airtable.com/v0'
 
 interface AirtableRecord {
-  id: string;
-  fields: Record<string, any>;
+  id: string
+  fields: Record<string, any>
 }
 
 interface AirtableResponse {
-  records: AirtableRecord[];
-  offset?: string;
+  records: AirtableRecord[]
+  offset?: string
 }
 
 async function airtableFetch(
   tableName: string,
   options: {
-    filterByFormula?: string;
-    sort?: Array<{ field: string; direction: "asc" | "desc" }>;
+    filterByFormula?: string
+    sort?: Array<{ field: string; direction: 'asc' | 'desc' }>
   } = {},
 ): Promise<AirtableRecord[]> {
-  const apiKey = import.meta.env.AIRTABLE_KEY as string;
-  const baseId = import.meta.env.AIRTABLE_BASE as string;
+  const apiKey = import.meta.env.AIRTABLE_KEY as string
+  const baseId = import.meta.env.AIRTABLE_BASE as string
 
   if (!apiKey || !baseId) {
-    throw new Error("Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local");
+    throw new Error('Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local')
   }
 
-  const params = new URLSearchParams();
+  const params = new URLSearchParams()
   if (options.filterByFormula) {
-    params.append("filterByFormula", options.filterByFormula);
+    params.append('filterByFormula', options.filterByFormula)
   }
   if (options.sort) {
     options.sort.forEach((s, i) => {
-      params.append(`sort[${i}][field]`, s.field);
-      params.append(`sort[${i}][direction]`, s.direction);
-    });
+      params.append(`sort[${i}][field]`, s.field)
+      params.append(`sort[${i}][direction]`, s.direction)
+    })
   }
 
-  const url = `${AIRTABLE_API_URL}/${baseId}/${encodeURIComponent(tableName)}?${params}`;
+  const url = `${AIRTABLE_API_URL}/${baseId}/${encodeURIComponent(tableName)}?${params}`
 
   const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${apiKey}`,
     },
-  });
+  })
 
   if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Airtable API error: ${response.status} ${errorText}`);
+    const errorText = await response.text()
+    throw new Error(`Airtable API error: ${response.status} ${errorText}`)
   }
 
-  const data: AirtableResponse = await response.json();
-  return data.records;
+  const data: AirtableResponse = await response.json()
+  return data.records
 }
 
 async function airtableFindRecord(tableName: string, recordId: string): Promise<AirtableRecord> {
-  const apiKey = import.meta.env.AIRTABLE_KEY as string;
-  const baseId = import.meta.env.AIRTABLE_BASE as string;
+  const apiKey = import.meta.env.AIRTABLE_KEY as string
+  const baseId = import.meta.env.AIRTABLE_BASE as string
 
   if (!apiKey || !baseId) {
-    throw new Error("Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local");
+    throw new Error('Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local')
   }
 
-  const url = `${AIRTABLE_API_URL}/${baseId}/${encodeURIComponent(tableName)}/${recordId}`;
+  const url = `${AIRTABLE_API_URL}/${baseId}/${encodeURIComponent(tableName)}/${recordId}`
 
   const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${apiKey}`,
     },
-  });
+  })
 
   if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Airtable API error: ${response.status} ${errorText}`);
+    const errorText = await response.text()
+    throw new Error(`Airtable API error: ${response.status} ${errorText}`)
   }
 
-  return response.json();
+  return response.json()
 }
 
-const COLORS = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink"];
+const COLORS = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink']
 
 /**
  * Maps project identifiers to their local image paths
  */
 function getProjectIconPath(identifier: string): string {
   const iconMap: Record<string, string> = {
-    wemeditate: "/images/wemeditate/logo.webp",
-    atlas: "/images/sahaj-atlas/logo.webp",
-    app: "/images/mobile-app/logo.svg",
-    resources: "/images/resources/logo.webp",
-  };
+    wemeditate: '/images/wemeditate/logo.webp',
+    atlas: '/images/sahaj-atlas/logo.webp',
+    app: '/images/mobile-app/logo.svg',
+    resources: '/images/resources/logo.webp',
+  }
 
-  return iconMap[identifier] || "";
+  return iconMap[identifier] || ''
 }
 
 /**
@@ -100,36 +100,36 @@ function getProjectIconPath(identifier: string): string {
  * Returns the missing fields array (empty if valid).
  */
 function validateJobFields(record: AirtableRecord): string[] {
-  const missingFields: string[] = [];
-  const fields = record.fields;
+  const missingFields: string[] = []
+  const fields = record.fields
 
-  if (typeof fields.Name !== "string" || !fields.Name) missingFields.push("Name");
-  if (typeof fields.Category !== "string" || !fields.Category) missingFields.push("Category");
-  if (typeof fields.Brief !== "string") missingFields.push("Brief");
-  if (typeof fields.Description !== "string") missingFields.push("Description");
+  if (typeof fields.Name !== 'string' || !fields.Name) missingFields.push('Name')
+  if (typeof fields.Category !== 'string' || !fields.Category) missingFields.push('Category')
+  if (typeof fields.Brief !== 'string') missingFields.push('Brief')
+  if (typeof fields.Description !== 'string') missingFields.push('Description')
 
-  return missingFields;
+  return missingFields
 }
 
 export async function fetchJobs(): Promise<Job[]> {
   try {
-    console.log("Fetching jobs from Airtable...");
-    const records = await airtableFetch("JobsV2", {
-      filterByFormula: "Public = 1",
-      sort: [{ field: "Category", direction: "asc" }],
-    });
+    console.log('Fetching jobs from Airtable...')
+    const records = await airtableFetch('JobsV2', {
+      filterByFormula: 'Public = 1',
+      sort: [{ field: 'Category', direction: 'asc' }],
+    })
 
-    console.log(`Fetched ${records.length} jobs`);
+    console.log(`Fetched ${records.length} jobs`)
 
     const validJobs = records
       .map((r): Job | null => {
-        const missingFields = validateJobFields(r);
+        const missingFields = validateJobFields(r)
         if (missingFields.length > 0) {
           console.warn(
-            `[fetchJobs] Discarding job (id: ${r.id}): missing required fields [${missingFields.join(", ")}]`,
+            `[fetchJobs] Discarding job (id: ${r.id}): missing required fields [${missingFields.join(', ')}]`,
             { recordId: r.id, fields: r.fields },
-          );
-          return null;
+          )
+          return null
         }
 
         return {
@@ -141,32 +141,32 @@ export async function fetchJobs(): Promise<Job[]> {
           priority: r.fields.Priority as string | undefined,
           project: r.fields.Project as string | undefined,
           public: true,
-        };
+        }
       })
-      .filter((job): job is Job => job !== null);
+      .filter((job): job is Job => job !== null)
 
     if (validJobs.length < records.length) {
-      console.warn(`[fetchJobs] ${records.length - validJobs.length} job(s) were discarded due to missing fields`);
+      console.warn(`[fetchJobs] ${records.length - validJobs.length} job(s) were discarded due to missing fields`)
     }
 
-    return validJobs;
+    return validJobs
   } catch (error) {
-    console.error("Error fetching jobs from Airtable:", error);
-    return [];
+    console.error('Error fetching jobs from Airtable:', error)
+    return []
   }
 }
 
 export async function fetchJob(id: string): Promise<Job | null> {
   try {
-    const record = await airtableFindRecord("Jobs", id);
+    const record = await airtableFindRecord('Jobs', id)
 
-    const missingFields = validateJobFields(record);
+    const missingFields = validateJobFields(record)
     if (missingFields.length > 0) {
-      console.warn(`[fetchJob] Job (id: ${id}) has missing required fields [${missingFields.join(", ")}]`, {
+      console.warn(`[fetchJob] Job (id: ${id}) has missing required fields [${missingFields.join(', ')}]`, {
         recordId: record.id,
         fields: record.fields,
-      });
-      return null;
+      })
+      return null
     }
 
     return {
@@ -177,10 +177,10 @@ export async function fetchJob(id: string): Promise<Job | null> {
       description: record.fields.Description as string,
       priority: record.fields.Priority as string | undefined,
       public: record.fields.Public as boolean,
-    };
+    }
   } catch (error) {
-    console.error("Error fetching job:", error);
-    return null;
+    console.error('Error fetching job:', error)
+    return null
   }
 }
 
@@ -191,15 +191,15 @@ export async function fetchJob(id: string): Promise<Job | null> {
 function validateExpenseFields(
   record: AirtableRecord,
 ): { valid: true; expense: Expense } | { valid: false; missingFields: string[] } {
-  const missingFields: string[] = [];
-  const fields = record.fields;
+  const missingFields: string[] = []
+  const fields = record.fields
 
-  if (typeof fields.Name !== "string" || !fields.Name) missingFields.push("Name");
-  if (typeof fields.Description !== "string") missingFields.push("Description");
-  if (fields.Type !== "Monthly" && fields.Type !== "Yearly") missingFields.push("Type");
+  if (typeof fields.Name !== 'string' || !fields.Name) missingFields.push('Name')
+  if (typeof fields.Description !== 'string') missingFields.push('Description')
+  if (fields.Type !== 'Monthly' && fields.Type !== 'Yearly') missingFields.push('Type')
 
   if (missingFields.length > 0) {
-    return { valid: false, missingFields };
+    return { valid: false, missingFields }
   }
 
   return {
@@ -207,11 +207,11 @@ function validateExpenseFields(
     expense: {
       name: fields.Name as string,
       description: fields.Description as string,
-      type: fields.Type as "Monthly" | "Yearly",
+      type: fields.Type as 'Monthly' | 'Yearly',
       monthly: (fields.Monthly as number) || 0,
       yearly: (fields.Yearly as number) || 0,
     },
-  };
+  }
 }
 
 /**
@@ -219,66 +219,66 @@ function validateExpenseFields(
  * Returns the missing fields array (empty if valid).
  */
 function validateProjectFields(record: AirtableRecord): string[] {
-  const missingFields: string[] = [];
-  const fields = record.fields;
+  const missingFields: string[] = []
+  const fields = record.fields
 
-  if (typeof fields.Name !== "string" || !fields.Name) missingFields.push("Name");
-  if (typeof fields.Identifier !== "string" || !fields.Identifier) missingFields.push("Identifier");
-  if (typeof fields.Description !== "string") missingFields.push("Description");
-  if (typeof fields.URL !== "string") missingFields.push("URL");
+  if (typeof fields.Name !== 'string' || !fields.Name) missingFields.push('Name')
+  if (typeof fields.Identifier !== 'string' || !fields.Identifier) missingFields.push('Identifier')
+  if (typeof fields.Description !== 'string') missingFields.push('Description')
+  if (typeof fields.URL !== 'string') missingFields.push('URL')
 
-  return missingFields;
+  return missingFields
 }
 
 export async function fetchProjects(): Promise<Project[]> {
   try {
-    console.log("Fetching projects from Airtable...");
-    const projectRecords = await airtableFetch("Projects", {
+    console.log('Fetching projects from Airtable...')
+    const projectRecords = await airtableFetch('Projects', {
       filterByFormula: "Type = 'Internal'",
-      sort: [{ field: "Monthly", direction: "desc" }],
-    });
+      sort: [{ field: 'Monthly', direction: 'desc' }],
+    })
 
-    console.log(`Fetched ${projectRecords.length} projects`);
+    console.log(`Fetched ${projectRecords.length} projects`)
 
     const projectResults = await Promise.all(
       projectRecords.map(async (project) => {
         // Validate required project fields
-        const missingFields = validateProjectFields(project);
+        const missingFields = validateProjectFields(project)
         if (missingFields.length > 0) {
           console.warn(
-            `[fetchProjects] Discarding project (id: ${project.id}): missing required fields [${missingFields.join(", ")}]`,
+            `[fetchProjects] Discarding project (id: ${project.id}): missing required fields [${missingFields.join(', ')}]`,
             { recordId: project.id, fields: project.fields },
-          );
-          return null;
+          )
+          return null
         }
 
-        const expenseIds = project.fields.Expenses as string[] | undefined;
-        let expenses: Expense[] = [];
+        const expenseIds = project.fields.Expenses as string[] | undefined
+        let expenses: Expense[] = []
 
         if (expenseIds?.length) {
-          const expenseRecords = await airtableFetch("Expenses", {
-            filterByFormula: `FIND(RECORD_ID(), "${expenseIds.join(",")}")`,
-            sort: [{ field: "Monthly", direction: "desc" }],
-          });
+          const expenseRecords = await airtableFetch('Expenses', {
+            filterByFormula: `FIND(RECORD_ID(), "${expenseIds.join(',')}")`,
+            sort: [{ field: 'Monthly', direction: 'desc' }],
+          })
 
           expenses = expenseRecords
             .map((r) => {
-              const result = validateExpenseFields(r);
+              const result = validateExpenseFields(r)
               if (!result.valid) {
                 console.warn(
-                  `[fetchProjects] Discarding expense (id: ${r.id}) for project "${project.fields.Name}": missing required fields [${result.missingFields.join(", ")}]`,
+                  `[fetchProjects] Discarding expense (id: ${r.id}) for project "${project.fields.Name}": missing required fields [${result.missingFields.join(', ')}]`,
                   { recordId: r.id, projectId: project.id, fields: r.fields },
-                );
-                return null;
+                )
+                return null
               }
-              return result.expense;
+              return result.expense
             })
-            .filter((e): e is Expense => e !== null);
+            .filter((e): e is Expense => e !== null)
         }
 
         // Map project identifier to local icon path
-        const identifier = project.fields.Identifier as string;
-        const localIconPath = getProjectIconPath(identifier);
+        const identifier = project.fields.Identifier as string
+        const localIconPath = getProjectIconPath(identifier)
 
         return {
           id: project.id,
@@ -289,58 +289,58 @@ export async function fetchProjects(): Promise<Project[]> {
           icon: localIconPath,
           monthly: (project.fields.Monthly as number) || 0,
           expenses,
-        };
+        }
       }),
-    );
+    )
 
     // Filter out any null projects (those that failed validation)
-    const validProjects = projectResults.filter((p): p is Project => p !== null);
+    const validProjects = projectResults.filter((p): p is Project => p !== null)
 
     if (validProjects.length < projectRecords.length) {
       console.warn(
         `[fetchProjects] ${projectRecords.length - validProjects.length} project(s) were discarded due to missing fields`,
-      );
+      )
     }
 
-    return validProjects;
+    return validProjects
   } catch (error) {
-    console.error("Error fetching projects from Airtable:", error);
-    return [];
+    console.error('Error fetching projects from Airtable:', error)
+    return []
   }
 }
 
 export async function fetchTeams(): Promise<Teams> {
-  const records = await airtableFetch("People", {
-    filterByFormula: "Public = 1",
-    sort: [{ field: "Teams", direction: "asc" }],
-  });
+  const records = await airtableFetch('People', {
+    filterByFormula: 'Public = 1',
+    sort: [{ field: 'Teams', direction: 'asc' }],
+  })
 
-  const teams: Teams = {};
+  const teams: Teams = {}
 
   records.forEach((r, i) => {
-    const teamsList = r.fields.Teams as string[];
-    const name = r.fields.Name as string;
-    const nameParts = name.split(" ");
+    const teamsList = r.fields.Teams as string[]
+    const name = r.fields.Name as string
+    const nameParts = name.split(' ')
 
     const person: Person = {
-      name: nameParts.map((n, idx) => (idx > 0 ? n[0] : n)).join(" "),
-      initials: nameParts.map((n) => n[0]).join(""),
+      name: nameParts.map((n, idx) => (idx > 0 ? n[0] : n)).join(' '),
+      initials: nameParts.map((n) => n[0]).join(''),
       country: r.fields.Country as string,
-      shortCountry: r.fields["Short Country"] as string,
+      shortCountry: r.fields['Short Country'] as string,
       teams: teamsList,
       color: COLORS[i % 10],
-    };
+    }
 
     teamsList.forEach((team) => {
-      if (!teams[team]) teams[team] = [];
-      teams[team].push(person);
-    });
-  });
+      if (!teams[team]) teams[team] = []
+      teams[team].push(person)
+    })
+  })
 
   // Sort people within each team
   Object.keys(teams).forEach((team) => {
-    teams[team].sort((a, b) => a.name.localeCompare(b.name));
-  });
+    teams[team].sort((a, b) => a.name.localeCompare(b.name))
+  })
 
-  return teams;
+  return teams
 }

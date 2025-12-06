@@ -1,11 +1,11 @@
-import { fetchTeams } from "../../../lib/airtable";
+import { fetchTeams } from '../../../lib/airtable'
 
-export type Data = Awaited<ReturnType<typeof data>>;
+export type Data = Awaited<ReturnType<typeof data>>
 
 export async function data() {
-  const teams = await fetchTeams();
+  const teams = await fetchTeams()
 
   return {
     teams,
-  };
+  }
 }

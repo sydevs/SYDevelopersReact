@@ -1,38 +1,38 @@
-import { useData } from "vike-react/useData";
-import { useState } from "react";
+import { useData } from 'vike-react/useData'
+import { useState } from 'react'
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ChevronRight, Filter, Check, Users } from "lucide-react";
-import type { Data } from "./+data";
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { ChevronRight, Filter, Check, Users } from 'lucide-react'
+import type { Data } from './+data'
 
 export default function Page() {
-  const { jobsByCategory, jobsByProject, projects } = useData<Data>();
-  const [selectedProject, setSelectedProject] = useState<string | null>(null);
-  const [filterOpen, setFilterOpen] = useState(false);
+  const { jobsByCategory, jobsByProject, projects } = useData<Data>()
+  const [selectedProject, setSelectedProject] = useState<string | null>(null)
+  const [filterOpen, setFilterOpen] = useState(false)
 
   const allJobs = Object.values(jobsByCategory)
     .flat()
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, b) => a.name.localeCompare(b.name))
 
   const filteredJobs = selectedProject
-    ? allJobs.filter((job) => (job.project || "All Projects") === selectedProject)
-    : allJobs;
+    ? allJobs.filter((job) => (job.project || 'All Projects') === selectedProject)
+    : allJobs
 
   const getProjectInfo = (identifier: string) => {
-    return projects.find((p) => p.identifier === identifier || p.name === identifier);
-  };
+    return projects.find((p) => p.identifier === identifier || p.name === identifier)
+  }
 
   const projectsWithJobs = Object.keys(jobsByProject).sort((a, b) => {
-    if (a === "All Projects") return 1;
-    if (b === "All Projects") return -1;
-    return a.localeCompare(b);
-  });
+    if (a === 'All Projects') return 1
+    if (b === 'All Projects') return -1
+    return a.localeCompare(b)
+  })
 
-  const selectedProjectInfo = selectedProject ? getProjectInfo(selectedProject) : null;
+  const selectedProjectInfo = selectedProject ? getProjectInfo(selectedProject) : null
 
   return (
     <>
@@ -50,10 +50,10 @@ export default function Page() {
       {/* About Section */}
       <div className="prose prose-sm max-w-none space-y-4">
         <p className="text-foreground/80">
-          Many yogis volunteer for numerous projects for{" "}
+          Many yogis volunteer for numerous projects for{' '}
           <a href="/" rel="noopener noreferrer">
             Sahaj Projects
-          </a>{" "}
+          </a>{' '}
           , but there&apos;s much more than we can manage alone!
         </p>
         <ul className="space-y-2 text-foreground/80 list-disc pl-5">
@@ -92,7 +92,7 @@ export default function Page() {
                     {selectedProjectInfo?.name || selectedProject}
                   </span>
                 ) : (
-                  "Filter by project"
+                  'Filter by project'
                 )}
               </Button>
             </PopoverTrigger>
@@ -100,11 +100,11 @@ export default function Page() {
               <div className="space-y-1">
                 <button
                   onClick={() => {
-                    setSelectedProject(null);
-                    setFilterOpen(false);
+                    setSelectedProject(null)
+                    setFilterOpen(false)
                   }}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors hover:bg-accent cursor-pointer ${
-                    selectedProject === null ? "bg-accent" : ""
+                    selectedProject === null ? 'bg-accent' : ''
                   }`}
                 >
                   <div className="w-5 h-5 flex items-center justify-center">
@@ -116,19 +116,19 @@ export default function Page() {
                   </Badge>
                 </button>
                 {projectsWithJobs.map((projectKey) => {
-                  const projectInfo = getProjectInfo(projectKey);
-                  const jobCount = jobsByProject[projectKey]?.length || 0;
-                  const isSelected = selectedProject === projectKey;
+                  const projectInfo = getProjectInfo(projectKey)
+                  const jobCount = jobsByProject[projectKey]?.length || 0
+                  const isSelected = selectedProject === projectKey
 
                   return (
                     <button
                       key={projectKey}
                       onClick={() => {
-                        setSelectedProject(projectKey);
-                        setFilterOpen(false);
+                        setSelectedProject(projectKey)
+                        setFilterOpen(false)
                       }}
                       className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors hover:bg-accent cursor-pointer ${
-                        isSelected ? "bg-accent" : ""
+                        isSelected ? 'bg-accent' : ''
                       }`}
                     >
                       <div className="w-5 h-5 flex items-center justify-center">
@@ -146,7 +146,7 @@ export default function Page() {
                         {jobCount}
                       </Badge>
                     </button>
-                  );
+                  )
                 })}
               </div>
             </PopoverContent>
@@ -164,8 +164,8 @@ export default function Page() {
             </TabsTrigger>
             {Object.keys(jobsByCategory).map((category) => {
               const categoryJobs = selectedProject
-                ? jobsByCategory[category].filter((job) => (job.project || "All Projects") === selectedProject)
-                : jobsByCategory[category];
+                ? jobsByCategory[category].filter((job) => (job.project || 'All Projects') === selectedProject)
+                : jobsByCategory[category]
               return (
                 <TabsTrigger
                   key={category}
@@ -174,7 +174,7 @@ export default function Page() {
                 >
                   {category} ({categoryJobs.length})
                 </TabsTrigger>
-              );
+              )
             })}
           </TabsList>
 
@@ -187,7 +187,7 @@ export default function Page() {
             ) : (
               <div className="border rounded-lg divide-y">
                 {filteredJobs.map((job) => {
-                  const projectInfo = job.project ? getProjectInfo(job.project) : null;
+                  const projectInfo = job.project ? getProjectInfo(job.project) : null
                   return (
                     <a
                       key={job.id}
@@ -200,7 +200,7 @@ export default function Page() {
                           <AvatarImage src={projectInfo.icon} alt={projectInfo.name} />
                         ) : (
                           <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
-                            {(job.project || "G").charAt(0).toUpperCase()}
+                            {(job.project || 'G').charAt(0).toUpperCase()}
                           </AvatarFallback>
                         )}
                       </Avatar>
@@ -211,11 +211,11 @@ export default function Page() {
                         <div className="text-sm text-muted-foreground flex items-center gap-2 flex-wrap">
                           <span>{job.category}</span>
                           <span className="text-muted-foreground/50">|</span>
-                          <span>{projectInfo?.name || job.project || "All Projects"}</span>
+                          <span>{projectInfo?.name || job.project || 'All Projects'}</span>
                           {job.priority && (
                             <>
                               <span className="text-muted-foreground/50">|</span>
-                              <span className={job.priority === "Critical" ? "text-destructive" : ""}>
+                              <span className={job.priority === 'Critical' ? 'text-destructive' : ''}>
                                 {job.priority} Priority
                               </span>
                             </>
@@ -229,11 +229,11 @@ export default function Page() {
                           <Badge
                             variant="outline"
                             className={
-                              job.priority === "Critical"
-                                ? "border-red-600 bg-red-600 text-white"
-                                : job.priority === "Important"
-                                  ? "border-amber-600 bg-amber-600 text-white"
-                                  : "border-teal-600 bg-teal-600 text-white"
+                              job.priority === 'Critical'
+                                ? 'border-red-600 bg-red-600 text-white'
+                                : job.priority === 'Important'
+                                  ? 'border-amber-600 bg-amber-600 text-white'
+                                  : 'border-teal-600 bg-teal-600 text-white'
                             }
                           >
                             {job.priority}
@@ -242,7 +242,7 @@ export default function Page() {
                         <ChevronRight className="h-5 w-5 text-muted-foreground" />
                       </div>
                     </a>
-                  );
+                  )
                 })}
               </div>
             )}
@@ -251,12 +251,12 @@ export default function Page() {
           {/* Job Category Tabs - List View */}
           {Object.entries(jobsByCategory).map(([category, jobs]) => {
             const categoryJobs = selectedProject
-              ? jobs.filter((job) => (job.project || "All Projects") === selectedProject)
-              : jobs;
+              ? jobs.filter((job) => (job.project || 'All Projects') === selectedProject)
+              : jobs
 
             return (
               <TabsContent key={category} value={category.toLowerCase()} className="mt-4">
-                {category.toLowerCase() === "development" && (
+                {category.toLowerCase() === 'development' && (
                   <p className="text-sm text-muted-foreground mb-4">
                     For most of these technical roles we expect that you have some prior skills.
                   </p>
@@ -268,9 +268,9 @@ export default function Page() {
                 ) : (
                   <div className="border rounded-lg divide-y">
                     {categoryJobs
-                      .sort((a, b) => (a.priority || "z").localeCompare(b.priority || "z"))
+                      .sort((a, b) => (a.priority || 'z').localeCompare(b.priority || 'z'))
                       .map((job) => {
-                        const projectInfo = job.project ? getProjectInfo(job.project) : null;
+                        const projectInfo = job.project ? getProjectInfo(job.project) : null
                         return (
                           <a
                             key={job.id}
@@ -283,7 +283,7 @@ export default function Page() {
                                 <AvatarImage src={projectInfo.icon} alt={projectInfo.name} />
                               ) : (
                                 <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
-                                  {(job.project || "G").charAt(0).toUpperCase()}
+                                  {(job.project || 'G').charAt(0).toUpperCase()}
                                 </AvatarFallback>
                               )}
                             </Avatar>
@@ -294,11 +294,11 @@ export default function Page() {
                               <div className="text-sm text-muted-foreground flex items-center gap-2 flex-wrap">
                                 <span>{job.category}</span>
                                 <span className="text-muted-foreground/50">|</span>
-                                <span>{projectInfo?.name || job.project || "All Projects"}</span>
+                                <span>{projectInfo?.name || job.project || 'All Projects'}</span>
                                 {job.priority && (
                                   <>
                                     <span className="text-muted-foreground/50">|</span>
-                                    <span className={job.priority === "Critical" ? "text-destructive" : ""}>
+                                    <span className={job.priority === 'Critical' ? 'text-destructive' : ''}>
                                       {job.priority} Priority
                                     </span>
                                   </>
@@ -312,11 +312,11 @@ export default function Page() {
                                 <Badge
                                   variant="outline"
                                   className={
-                                    job.priority === "Critical"
-                                      ? "border-red-600 bg-red-600 text-white"
-                                      : job.priority === "Important"
-                                        ? "border-amber-600 bg-amber-600 text-white"
-                                        : "border-teal-600 bg-teal-600 text-white"
+                                    job.priority === 'Critical'
+                                      ? 'border-red-600 bg-red-600 text-white'
+                                      : job.priority === 'Important'
+                                        ? 'border-amber-600 bg-amber-600 text-white'
+                                        : 'border-teal-600 bg-teal-600 text-white'
                                   }
                                 >
                                   {job.priority}
@@ -325,15 +325,15 @@ export default function Page() {
                               <ChevronRight className="h-5 w-5 text-muted-foreground" />
                             </div>
                           </a>
-                        );
+                        )
                       })}
                   </div>
                 )}
               </TabsContent>
-            );
+            )
           })}
         </Tabs>
       </div>
     </>
-  );
+  )
 }
