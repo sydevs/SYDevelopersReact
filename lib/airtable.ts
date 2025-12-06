@@ -107,7 +107,6 @@ function validateJobFields(record: AirtableRecord): string[] {
   if (typeof fields.Category !== "string" || !fields.Category) missingFields.push("Category");
   if (typeof fields.Brief !== "string") missingFields.push("Brief");
   if (typeof fields.Description !== "string") missingFields.push("Description");
-  if (typeof fields.Icon !== "string") missingFields.push("Icon");
 
   return missingFields;
 }
@@ -139,7 +138,6 @@ export async function fetchJobs(): Promise<Job[]> {
           category: r.fields.Category as string,
           brief: r.fields.Brief as string,
           description: r.fields.Description as string,
-          icon: r.fields.Icon as string,
           priority: r.fields.Priority as string | undefined,
           project: r.fields.Project as string | undefined,
           public: true,
@@ -177,7 +175,6 @@ export async function fetchJob(id: string): Promise<Job | null> {
       category: record.fields.Category as string,
       brief: record.fields.Brief as string,
       description: record.fields.Description as string,
-      icon: record.fields.Icon as string,
       priority: record.fields.Priority as string | undefined,
       public: record.fields.Public as boolean,
     };
