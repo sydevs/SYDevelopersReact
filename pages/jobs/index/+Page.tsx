@@ -10,27 +10,22 @@ import { ChevronRight, Filter, Check, Users } from "lucide-react";
 import type { Data } from "./+data";
 
 export default function Page() {
-  // const { jobsByCategory, teams } = useData<Data>();
   const { jobsByCategory, jobsByProject, projects } = useData<Data>();
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [filterOpen, setFilterOpen] = useState(false);
 
-  // Get all jobs from all categories for the "All Jobs" tab
   const allJobs = Object.values(jobsByCategory)
     .flat()
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  // Filter jobs by selected project
   const filteredJobs = selectedProject
     ? allJobs.filter((job) => (job.project || "All Projects") === selectedProject)
     : allJobs;
 
-  // Get project info by identifier
   const getProjectInfo = (identifier: string) => {
     return projects.find((p) => p.identifier === identifier || p.name === identifier);
   };
 
-  // Get unique project identifiers from jobs
   const projectsWithJobs = Object.keys(jobsByProject).sort((a, b) => {
     if (a === "All Projects") return 1;
     if (b === "All Projects") return -1;
