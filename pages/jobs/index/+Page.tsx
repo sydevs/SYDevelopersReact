@@ -295,14 +295,6 @@ export default function Page() {
                                 <span>{job.category}</span>
                                 <span className="text-muted-foreground/50">|</span>
                                 <span>{projectInfo?.name || job.project || 'All Projects'}</span>
-                                {job.priority && (
-                                  <>
-                                    <span className="text-muted-foreground/50">|</span>
-                                    <span className={job.priority === 'Critical' ? 'text-destructive' : ''}>
-                                      {job.priority} Priority
-                                    </span>
-                                  </>
-                                )}
                               </div>
                             </div>
 
