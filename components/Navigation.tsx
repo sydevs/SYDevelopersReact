@@ -33,7 +33,7 @@ export function Navigation() {
   const selected = getSelectedKey()
 
   return (
-    <nav className="fixed bottom-0 w-full sm:bottom-auto sm:top-0 z-10 bg-nav-background border-t sm:border-none shadow-md p-4">
+    <nav className="fixed bottom-0 w-full sm:bottom-auto sm:top-0 z-10 bg-background border-t sm:border-none shadow-md p-4">
       <div className="max-w-md mx-auto flex gap-2 justify-center">
         <Button
           variant={selected === 'projects' ? 'default' : 'ghost'}
