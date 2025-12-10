@@ -3,7 +3,17 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
-import { Wrench, Pencil, Newspaper, Smartphone, Video, Share2, ArrowLeft, Globe, Users } from 'lucide-react'
+import {
+  Wrench,
+  Pencil,
+  Newspaper,
+  Smartphone,
+  Video,
+  Share2,
+  ArrowLeft,
+  Globe,
+  Users,
+} from 'lucide-react'
 import type { Data } from './+data'
 
 // Map team names to Lucide icons
@@ -21,11 +31,16 @@ const getTeamIcon = (teamName: string) => {
 // Map team colors
 const getTeamColor = (teamName: string) => {
   const teamLower = teamName.toLowerCase()
-  if (teamLower === 'technical') return 'bg-blue-500/10 text-blue-600 border-blue-500/20'
-  if (teamLower === 'editorial') return 'bg-purple-500/10 text-purple-600 border-purple-500/20'
-  if (teamLower === 'app development') return 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
-  if (teamLower === 'social media') return 'bg-pink-500/10 text-pink-600 border-pink-500/20'
-  if (teamLower === 'live meditations') return 'bg-amber-500/10 text-amber-600 border-amber-500/20'
+  if (teamLower === 'technical')
+    return 'bg-blue-500/10 text-blue-600 border-blue-500/20'
+  if (teamLower === 'editorial')
+    return 'bg-purple-500/10 text-purple-600 border-purple-500/20'
+  if (teamLower === 'app development')
+    return 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
+  if (teamLower === 'social media')
+    return 'bg-pink-500/10 text-pink-600 border-pink-500/20'
+  if (teamLower === 'live meditations')
+    return 'bg-amber-500/10 text-amber-600 border-amber-500/20'
   return 'bg-slate-500/10 text-slate-600 border-slate-500/20'
 }
 
@@ -40,7 +55,9 @@ export default function Page() {
   const totalVolunteers = allPeople.size
 
   // Sort teams alphabetically
-  const sortedTeams = Object.entries(teams).sort(([a], [b]) => a.localeCompare(b))
+  const sortedTeams = Object.entries(teams).sort(([a], [b]) =>
+    a.localeCompare(b),
+  )
 
   return (
     <>
@@ -63,7 +80,8 @@ export default function Page() {
           <div>
             <h1 className="text-2xl md:text-3xl font-bold">Meet Our Team</h1>
             <p className="text-muted-foreground">
-              {totalVolunteers} dedicated volunteers across {sortedTeams.length} teams
+              {totalVolunteers} dedicated volunteers across {sortedTeams.length}{' '}
+              teams
             </p>
           </div>
         </div>
@@ -72,8 +90,9 @@ export default function Page() {
       {/* Introduction */}
       <div className="prose prose-sm max-w-none">
         <p className="text-foreground/80">
-          Our global team of volunteers work together to build and maintain digital tools that help spread Sahaja Yoga
-          around the world. Each team focuses on different aspects of our projects, from technical
+          Our global team of volunteers work together to build and maintain
+          digital tools that help spread Sahaja Yoga around the world. Each team
+          focuses on different aspects of our projects, from technical
           development to content creation and community engagement.
         </p>
       </div>
@@ -116,7 +135,9 @@ export default function Page() {
                           {person.initials}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="text-sm font-medium">{person.name.split(' ')[0]}</span>
+                      <span className="text-sm font-medium">
+                        {person.name.split(' ')[0]}
+                      </span>
                       <span className="text-xs text-muted-foreground flex items-center gap-1">
                         <Globe className="h-3 w-3" />
                         {person.shortCountry}
@@ -137,8 +158,10 @@ export default function Page() {
         <CardContent className="pt-6 text-center space-y-4">
           <h2 className="text-xl font-bold">Want to Join Our Team?</h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            We&apos;re always looking for passionate volunteers to help with our projects. Whether you&apos;re a
-            developer, writer, designer, or just enthusiastic about spreading meditation, there&apos;s a place for you.
+            We&apos;re always looking for passionate volunteers to help with our
+            projects. Whether you&apos;re a developer, writer, designer, or just
+            enthusiastic about spreading meditation, there&apos;s a place for
+            you.
           </p>
           <Button asChild size="lg">
             <a href="/jobs">View Open Positions</a>
