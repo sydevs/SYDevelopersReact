@@ -36,14 +36,15 @@ export function JobList({ jobs, projects, selectedCategory }: JobListProps) {
       )}
       <div className="border rounded-lg divide-y">
         {sortedJobs.map((job) => {
-          const projectInfo = job.project ? getProjectInfo(job.project) : undefined
+          const projectInfo = job.project
+            ? getProjectInfo(job.project)
+            : undefined
           return (
             <JobListItem
               key={job.id}
               job={job}
               projectInfo={projectInfo}
               showCategory={selectedCategory === null}
-              showPriorityInSubtitle={selectedCategory === null}
             />
           )
         })}
@@ -51,4 +52,3 @@ export function JobList({ jobs, projects, selectedCategory }: JobListProps) {
     </div>
   )
 }
-

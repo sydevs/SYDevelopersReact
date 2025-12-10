@@ -7,14 +7,12 @@ interface JobListItemProps {
   job: Job
   projectInfo?: Project
   showCategory?: boolean
-  showPriorityInSubtitle?: boolean
 }
 
 export function JobListItem({
   job,
   projectInfo,
   showCategory = true,
-  showPriorityInSubtitle = false,
 }: JobListItemProps) {
   return (
     <a
@@ -43,16 +41,6 @@ export function JobListItem({
             </>
           )}
           <span>{projectInfo?.name || job.project || 'All Projects'}</span>
-          {showPriorityInSubtitle && job.priority && (
-            <>
-              <span className="text-muted-foreground/50">|</span>
-              <span
-                className={job.priority === 'Critical' ? 'text-destructive' : ''}
-              >
-                {job.priority} Priority
-              </span>
-            </>
-          )}
         </div>
       </div>
 
@@ -77,4 +65,3 @@ export function JobListItem({
     </a>
   )
 }
-
