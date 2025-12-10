@@ -1,5 +1,3 @@
-import { Badge } from '@/components/ui/badge'
-
 interface CategoryFilterProps {
   categories: string[]
   selectedCategory: string | null
@@ -14,24 +12,16 @@ export function CategoryFilter({
   getCategoryCount,
 }: CategoryFilterProps) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="w-full flex justify-start border-b gap-0">
       <button
         onClick={() => onSelectCategory(null)}
-        className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
+        className={`rounded-none border-b-2 px-4 py-3 cursor-pointer text-sm font-medium transition-colors ${
           selectedCategory === null
-            ? 'bg-primary text-primary-foreground'
-            : 'bg-muted hover:bg-muted/80 text-foreground'
+            ? 'border-primary'
+            : 'border-transparent text-muted-foreground hover:text-foreground'
         }`}
       >
-        All Jobs
-        <Badge
-          variant="secondary"
-          className={`ml-2 text-xs ${
-            selectedCategory === null ? 'bg-primary-foreground/20 text-primary-foreground' : ''
-          }`}
-        >
-          {getCategoryCount(null)}
-        </Badge>
+        All Jobs ({getCategoryCount(null)})
       </button>
       {categories.map((category) => {
         const count = getCategoryCount(category)
@@ -40,25 +30,16 @@ export function CategoryFilter({
           <button
             key={category}
             onClick={() => onSelectCategory(category)}
-            className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
+            className={`rounded-none border-b-2 px-4 py-3 cursor-pointer text-sm font-medium transition-colors ${
               selectedCategory === category
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted hover:bg-muted/80 text-foreground'
+                ? 'border-primary'
+                : 'border-transparent text-muted-foreground hover:text-foreground'
             }`}
           >
-            {category}
-            <Badge
-              variant="secondary"
-              className={`ml-2 text-xs ${
-                selectedCategory === category ? 'bg-primary-foreground/20 text-primary-foreground' : ''
-              }`}
-            >
-              {count}
-            </Badge>
+            {category} ({count})
           </button>
         )
       })}
     </div>
   )
 }
-
