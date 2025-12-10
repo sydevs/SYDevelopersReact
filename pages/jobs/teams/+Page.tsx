@@ -61,7 +61,7 @@ export default function Page() {
             <Users className="h-8 w-8 text-primary" />
           </div>
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold">Our Volunteer Team</h1>
+            <h1 className="text-2xl md:text-3xl font-bold">Meet Our Team</h1>
             <p className="text-muted-foreground">
               {totalVolunteers} dedicated volunteers across {sortedTeams.length} teams
             </p>
@@ -73,7 +73,7 @@ export default function Page() {
       <div className="prose prose-sm max-w-none">
         <p className="text-foreground/80">
           Our global team of volunteers work together to build and maintain digital tools that help spread Sahaja Yoga
-          meditation around the world. Each team focuses on different aspects of our projects, from technical
+          around the world. Each team focuses on different aspects of our projects, from technical
           development to content creation and community engagement.
         </p>
       </div>
