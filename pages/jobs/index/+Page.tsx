@@ -1,10 +1,8 @@
 import { useData } from 'vike-react/useData'
 import { useState, useMemo } from 'react'
 
-import { Button } from '@/components/ui/button'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 import {
   Wrench,
   Pencil,
@@ -13,7 +11,6 @@ import {
   Video,
   Share2,
   Globe,
-  Briefcase,
 } from 'lucide-react'
 import type { Data } from './+data'
 
