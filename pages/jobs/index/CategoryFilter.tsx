@@ -1,5 +1,4 @@
 import { Users } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 
 interface CategoryFilterProps {
   categories: string[]
@@ -54,18 +53,19 @@ export function CategoryFilter({
           })}
         </div>
       </div>
-      {/* Fixed team button */}
-      <Button
-        variant="outline"
-        className={`gap-2 cursor-pointer shrink-0 ${showTeam ? 'bg-accent' : 'bg-inherit'}`}
+      {/* Team tab - same styling as category tabs */}
+      <button
         onClick={onToggleTeam}
+        className={`flex items-center gap-1.5 rounded-none border-b-2 px-3 sm:px-4 py-3 cursor-pointer text-sm font-medium transition-colors shrink-0 ${
+          showTeam
+            ? 'border-primary'
+            : 'border-transparent text-muted-foreground hover:text-foreground'
+        }`}
       >
         <Users className="h-4 w-4" />
-        <span className="hidden sm:inline">Meet the Team</span>
-        <span className="text-xs text-muted-foreground hidden md:inline">
-          ({totalVolunteers})
-        </span>
-      </Button>
+        <span>Team</span>
+        <span className="hidden sm:inline">({totalVolunteers})</span>
+      </button>
     </div>
   )
 }
