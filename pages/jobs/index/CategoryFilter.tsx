@@ -21,36 +21,40 @@ export function CategoryFilter({
   totalVolunteers,
 }: CategoryFilterProps) {
   return (
-    <div className="w-full flex items-center justify-between border-b gap-0">
-      <div className="flex">
-        <button
-          onClick={() => onSelectCategory(null)}
-          className={`rounded-none border-b-2 px-4 py-3 cursor-pointer text-sm font-medium transition-colors ${
-            selectedCategory === null && !showTeam
-              ? 'border-primary'
-              : 'border-transparent text-muted-foreground hover:text-foreground'
-          }`}
-        >
-          All Jobs ({getCategoryCount(null)})
-        </button>
-        {categories.map((category) => {
-          const count = getCategoryCount(category)
-          if (count === 0) return null
-          return (
-            <button
-              key={category}
-              onClick={() => onSelectCategory(category)}
-              className={`rounded-none border-b-2 px-4 py-3 cursor-pointer text-sm font-medium transition-colors ${
-                selectedCategory === category && !showTeam
-                  ? 'border-primary'
-                  : 'border-transparent text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              {category} ({count})
-            </button>
-          )
-        })}
+    <div className="w-full flex items-center border-b gap-2">
+      {/* Scrollable category tabs */}
+      <div className="flex-1 overflow-x-auto scrollbar-hide min-w-0">
+        <div className="flex whitespace-nowrap">
+          <button
+            onClick={() => onSelectCategory(null)}
+            className={`rounded-none border-b-2 px-3 sm:px-4 py-3 cursor-pointer text-sm font-medium transition-colors shrink-0 ${
+              selectedCategory === null && !showTeam
+                ? 'border-primary'
+                : 'border-transparent text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            All Jobs ({getCategoryCount(null)})
+          </button>
+          {categories.map((category) => {
+            const count = getCategoryCount(category)
+            if (count === 0) return null
+            return (
+              <button
+                key={category}
+                onClick={() => onSelectCategory(category)}
+                className={`rounded-none border-b-2 px-3 sm:px-4 py-3 cursor-pointer text-sm font-medium transition-colors shrink-0 ${
+                  selectedCategory === category && !showTeam
+                    ? 'border-primary'
+                    : 'border-transparent text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {category} ({count})
+              </button>
+            )
+          })}
+        </div>
       </div>
+      {/* Fixed team button */}
       <Button
         variant="outline"
         className={`gap-2 cursor-pointer shrink-0 ${showTeam ? 'bg-accent' : 'bg-inherit'}`}
