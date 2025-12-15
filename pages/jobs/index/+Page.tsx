@@ -82,11 +82,11 @@ export default function Page() {
       {/* About Section */}
       <div className="prose prose-sm max-w-none space-y-4">
         <p className="text-foreground/80">
-          Many yogis volunteer for numerous projects for{' '}
+          Numerous yogis are already volunteering their time for{' '}
           <a href="/" rel="noopener noreferrer">
             Sahaj Projects
           </a>{' '}
-          , but there&apos;s much more than we can manage alone!
+          , but there's so more that needs to be done to reach seekers online.
         </p>
         <ul className="space-y-2 text-foreground/80 list-disc pl-5">
           <li>
