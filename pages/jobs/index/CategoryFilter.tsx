@@ -63,7 +63,7 @@ export function CategoryFilter({
         }`}
       >
         <Users className="h-4 w-4" />
-        <span>Team</span>
+        <span>Our Team</span>
         <span className="hidden sm:inline">({totalVolunteers})</span>
       </button>
     </div>

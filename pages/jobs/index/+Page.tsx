@@ -244,25 +244,6 @@ export default function Page() {
                 )
               })}
             </div>
-
-            <Separator />
-
-            {/* Join CTA */}
-            <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
-              <CardContent className="pt-6 text-center space-y-4">
-                <h2 className="text-xl font-bold">Want to Join Our Team?</h2>
-                <p className="text-muted-foreground max-w-lg mx-auto">
-                  We&apos;re always looking for passionate volunteers to help
-                  with our projects. Whether you&apos;re a developer, writer,
-                  designer, or just enthusiastic about spreading meditation,
-                  there&apos;s a place for you.
-                </p>
-                <Button size="lg" onClick={() => setShowTeam(false)}>
-                  <Briefcase className="h-4 w-4 mr-2" />
-                  View Open Positions
-                </Button>
-              </CardContent>
-            </Card>
           </div>
         ) : (
           <JobList
