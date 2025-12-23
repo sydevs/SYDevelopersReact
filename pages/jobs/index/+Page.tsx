@@ -1,7 +1,7 @@
 import { useData } from 'vike-react/useData'
 import { useState, useMemo } from 'react'
 
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Wrench,
@@ -10,7 +10,6 @@ import {
   Smartphone,
   Video,
   Share2,
-  Globe,
 } from 'lucide-react'
 import type { Data } from './+data'
 
@@ -213,24 +212,12 @@ export default function Page() {
                         {members.map((person, i) => (
                           <div
                             key={`${person.name}-${i}`}
-                            className="flex items-center gap-2 bg-muted/50 rounded-full px-3 py-1.5"
+                            className="flex items-center gap-2 bg-background border rounded-full px-3 py-1.5 shadow-sm"
                           >
-                            <Avatar className="h-6 w-6">
-                              <AvatarFallback
-                                className="text-[10px] font-medium"
-                                style={{
-                                  backgroundColor: `var(--${person.color}-100, #e0e0e0)`,
-                                  color: `var(--${person.color}-700, #333)`,
-                                }}
-                              >
-                                {person.initials}
-                              </AvatarFallback>
-                            </Avatar>
                             <span className="text-sm font-medium">
                               {person.name.split(' ')[0]}
                             </span>
                             <span className="text-xs text-muted-foreground flex items-center gap-1">
-                              <Globe className="h-3 w-3" />
                               {person.shortCountry}
                             </span>
                           </div>
