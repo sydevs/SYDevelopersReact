@@ -90,6 +90,7 @@ function getProjectIconPath(identifier: string): string {
     atlas: '/images/sahaj-atlas/logo.webp',
     app: '/images/mobile-app/logo.svg',
     resources: '/images/resources/logo.webp',
+    journeyselfdiscovery: '/images/journeyselfdiscovery/logo.webp',
   }
 
   return iconMap[identifier] || ''
@@ -234,7 +235,9 @@ export async function fetchProjects(): Promise<Project[]> {
   try {
     console.log('Fetching projects from Airtable...')
     const projectRecords = await airtableFetch('Projects', {
-      filterByFormula: "Type = 'Internal'",
+      // Include Internal projects + journeyselfdiscovery (which is External)
+      filterByFormula:
+        "OR(Type = 'Internal', Identifier = 'journeyselfdiscovery')",
       sort: [{ field: 'Monthly', direction: 'desc' }],
     })
 
