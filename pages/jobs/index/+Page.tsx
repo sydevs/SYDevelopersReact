@@ -1,18 +1,21 @@
 import { useData } from 'vike-react/useData'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { useState, useMemo } from 'react'
+
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Wrench, Pencil, Newspaper, Smartphone, Video, Share2, ChevronRight } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Wrench,
+  Pencil,
+  Newspaper,
+  Smartphone,
+  Video,
+  Share2,
+} from 'lucide-react'
 import type { Data } from './+data'
+
+import { CategoryFilter } from './CategoryFilter'
+import { ProjectFilter } from './ProjectFilter'
+import { JobList } from './JobList'
 
 // Map team names to Lucide icons
 const getTeamIcon = (teamName: string) => {
@@ -26,13 +29,90 @@ const getTeamIcon = (teamName: string) => {
   return Wrench
 }
 
-export default function Page() {
-  const { jobsByCategory, teams } = useData<Data>()
+// Map team colors
+const getTeamColor = (teamName: string) => {
+  const teamLower = teamName.toLowerCase()
+  if (teamLower === 'technical')
+    return 'bg-blue-500/10 text-blue-600 border-blue-500/20'
+  if (teamLower === 'editorial')
+    return 'bg-purple-500/10 text-purple-600 border-purple-500/20'
+  if (teamLower === 'app development')
+    return 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
+  if (teamLower === 'social media')
+    return 'bg-pink-500/10 text-pink-600 border-pink-500/20'
+  if (teamLower === 'live meditations')
+    return 'bg-amber-500/10 text-amber-600 border-amber-500/20'
+  return 'bg-slate-500/10 text-slate-600 border-slate-500/20'
+}
 
-  // Get all jobs from all categories for the "All Jobs" tab
-  const allJobs = Object.values(jobsByCategory)
-    .flat()
-    .sort((a, b) => a.name.localeCompare(b.name))
+export default function Page() {
+  const { jobs, jobsByCategory, jobsByProject, projects, teams } =
+    useData<Data>()
+  const [selectedProject, setSelectedProject] = useState<string | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [showTeam, setShowTeam] = useState(false)
+
+  // Team data calculations
+  const allPeople = useMemo(() => {
+    const people = new Set<string>()
+    Object.values(teams).forEach((members) => {
+      members.forEach((person) => people.add(person.name))
+    })
+    return people
+  }, [teams])
+  const totalVolunteers = allPeople.size
+
+  const sortedTeams = useMemo(
+    () => Object.entries(teams).sort(([a], [b]) => a.localeCompare(b)),
+    [teams],
+  )
+
+  const categories = useMemo(
+    () => Object.keys(jobsByCategory),
+    [jobsByCategory],
+  )
+
+  const projectsWithJobs = useMemo(
+    () =>
+      Object.keys(jobsByProject).sort((a, b) => {
+        if (a === 'All Projects') return 1
+        if (b === 'All Projects') return -1
+        return a.localeCompare(b)
+      }),
+    [jobsByProject],
+  )
+
+  const filteredJobs = useMemo(() => {
+    let result = jobs
+
+    if (selectedProject) {
+      result = result.filter(
+        (job) => (job.project || 'All Projects') === selectedProject,
+      )
+    }
+
+    if (selectedCategory) {
+      result = result.filter((job) => job.category === selectedCategory)
+    }
+
+    return result.sort((a, b) => a.name.localeCompare(b.name))
+  }, [jobs, selectedProject, selectedCategory])
+
+  const getCategoryCount = (category: string | null) => {
+    const baseJobs = selectedProject
+      ? jobs.filter(
+          (job) => (job.project || 'All Projects') === selectedProject,
+        )
+      : jobs
+
+    if (category === null) return baseJobs.length
+    return baseJobs.filter((job) => job.category === category).length
+  }
+
+  const getProjectJobCount = (project: string | null) => {
+    if (project === null) return jobs.length
+    return jobsByProject[project]?.length || 0
+  }
 
   return (
     <>
@@ -42,7 +122,9 @@ export default function Page() {
           <AvatarImage src="/images/logo.webp" alt="Sahaj Web Projects Logo" />
         </Avatar>
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold">Sahaj Web Volunteering</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">
+            Sahaj Web Volunteering
+          </h1>
           <p className="text-muted-foreground">
             Help us build a strong digital campaign to spread Sahaja Yoga
           </p>
@@ -52,136 +134,109 @@ export default function Page() {
       {/* About Section */}
       <div className="prose prose-sm max-w-none space-y-4">
         <p className="text-foreground/80">
-          Many yogis volunteer for{' '}
-          <a href="https://wemeditate.com" target="_blank" rel="noopener noreferrer">
-            We Meditate
+          Numerous yogis are already volunteering their time for{' '}
+          <a href="/" rel="noopener noreferrer">
+            Sahaj Projects
           </a>{' '}
-          and its <a href="/">related projects</a> , but there&apos;s much more than we can manage
-          alone!
+          , but there's so more that needs to be done to reach seekers online.
         </p>
         <ul className="space-y-2 text-foreground/80 list-disc pl-5">
           <li>
-            If you&apos;re ready to take responsibility to make part of this project successful,
-            please get in touch. Enthusiasm is as important as skill.
+            If you&apos;re ready to take responsibility to make part of this
+            project successful, please get in touch. Enthusiasm is as important
+            as skill.
           </li>
           <li>
-            If you need resume-worthy work, look no further. You&apos;re being given meaningful
-            responsibility and a great opportunity to develop skills.
+            If you need resume-worthy work, look no further. You&apos;re being
+            given meaningful responsibility and a great opportunity to develop
+            skills.
           </li>
         </ul>
       </div>
 
-      {/* Jobs and Team Tabs */}
-      <Tabs defaultValue="all" className="w-full">
-        <TabsList className="flex flex-wrap justify-center gap-2 h-auto bg-transparent p-0 my-3">
-          <TabsTrigger value="all" className="bg-secondary/20">
-            All Jobs
-          </TabsTrigger>
-          {Object.keys(jobsByCategory).map((category) => (
-            <TabsTrigger key={category} value={category.toLowerCase()} className="bg-secondary/20">
-              {category} ({jobsByCategory[category].length})
-            </TabsTrigger>
-          ))}
-          <TabsTrigger value="team" className="bg-secondary/20">
-            Current Team
-          </TabsTrigger>
-        </TabsList>
+      {/* Jobs Dashboard */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold">Job Dashboard</h2>
 
-        {/* All Jobs Tab */}
-        <TabsContent value="all" className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {allJobs.map((job) => (
-              <a key={job.id} href={`/jobs/${job.id}`}>
-                <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer flex flex-col">
-                  <CardHeader className="flex-1">
-                    <CardTitle className="text-lg">{job.name}</CardTitle>
-                    <CardDescription>{job.brief}</CardDescription>
-                  </CardHeader>
-                  <CardFooter className="flex items-center justify-between">
-                    <Button variant="ghost" size="sm" className="w-full justify-between">
-                      <span>View Details</span>
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
-                    {job.priority && (
-                      <Badge
-                        variant={job.priority === 'Critical' ? 'destructive' : 'secondary'}
-                        className="ml-2 shrink-0"
-                      >
-                        {job.priority}
-                      </Badge>
-                    )}
-                  </CardFooter>
-                </Card>
-              </a>
-            ))}
-          </div>
-        </TabsContent>
+          <ProjectFilter
+            projects={projects}
+            projectsWithJobs={projectsWithJobs}
+            selectedProject={selectedProject}
+            onSelectProject={setSelectedProject}
+            getProjectJobCount={getProjectJobCount}
+            totalJobCount={jobs.length}
+          />
+        </div>
 
-        {/* Current Team Tab */}
-        <TabsContent value="team" className="space-y-4">
-          <Card>
-            <CardContent className="pt-6 space-y-4">
-              {Object.entries(teams).map(([team, people]) => {
-                const TeamIcon = getTeamIcon(team)
+        <CategoryFilter
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={(category) => {
+            setSelectedCategory(category)
+            setShowTeam(false)
+          }}
+          getCategoryCount={getCategoryCount}
+          showTeam={showTeam}
+          onToggleTeam={() => {
+            setShowTeam((prev) => !prev)
+            if (!showTeam) {
+              setSelectedCategory(null)
+            }
+          }}
+          totalVolunteers={totalVolunteers}
+        />
+
+        {showTeam ? (
+          <div className="space-y-6">
+            {/* Teams Grid */}
+            <div className="grid gap-6 md:grid-cols-2">
+              {sortedTeams.map(([teamName, members]) => {
+                const TeamIcon = getTeamIcon(teamName)
+                const colorClasses = getTeamColor(teamName)
+
                 return (
-                  <div key={team} className="space-y-2">
-                    <div className="flex items-center gap-2 font-semibold">
-                      <TeamIcon className="h-4 w-4" />
-                      <span>{team}</span>
-                    </div>
-                    <div className="flex flex-wrap gap-2 pl-6">
-                      {people.map((person, i) => (
-                        <Badge key={i} variant="outline">
-                          {person.name.split(' ')[0]} • {person.shortCountry}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
+                  <Card key={teamName} className="overflow-hidden">
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2 rounded-lg ${colorClasses}`}>
+                          <TeamIcon className="h-5 w-5" />
+                        </div>
+                        <div className="flex-1">
+                          <CardTitle className="text-lg">{teamName}</CardTitle>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-wrap gap-2">
+                        {members.map((person, i) => (
+                          <div
+                            key={`${person.name}-${i}`}
+                            className="flex items-center gap-2 bg-background border rounded-full px-3 py-1.5 shadow-sm"
+                          >
+                            <span className="text-sm font-medium">
+                              {person.name.split(' ')[0]}
+                            </span>
+                            <span className="text-xs text-muted-foreground flex items-center gap-1">
+                              {person.shortCountry}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
                 )
               })}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Job Category Tabs */}
-        {Object.entries(jobsByCategory).map(([category, jobs]) => (
-          <TabsContent key={category} value={category.toLowerCase()} className="space-y-4">
-            {category.toLowerCase() === 'development' && (
-              <p className="text-sm text-muted-foreground text-center">
-                For most of these technical roles we expect that you have some prior skills.
-              </p>
-            )}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {jobs
-                .sort((a, b) => (a.priority || 'z').localeCompare(b.priority || 'z'))
-                .map((job) => (
-                  <a key={job.id} href={`/jobs/${job.id}`}>
-                    <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer flex flex-col">
-                      <CardHeader className="flex-1">
-                        <CardTitle className="text-lg">{job.name}</CardTitle>
-                        <CardDescription>{job.brief}</CardDescription>
-                      </CardHeader>
-                      <CardFooter className="flex items-center justify-between">
-                        <Button variant="ghost" size="sm" className="w-full justify-between">
-                          <span>View Details</span>
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                        {job.priority && (
-                          <Badge
-                            variant={job.priority === 'Critical' ? 'destructive' : 'secondary'}
-                            className="ml-2 shrink-0"
-                          >
-                            {job.priority}
-                          </Badge>
-                        )}
-                      </CardFooter>
-                    </Card>
-                  </a>
-                ))}
             </div>
-          </TabsContent>
-        ))}
-      </Tabs>
+          </div>
+        ) : (
+          <JobList
+            jobs={filteredJobs}
+            projects={projects}
+            selectedCategory={selectedCategory}
+          />
+        )}
+      </div>
     </>
   )
 }

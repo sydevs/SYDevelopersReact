@@ -57,7 +57,10 @@ async function airtableFetch(
   return data.records
 }
 
-async function airtableFindRecord(tableName: string, recordId: string): Promise<AirtableRecord> {
+async function airtableFindRecord(
+  tableName: string,
+  recordId: string,
+): Promise<AirtableRecord> {
   const apiKey = import.meta.env.AIRTABLE_KEY as string
   const baseId = import.meta.env.AIRTABLE_BASE as string
 
@@ -105,30 +108,71 @@ function getProjectIconPath(identifier: string): string {
     atlas: '/images/sahaj-atlas/logo.webp',
     app: '/images/mobile-app/logo.svg',
     resources: '/images/resources/logo.webp',
+    journeyselfdiscovery: '/images/journeyselfdiscovery/logo.webp',
+    '21daymeditation': '/images/21daymeditation/logo.webp',
   }
 
   return iconMap[identifier] || ''
 }
 
+/**
+ * Validates that a job record has all required fields.
+ * Returns the missing fields array (empty if valid).
+ */
+function validateJobFields(record: AirtableRecord): string[] {
+  const missingFields: string[] = []
+  const fields = record.fields
+
+  if (typeof fields.Name !== 'string' || !fields.Name) missingFields.push('Name')
+  if (typeof fields.Category !== 'string' || !fields.Category) missingFields.push('Category')
+  if (typeof fields.Brief !== 'string') missingFields.push('Brief')
+  if (typeof fields.Description !== 'string') missingFields.push('Description')
+
+  return missingFields
+}
+
 export async function fetchJobs(): Promise<Job[]> {
   try {
     console.log('Fetching jobs from Airtable...')
-    const records = await airtableFetch('Jobs', {
+    const records = await airtableFetch('JobsV2', {
       filterByFormula: 'Public = 1',
       sort: [{ field: 'Category', direction: 'asc' }],
     })
 
     console.log(`Fetched ${records.length} jobs`)
-    return records.map((r) => ({
-      id: r.id,
-      name: r.fields.Name as string,
-      category: r.fields.Category as string,
-      brief: r.fields.Brief as string,
-      description: r.fields.Description as string,
-      icon: r.fields.Icon as string,
-      priority: r.fields.Priority as string | undefined,
-      public: true,
-    }))
+
+    const validJobs = records
+      .map((r): Job | null => {
+        const missingFields = validateJobFields(r)
+        if (missingFields.length > 0) {
+          console.warn(
+            `[fetchJobs] Discarding job (id: ${r.id}): missing required fields [${missingFields.join(', ')}]`,
+            { recordId: r.id, fields: r.fields },
+          )
+          return null
+        }
+
+        return {
+          id: r.id,
+          name: r.fields.Name as string,
+          category: r.fields.Category as string,
+          brief: r.fields.Brief as string,
+          description: r.fields.Description as string,
+          priority: r.fields.Priority as string | undefined,
+          project: r.fields.Project as string | undefined,
+          contactEmail: r.fields.ContactEmail as string | undefined,
+          public: true,
+        }
+      })
+      .filter((job): job is Job => job !== null)
+
+    if (validJobs.length < records.length) {
+      console.warn(
+        `[fetchJobs] ${records.length - validJobs.length} job(s) were discarded due to missing fields`,
+      )
+    }
+
+    return validJobs
   } catch (error) {
     console.error('Error fetching jobs from Airtable:', error)
     return []
@@ -138,20 +182,81 @@ export async function fetchJobs(): Promise<Job[]> {
 export async function fetchJob(id: string): Promise<Job | null> {
   try {
     const record = await airtableFindRecord('Jobs', id)
+
+    const missingFields = validateJobFields(record)
+    if (missingFields.length > 0) {
+      console.warn(
+        `[fetchJob] Job (id: ${id}) has missing required fields [${missingFields.join(', ')}]`,
+        {
+          recordId: record.id,
+          fields: record.fields,
+        },
+      )
+      return null
+    }
+
     return {
       id: record.id,
       name: record.fields.Name as string,
       category: record.fields.Category as string,
       brief: record.fields.Brief as string,
       description: record.fields.Description as string,
-      icon: record.fields.Icon as string,
       priority: record.fields.Priority as string | undefined,
+      contactEmail: record.fields.ContactEmail as string | undefined,
       public: record.fields.Public as boolean,
     }
   } catch (error) {
     console.error('Error fetching job:', error)
     return null
   }
+}
+
+/**
+ * Validates that an expense record has all required fields.
+ * Returns the missing fields array (empty if valid).
+ */
+function validateExpenseFields(
+  record: AirtableRecord,
+):
+  | { valid: true; expense: Expense }
+  | { valid: false; missingFields: string[] } {
+  const missingFields: string[] = []
+  const fields = record.fields
+
+  if (typeof fields.Name !== 'string' || !fields.Name) missingFields.push('Name')
+  if (typeof fields.Description !== 'string') missingFields.push('Description')
+  if (fields.Type !== 'Monthly' && fields.Type !== 'Yearly') missingFields.push('Type')
+
+  if (missingFields.length > 0) {
+    return { valid: false, missingFields }
+  }
+
+  return {
+    valid: true,
+    expense: {
+      name: fields.Name as string,
+      description: fields.Description as string,
+      type: fields.Type as 'Monthly' | 'Yearly',
+      monthly: (fields.Monthly as number) || 0,
+      yearly: (fields.Yearly as number) || 0,
+    },
+  }
+}
+
+/**
+ * Validates that a project record has all required fields.
+ * Returns the missing fields array (empty if valid).
+ */
+function validateProjectFields(record: AirtableRecord): string[] {
+  const missingFields: string[] = []
+  const fields = record.fields
+
+  if (typeof fields.Name !== 'string' || !fields.Name) missingFields.push('Name')
+  if (typeof fields.Identifier !== 'string' || !fields.Identifier) missingFields.push('Identifier')
+  if (typeof fields.Description !== 'string') missingFields.push('Description')
+  if (typeof fields.URL !== 'string') missingFields.push('URL')
+
+  return missingFields
 }
 
 export async function fetchProjects(): Promise<Project[]> {
@@ -163,8 +268,19 @@ export async function fetchProjects(): Promise<Project[]> {
     })
 
     console.log(`Fetched ${projectRecords.length} projects`)
-    const projects = await Promise.all(
+
+    const projectResults = await Promise.all(
       projectRecords.map(async (project) => {
+        // Validate required project fields
+        const missingFields = validateProjectFields(project)
+        if (missingFields.length > 0) {
+          console.warn(
+            `[fetchProjects] Discarding project (id: ${project.id}): missing required fields [${missingFields.join(', ')}]`,
+            { recordId: project.id, fields: project.fields },
+          )
+          return null
+        }
+
         const expenseIds = project.fields.Expenses as string[] | undefined
         let expenses: Expense[] = []
 
@@ -174,13 +290,19 @@ export async function fetchProjects(): Promise<Project[]> {
             sort: [{ field: 'Monthly', direction: 'desc' }],
           })
 
-          expenses = expenseRecords.map((r) => ({
-            name: r.fields.Name as string,
-            description: r.fields.Description as string,
-            type: r.fields.Type as 'Monthly' | 'Yearly',
-            monthly: (r.fields.Monthly as number) || 0,
-            yearly: (r.fields.Yearly as number) || 0,
-          }))
+          expenses = expenseRecords
+            .map((r) => {
+              const result = validateExpenseFields(r)
+              if (!result.valid) {
+                console.warn(
+                  `[fetchProjects] Discarding expense (id: ${r.id}) for project "${project.fields.Name}": missing required fields [${result.missingFields.join(', ')}]`,
+                  { recordId: r.id, projectId: project.id, fields: r.fields },
+                )
+                return null
+              }
+              return result.expense
+            })
+            .filter((e): e is Expense => e !== null)
         }
 
         // Map project identifier to local icon path
@@ -200,7 +322,16 @@ export async function fetchProjects(): Promise<Project[]> {
       }),
     )
 
-    return projects
+    // Filter out any null projects (those that failed validation)
+    const validProjects = projectResults.filter((p): p is Project => p !== null)
+
+    if (validProjects.length < projectRecords.length) {
+      console.warn(
+        `[fetchProjects] ${projectRecords.length - validProjects.length} project(s) were discarded due to missing fields`,
+      )
+    }
+
+    return validProjects
   } catch (error) {
     console.error('Error fetching projects from Airtable:', error)
     return []
