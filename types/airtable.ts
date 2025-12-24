@@ -1,3 +1,10 @@
+export interface ProjectRef {
+  id: string
+  identifier: string
+  name: string
+  icon: string
+}
+
 export interface Job {
   id: string
   name: string
@@ -5,7 +12,7 @@ export interface Job {
   brief: string
   description: string
   priority?: string
-  project?: string
+  projects?: ProjectRef[]
   contactEmail?: string
   public: boolean
 }

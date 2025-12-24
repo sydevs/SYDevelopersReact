@@ -1,34 +1,76 @@
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { ChevronRight } from 'lucide-react'
-import type { Job, Project } from '@/types/airtable'
+import type { Job, ProjectRef } from '@/types/airtable'
 
 interface JobListItemProps {
   job: Job
-  projectInfo?: Project
   showCategory?: boolean
 }
 
-export function JobListItem({
-  job,
-  projectInfo,
-  showCategory = true,
-}: JobListItemProps) {
+export function JobListItem({ job, showCategory = true }: JobListItemProps) {
+  const projects = job.projects || []
+  const hasProjects = projects.length > 0
+  const maxVisibleIcons = 3
+  const visibleProjects = projects.slice(0, maxVisibleIcons)
+  const remainingCount = projects.length - maxVisibleIcons
+
+  // Generate project names for display
+  const projectNames = hasProjects
+    ? projects.map((p) => p.name).join(', ')
+    : 'All Projects'
+
   return (
     <a
       href={`/jobs/${job.id}`}
       className="flex items-center gap-4 p-4 hover:bg-accent/50 transition-colors"
     >
-      {/* Project Logo */}
-      <Avatar className="h-10 w-10 shrink-0">
-        {projectInfo?.icon ? (
-          <AvatarImage src={projectInfo.icon} alt={projectInfo.name} />
+      {/* Stacked Project Icons */}
+      <div className="relative flex shrink-0" style={{ width: hasProjects ? `${Math.min(projects.length, maxVisibleIcons) * 28 + 12}px` : '40px' }}>
+        {hasProjects ? (
+          <>
+            {visibleProjects.map((project, index) => (
+              <Avatar
+                key={project.id}
+                className="h-10 w-10 border-2 border-background"
+                style={{
+                  position: index === 0 ? 'relative' : 'absolute',
+                  left: `${index * 28}px`,
+                  zIndex: maxVisibleIcons - index,
+                }}
+              >
+                {project.icon ? (
+                  <AvatarImage src={project.icon} alt={project.name} />
+                ) : (
+                  <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
+                    {project.name.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                )}
+              </Avatar>
+            ))}
+            {remainingCount > 0 && (
+              <Avatar
+                className="h-10 w-10 border-2 border-background"
+                style={{
+                  position: 'absolute',
+                  left: `${maxVisibleIcons * 28}px`,
+                  zIndex: 0,
+                }}
+              >
+                <AvatarFallback className="bg-muted text-muted-foreground text-xs font-medium">
+                  +{remainingCount}
+                </AvatarFallback>
+              </Avatar>
+            )}
+          </>
         ) : (
-          <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
-            {(job.project || 'G').charAt(0).toUpperCase()}
-          </AvatarFallback>
+          <Avatar className="h-10 w-10">
+            <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
+              G
+            </AvatarFallback>
+          </Avatar>
         )}
-      </Avatar>
+      </div>
 
       {/* Job Info */}
       <div className="flex-1 min-w-0">
@@ -40,7 +82,7 @@ export function JobListItem({
               <span className="text-muted-foreground/50">|</span>
             </>
           )}
-          <span>{projectInfo?.name || job.project || 'All Projects'}</span>
+          <span className="truncate">{projectNames}</span>
         </div>
       </div>
 
