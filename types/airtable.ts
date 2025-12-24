@@ -6,6 +6,7 @@ export interface Job {
   description: string
   priority?: string
   project?: string
+  contactEmail?: string
   public: boolean
 }
 

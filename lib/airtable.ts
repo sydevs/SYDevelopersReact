@@ -24,7 +24,9 @@ async function airtableFetch(
   const baseId = import.meta.env.AIRTABLE_BASE as string
 
   if (!apiKey || !baseId) {
-    throw new Error('Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local')
+    throw new Error(
+      'Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local',
+    )
   }
 
   const params = new URLSearchParams()
@@ -55,12 +57,17 @@ async function airtableFetch(
   return data.records
 }
 
-async function airtableFindRecord(tableName: string, recordId: string): Promise<AirtableRecord> {
+async function airtableFindRecord(
+  tableName: string,
+  recordId: string,
+): Promise<AirtableRecord> {
   const apiKey = import.meta.env.AIRTABLE_KEY as string
   const baseId = import.meta.env.AIRTABLE_BASE as string
 
   if (!apiKey || !baseId) {
-    throw new Error('Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local')
+    throw new Error(
+      'Airtable credentials not configured. Check AIRTABLE_KEY and AIRTABLE_BASE in .env.local',
+    )
   }
 
   const url = `${AIRTABLE_API_URL}/${baseId}/${encodeURIComponent(tableName)}/${recordId}`
@@ -79,7 +86,18 @@ async function airtableFindRecord(tableName: string, recordId: string): Promise<
   return response.json()
 }
 
-const COLORS = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink']
+const COLORS = [
+  'red',
+  'orange',
+  'yellow',
+  'olive',
+  'green',
+  'teal',
+  'blue',
+  'violet',
+  'purple',
+  'pink',
+]
 
 /**
  * Maps project identifiers to their local image paths
@@ -142,13 +160,16 @@ export async function fetchJobs(): Promise<Job[]> {
           description: r.fields.Description as string,
           priority: r.fields.Priority as string | undefined,
           project: r.fields.Project as string | undefined,
+          contactEmail: r.fields.ContactEmail as string | undefined,
           public: true,
         }
       })
       .filter((job): job is Job => job !== null)
 
     if (validJobs.length < records.length) {
-      console.warn(`[fetchJobs] ${records.length - validJobs.length} job(s) were discarded due to missing fields`)
+      console.warn(
+        `[fetchJobs] ${records.length - validJobs.length} job(s) were discarded due to missing fields`,
+      )
     }
 
     return validJobs
@@ -164,10 +185,13 @@ export async function fetchJob(id: string): Promise<Job | null> {
 
     const missingFields = validateJobFields(record)
     if (missingFields.length > 0) {
-      console.warn(`[fetchJob] Job (id: ${id}) has missing required fields [${missingFields.join(', ')}]`, {
-        recordId: record.id,
-        fields: record.fields,
-      })
+      console.warn(
+        `[fetchJob] Job (id: ${id}) has missing required fields [${missingFields.join(', ')}]`,
+        {
+          recordId: record.id,
+          fields: record.fields,
+        },
+      )
       return null
     }
 
@@ -178,6 +202,7 @@ export async function fetchJob(id: string): Promise<Job | null> {
       brief: record.fields.Brief as string,
       description: record.fields.Description as string,
       priority: record.fields.Priority as string | undefined,
+      contactEmail: record.fields.ContactEmail as string | undefined,
       public: record.fields.Public as boolean,
     }
   } catch (error) {
@@ -192,7 +217,9 @@ export async function fetchJob(id: string): Promise<Job | null> {
  */
 function validateExpenseFields(
   record: AirtableRecord,
-): { valid: true; expense: Expense } | { valid: false; missingFields: string[] } {
+):
+  | { valid: true; expense: Expense }
+  | { valid: false; missingFields: string[] } {
   const missingFields: string[] = []
   const fields = record.fields
 
