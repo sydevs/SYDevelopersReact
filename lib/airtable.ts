@@ -263,9 +263,7 @@ export async function fetchProjects(): Promise<Project[]> {
   try {
     console.log('Fetching projects from Airtable...')
     const projectRecords = await airtableFetch('Projects', {
-      // Include Internal projects + journeyselfdiscovery (which is External)
-      filterByFormula:
-        "OR(Type = 'Internal', Identifier = 'journeyselfdiscovery', Identifier = '21daymeditation')",
+      filterByFormula: "Type = 'Internal'",
       sort: [{ field: 'Monthly', direction: 'desc' }],
     })
 
