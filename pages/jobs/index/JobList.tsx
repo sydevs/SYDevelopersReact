@@ -29,11 +29,7 @@ export function JobList({ jobs, selectedCategory }: JobListProps) {
       )}
       <div className="border rounded-lg divide-y">
         {sortedJobs.map((job) => (
-          <JobListItem
-            key={job.id}
-            job={job}
-            showCategory={selectedCategory === null}
-          />
+          <JobListItem key={job.id} job={job} />
         ))}
       </div>
     </div>

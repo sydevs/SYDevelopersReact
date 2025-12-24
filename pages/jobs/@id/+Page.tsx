@@ -29,14 +29,11 @@ export default function Page() {
       <div className="space-y-4">
         <div className="flex items-center gap-3 flex-wrap">
           <Badge>{job.category}</Badge>
-          {job.priority && (
-            <Badge
-              variant={
-                job.priority === 'Critical' ? 'destructive' : 'secondary'
-              }
-            >
-              {job.priority}
-            </Badge>
+          {job.priority === 'Critical' && (
+            <Badge variant="destructive">Critical</Badge>
+          )}
+          {job.priority === 'Important' && (
+            <Badge variant="secondary">Important</Badge>
           )}
         </div>
 
