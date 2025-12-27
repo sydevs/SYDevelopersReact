@@ -33,8 +33,8 @@ export default function Page() {
       {/* Content */}
       <div className="prose prose-sm max-w-none space-y-8">
         <p className="text-lg text-muted-foreground">
-          A series of 12-week courses for beginner, intermediate and advanced
-          meditators.
+          Journey of Self-discovery is a complete Sahaja Yoga meditation course
+          designed to open the heart and satisfy the enquiring mind.
         </p>
 
         <div className="space-y-4">
@@ -42,6 +42,10 @@ export default function Page() {
             What is Journey of Self-Discovery?
           </h2>
           <div className="space-y-4 text-muted-foreground">
+            <p>
+              Journey of Self-discovery is a complete Sahaja Yoga meditation
+              course designed to open the heart and satisfy the enquiring mind.
+            </p>
             <p>
               This successful series of 12-week courses for beginner,
               intermediate and advanced meditators, has been developed and
