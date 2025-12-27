@@ -15,14 +15,25 @@ export async function data(_pageContext: PageContextServer) {
     jobsByCategory[job.category].push(job)
   })
 
-  // Group jobs by project
+  // Group jobs by project (jobs can appear under multiple projects)
   const jobsByProject: Record<string, typeof jobs> = {}
   jobs.forEach((job) => {
-    const projectKey = job.project || 'All Projects'
-    if (!jobsByProject[projectKey]) {
-      jobsByProject[projectKey] = []
+    if (job.projects && job.projects.length > 0) {
+      // Add job to each linked project
+      job.projects.forEach((project) => {
+        const projectKey = project.identifier
+        if (!jobsByProject[projectKey]) {
+          jobsByProject[projectKey] = []
+        }
+        jobsByProject[projectKey].push(job)
+      })
+    } else {
+      // Jobs without projects go to "All Projects"
+      if (!jobsByProject['All Projects']) {
+        jobsByProject['All Projects'] = []
+      }
+      jobsByProject['All Projects'].push(job)
     }
-    jobsByProject[projectKey].push(job)
   })
 
   return {
