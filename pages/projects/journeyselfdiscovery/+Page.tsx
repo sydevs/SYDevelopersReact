@@ -126,7 +126,7 @@ export default function Page() {
           <div className="flex flex-col gap-2">
             <Button asChild variant="outline" className="justify-start">
               <a
-                href="https://sahajayoga.nl/en/"
+                href="https://www.amruta.org/sahaja-yoga-meditation-course/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
