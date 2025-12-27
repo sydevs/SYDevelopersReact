@@ -131,7 +131,7 @@ export default function Page() {
                 rel="noopener noreferrer"
               >
                 <ExternalLink className="mr-2 h-4 w-4" />
-                Journey of Self-Discovery Website
+                Journey of Self-Discovery Website (Amruta)
               </a>
             </Button>
             <Button asChild variant="outline" className="justify-start">
