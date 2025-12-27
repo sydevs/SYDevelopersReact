@@ -115,11 +115,6 @@ export default function Page() {
     return baseJobs.filter((job) => job.category === category).length
   }
 
-  const getProjectJobCount = (project: string | null) => {
-    if (project === null) return jobs.length
-    return jobsByProject[project]?.length || 0
-  }
-
   return (
     <>
       {/* Hero Section */}
@@ -162,18 +157,14 @@ export default function Page() {
 
       {/* Jobs Dashboard */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold">Job Dashboard</h2>
+        <h2 className="text-xl font-bold">Job Dashboard</h2>
 
-          <ProjectFilter
-            projects={projects}
-            projectsWithJobs={projectsWithJobs}
-            selectedProject={selectedProject}
-            onSelectProject={setSelectedProject}
-            getProjectJobCount={getProjectJobCount}
-            totalJobCount={jobs.length}
-          />
-        </div>
+        <ProjectFilter
+          projects={projects}
+          projectsWithJobs={projectsWithJobs}
+          selectedProject={selectedProject}
+          onSelectProject={setSelectedProject}
+        />
 
         <CategoryFilter
           categories={categories}
