@@ -17,12 +17,12 @@ export default function Page() {
         <div className="space-y-1">
           <h1 className="text-3xl font-bold">Journey of Self-Discovery</h1>
           <a
-            href="https://sahajayoga.nl/en/"
+            href="https://www.amruta.org/sahaja-yoga-meditation-course/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:underline flex items-center gap-1"
           >
-            sahajayoga.nl
+            amruta.org
             <ExternalLink className="h-4 w-4" />
           </a>
         </div>
@@ -33,8 +33,8 @@ export default function Page() {
       {/* Content */}
       <div className="prose prose-sm max-w-none space-y-8">
         <p className="text-lg text-muted-foreground">
-          A series of 12-week courses for beginner, intermediate and advanced
-          meditators.
+          Journey of Self-discovery is a complete Sahaja Yoga meditation course
+          designed to open the heart and satisfy the enquiring mind.
         </p>
 
         <div className="space-y-4">
@@ -42,6 +42,10 @@ export default function Page() {
             What is Journey of Self-Discovery?
           </h2>
           <div className="space-y-4 text-muted-foreground">
+            <p>
+              Journey of Self-discovery is a complete Sahaja Yoga meditation
+              course designed to open the heart and satisfy the enquiring mind.
+            </p>
             <p>
               This successful series of 12-week courses for beginner,
               intermediate and advanced meditators, has been developed and
@@ -122,12 +126,12 @@ export default function Page() {
           <div className="flex flex-col gap-2">
             <Button asChild variant="outline" className="justify-start">
               <a
-                href="https://sahajayoga.nl/en/"
+                href="https://www.amruta.org/sahaja-yoga-meditation-course/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <ExternalLink className="mr-2 h-4 w-4" />
-                Journey of Self-Discovery Website
+                Journey of Self-Discovery Website (Amruta)
               </a>
             </Button>
             <Button asChild variant="outline" className="justify-start">
