@@ -48,7 +48,7 @@ const getTeamColor = (teamName: string) => {
 export default function Page() {
   const { jobs, jobsByCategory, jobsByProject, projects, teams } =
     useData<Data>()
-  const [selectedProject, setSelectedProject] = useState<string | null>(null)
+  const [selectedProject, setSelectedProject] = useState<string | null>('wemeditate')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [showTeam, setShowTeam] = useState(false)
 
