@@ -17,12 +17,12 @@ export default function Page() {
         <div className="space-y-1">
           <h1 className="text-3xl font-bold">Journey of Self-Discovery</h1>
           <a
-            href="https://sahajayoga.nl/en/"
+            href="https://www.amruta.org/sahaja-yoga-meditation-course/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:underline flex items-center gap-1"
           >
-            sahajayoga.nl
+            amruta.org
             <ExternalLink className="h-4 w-4" />
           </a>
         </div>
