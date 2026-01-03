@@ -1,19 +1,12 @@
 import { JobListItem } from './JobListItem'
-import type { Job, Project } from '@/types/airtable'
+import type { Job } from '@/types/airtable'
 
 interface JobListProps {
   jobs: Job[]
-  projects: Project[]
   selectedCategory: string | null
 }
 
-export function JobList({ jobs, projects, selectedCategory }: JobListProps) {
-  const getProjectInfo = (identifier: string) => {
-    return projects.find(
-      (p) => p.identifier === identifier || p.name === identifier,
-    )
-  }
-
+export function JobList({ jobs, selectedCategory }: JobListProps) {
   const sortedJobs = [...jobs].sort((a, b) =>
     (a.priority || 'z').localeCompare(b.priority || 'z'),
   )
@@ -35,19 +28,9 @@ export function JobList({ jobs, projects, selectedCategory }: JobListProps) {
         </p>
       )}
       <div className="border rounded-lg divide-y">
-        {sortedJobs.map((job) => {
-          const projectInfo = job.project
-            ? getProjectInfo(job.project)
-            : undefined
-          return (
-            <JobListItem
-              key={job.id}
-              job={job}
-              projectInfo={projectInfo}
-              showCategory={selectedCategory === null}
-            />
-          )
-        })}
+        {sortedJobs.map((job) => (
+          <JobListItem key={job.id} job={job} />
+        ))}
       </div>
     </div>
   )

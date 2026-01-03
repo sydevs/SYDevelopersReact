@@ -86,9 +86,12 @@ export default function Page() {
     let result = jobs
 
     if (selectedProject) {
-      result = result.filter(
-        (job) => (job.project || 'All Projects') === selectedProject,
-      )
+      result = result.filter((job) => {
+        if (selectedProject === 'All Projects') {
+          return !job.projects || job.projects.length === 0
+        }
+        return job.projects?.some((p) => p.identifier === selectedProject)
+      })
     }
 
     if (selectedCategory) {
@@ -100,9 +103,12 @@ export default function Page() {
 
   const getCategoryCount = (category: string | null) => {
     const baseJobs = selectedProject
-      ? jobs.filter(
-          (job) => (job.project || 'All Projects') === selectedProject,
-        )
+      ? jobs.filter((job) => {
+          if (selectedProject === 'All Projects') {
+            return !job.projects || job.projects.length === 0
+          }
+          return job.projects?.some((p) => p.identifier === selectedProject)
+        })
       : jobs
 
     if (category === null) return baseJobs.length
@@ -230,11 +236,7 @@ export default function Page() {
             </div>
           </div>
         ) : (
-          <JobList
-            jobs={filteredJobs}
-            projects={projects}
-            selectedCategory={selectedCategory}
-          />
+          <JobList jobs={filteredJobs} selectedCategory={selectedCategory} />
         )}
       </div>
     </>

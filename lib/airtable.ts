@@ -1,4 +1,11 @@
-import type { Job, Project, Person, Expense, Teams } from '../types/airtable'
+import type {
+  Job,
+  Project,
+  Person,
+  Expense,
+  Teams,
+  ProjectRef,
+} from '../types/airtable'
 
 // Use Cloudflare's native fetch API for Airtable (compatible with Workers)
 const AIRTABLE_API_URL = 'https://api.airtable.com/v0'
@@ -123,8 +130,10 @@ function validateJobFields(record: AirtableRecord): string[] {
   const missingFields: string[] = []
   const fields = record.fields
 
-  if (typeof fields.Name !== 'string' || !fields.Name) missingFields.push('Name')
-  if (typeof fields.Category !== 'string' || !fields.Category) missingFields.push('Category')
+  if (typeof fields.Name !== 'string' || !fields.Name)
+    missingFields.push('Name')
+  if (typeof fields.Category !== 'string' || !fields.Category)
+    missingFields.push('Category')
   if (typeof fields.Brief !== 'string') missingFields.push('Brief')
   if (typeof fields.Description !== 'string') missingFields.push('Description')
 
@@ -134,12 +143,40 @@ function validateJobFields(record: AirtableRecord): string[] {
 export async function fetchJobs(): Promise<Job[]> {
   try {
     console.log('Fetching jobs from Airtable...')
-    const records = await airtableFetch('JobsV2', {
+    const records = await airtableFetch('JobsV3', {
       filterByFormula: 'Public = 1',
       sort: [{ field: 'Category', direction: 'asc' }],
     })
 
     console.log(`Fetched ${records.length} jobs`)
+
+    // Collect all unique project IDs from all jobs
+    const allProjectIds = new Set<string>()
+    records.forEach((r) => {
+      const projectIds = r.fields.Projects as string[] | undefined
+      projectIds?.forEach((id) => allProjectIds.add(id))
+    })
+
+    // Fetch all referenced projects in parallel
+    const projectMap = new Map<string, ProjectRef>()
+    if (allProjectIds.size > 0) {
+      const projectPromises = Array.from(allProjectIds).map((id) =>
+        airtableFindRecord('Projects', id).catch(() => null),
+      )
+      const projectRecords = await Promise.all(projectPromises)
+
+      projectRecords.forEach((record) => {
+        if (record) {
+          const identifier = record.fields.Identifier as string
+          projectMap.set(record.id, {
+            id: record.id,
+            identifier,
+            name: record.fields.Name as string,
+            icon: getProjectIconPath(identifier),
+          })
+        }
+      })
+    }
 
     const validJobs = records
       .map((r): Job | null => {
@@ -152,6 +189,14 @@ export async function fetchJobs(): Promise<Job[]> {
           return null
         }
 
+        // Resolve linked projects
+        const projectIds = r.fields.Projects as string[] | undefined
+        const projects: ProjectRef[] = []
+        projectIds?.forEach((id) => {
+          const project = projectMap.get(id)
+          if (project) projects.push(project)
+        })
+
         return {
           id: r.id,
           name: r.fields.Name as string,
@@ -159,7 +204,7 @@ export async function fetchJobs(): Promise<Job[]> {
           brief: r.fields.Brief as string,
           description: r.fields.Description as string,
           priority: r.fields.Priority as string | undefined,
-          project: r.fields.Project as string | undefined,
+          projects: projects.length > 0 ? projects : undefined,
           contactEmail: r.fields.ContactEmail as string | undefined,
           public: true,
         }
@@ -181,7 +226,7 @@ export async function fetchJobs(): Promise<Job[]> {
 
 export async function fetchJob(id: string): Promise<Job | null> {
   try {
-    const record = await airtableFindRecord('Jobs', id)
+    const record = await airtableFindRecord('JobsV3', id)
 
     const missingFields = validateJobFields(record)
     if (missingFields.length > 0) {
@@ -195,6 +240,29 @@ export async function fetchJob(id: string): Promise<Job | null> {
       return null
     }
 
+    // Resolve linked projects
+    const projectIds = record.fields.Projects as string[] | undefined
+    const projects: ProjectRef[] = []
+
+    if (projectIds?.length) {
+      const projectPromises = projectIds.map((pid) =>
+        airtableFindRecord('Projects', pid).catch(() => null),
+      )
+      const projectRecords = await Promise.all(projectPromises)
+
+      projectRecords.forEach((p) => {
+        if (p) {
+          const identifier = p.fields.Identifier as string
+          projects.push({
+            id: p.id,
+            identifier,
+            name: p.fields.Name as string,
+            icon: getProjectIconPath(identifier),
+          })
+        }
+      })
+    }
+
     return {
       id: record.id,
       name: record.fields.Name as string,
@@ -202,6 +270,7 @@ export async function fetchJob(id: string): Promise<Job | null> {
       brief: record.fields.Brief as string,
       description: record.fields.Description as string,
       priority: record.fields.Priority as string | undefined,
+      projects: projects.length > 0 ? projects : undefined,
       contactEmail: record.fields.ContactEmail as string | undefined,
       public: record.fields.Public as boolean,
     }
@@ -223,9 +292,11 @@ function validateExpenseFields(
   const missingFields: string[] = []
   const fields = record.fields
 
-  if (typeof fields.Name !== 'string' || !fields.Name) missingFields.push('Name')
+  if (typeof fields.Name !== 'string' || !fields.Name)
+    missingFields.push('Name')
   if (typeof fields.Description !== 'string') missingFields.push('Description')
-  if (fields.Type !== 'Monthly' && fields.Type !== 'Yearly') missingFields.push('Type')
+  if (fields.Type !== 'Monthly' && fields.Type !== 'Yearly')
+    missingFields.push('Type')
 
   if (missingFields.length > 0) {
     return { valid: false, missingFields }
@@ -251,8 +322,10 @@ function validateProjectFields(record: AirtableRecord): string[] {
   const missingFields: string[] = []
   const fields = record.fields
 
-  if (typeof fields.Name !== 'string' || !fields.Name) missingFields.push('Name')
-  if (typeof fields.Identifier !== 'string' || !fields.Identifier) missingFields.push('Identifier')
+  if (typeof fields.Name !== 'string' || !fields.Name)
+    missingFields.push('Name')
+  if (typeof fields.Identifier !== 'string' || !fields.Identifier)
+    missingFields.push('Identifier')
   if (typeof fields.Description !== 'string') missingFields.push('Description')
   if (typeof fields.URL !== 'string') missingFields.push('URL')
 
