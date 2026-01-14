@@ -1,7 +1,7 @@
 import { Home, Heart, Briefcase } from 'lucide-react'
 import { usePageContext } from 'vike-react/usePageContext'
 import { Button } from '@/components/ui/button'
-
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 export function Navigation() {
   const pageContext = usePageContext()
   const pathname = pageContext.urlPathname
@@ -23,6 +23,7 @@ export function Navigation() {
       projects: '/',
       donations: '/funds',
       jobs: '/jobs',
+      course_collaboration: '/projects/3-course-collaboration',
     }
     const route = routes[key as keyof typeof routes]
     if (route) {
@@ -43,14 +44,37 @@ export function Navigation() {
           <Home className="h-4 w-4" />
           <span>Projects</span>
         </Button>
-        <Button
-          variant={selected === 'donations' ? 'default' : 'ghost'}
-          onClick={() => handleNavigation('donations')}
-          className="flex items-center gap-2 cursor-pointer"
-        >
-          <Heart className="h-4 w-4" />
-          <span>Donate</span>
-        </Button>
+        {/* Donation CTA */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={selected === 'donations' ? 'default' : 'ghost'}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <Heart className="h-4 w-4" />
+              <span>Donate</span>
+            </Button>
+          </PopoverTrigger>
+          {/*     </Button> */}
+          <PopoverContent className="w-45">
+            <div className="space-y-2">
+              <Button
+                onClick={() => handleNavigation('donations')}
+                variant="outline"
+                className="cursor-pointer w-full"
+              >
+                Web Funding
+              </Button>
+              <Button
+                onClick={() => handleNavigation('course_collaboration')}
+                variant="outline"
+                className="cursor-pointer w-full"
+              >
+                3-Course Colab
+              </Button>
+            </div>
+          </PopoverContent>
+        </Popover>
         <Button
           variant={selected === 'jobs' ? 'default' : 'ghost'}
           onClick={() => handleNavigation('jobs')}
