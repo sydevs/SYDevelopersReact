@@ -1,1 +1,7 @@
-/Users/devindra/.claude/plugins/marketplaces/sy-developers-plugins/plugins/sydevs/configs/.prettierrc
+{
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "printWidth": 100
+}
