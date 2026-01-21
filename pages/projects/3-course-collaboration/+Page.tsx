@@ -7,8 +7,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 export default function Page() {
   const handleDonation = (type: 'monthly' | 'onetime') => {
     const donationLinks = {
-      monthly: 'https://donate.stripe.com/14A14ogjdfoI6zjfut33W03',
-      onetime: 'https://donate.stripe.com/eVqdRa9UP90kaPzeqp33W02',
+      monthly: 'https://donate.stripe.com/cNi9AVb3c8MM73V9n4fAc00',
+      onetime: 'https://donate.stripe.com/3cI14p3AK3ssfAr6aSfAc01',
     }
     window.open(donationLinks[type], '_blank', 'noopener,noreferrer')
   }
