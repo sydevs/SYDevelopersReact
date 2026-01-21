@@ -127,29 +127,14 @@ export default function Page() {
               </li>
             </ul>
             <p>Here is a short video outlining the different courses and this initiative:</p>
-            <div
-              style={{
-                left: 0,
-                width: '100%',
-                height: 0,
-                position: 'relative',
-                paddingBottom: '56.25%',
-              }}
-            >
+            <div>
               <iframe
-                src="https://www.veed.io/embed/a4713139-8e9a-4503-bbe8-8ee95f4b74c1"
-                style={{
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  position: 'absolute',
-                  border: 0,
-                }}
-                title="Collaboration Announcement"
+                src="https://customer-aorobtik2fce41s5.cloudflarestream.com/f15a9e58cd1ddcd6ab3e18a19e137406/iframe?poster=https%3A%2F%2Fcustomer-aorobtik2fce41s5.cloudflarestream.com%2Ff15a9e58cd1ddcd6ab3e18a19e137406%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+                loading="lazy"
+                className="border-none rounded-lg shadow position-relative top-0 left-0 h-80 w-full"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
                 allowFullScreen
-                allow="encrypted-media *; fullscreen *;"
-              />
+              ></iframe>
             </div>
           </div>
         </div>
