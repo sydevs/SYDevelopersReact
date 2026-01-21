@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { ExternalLink } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-// import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 export default function Page() {
   const handleDonation = (type: 'monthly' | 'onetime') => {
@@ -20,10 +19,7 @@ export default function Page() {
       <div className="flex items-center gap-6">
         <div className="flex -space-x-8 rtl:space-x-reverse">
           <Avatar className="w-20 h-20">
-            <AvatarImage
-              src="/images/21daymeditation/logo.webp"
-              alt="Journey of Self-Discovery Logo"
-            />
+            <AvatarImage src="/images/21daymeditation/logo.webp" alt="21 Day Meditation Logo" />
           </Avatar>
           <Avatar className="w-20 h-20">
             <AvatarImage
@@ -32,7 +28,7 @@ export default function Page() {
             />
           </Avatar>
           <Avatar className="w-20 h-20">
-            <AvatarImage src="/images/wemeditate/logo.webp" alt="Journey of Self-Discovery Logo" />
+            <AvatarImage src="/images/wemeditate/logo.webp" alt="We Meditate Logo" />
           </Avatar>
         </div>
         <div className="space-y-1">
@@ -55,7 +51,8 @@ export default function Page() {
       <div className="prose prose-sm max-w-none space-y-8" id="donate">
         <p className="text-lg text-muted-foreground">
           We are delighted to announce a new collaboration between three well established and
-          successful online Sahaja Yoga platforms for seekers.
+          successful online Sahaja Yoga platforms for seekers: We Meditate, 21 Days & Journey of
+          Self-Discovery
         </p>
 
         {/* Funding Overview Card */}
@@ -65,8 +62,8 @@ export default function Page() {
               <span className="text-2xl font-bold">Donate</span>
             </CardTitle>
             <CardDescription>
-              any raised funds will be divided among the 3 projects, to support promotion and
-              operation to keep the projects going and reach more seekers.
+              All funds will be divided among the 3 projects, to support promoting online classes
+              and to fund operational costs (like Zoom subscriptions)
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -93,25 +90,25 @@ export default function Page() {
 
             <p className="text-sm text-muted-foreground text-center">
               Contact us at{' '}
-              <a className="underline" href="mailto:finances@sahajayoga.nlbb">
+              <a className="underline" href="mailto:finances@sahajayoga.nl">
                 finances@sahajayoga.nl
               </a>{' '}
-              if you need you need to cancel a monthly donation.
+              if you need to cancel a monthly donation.
             </p>
           </CardContent>
         </Card>
 
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold">3 courses join forces!</h2>
+          <h2 className="text-2xl font-bold">Three Online Courses Join Forces!</h2>
           <div className="space-y-4 text-muted-foreground">
             <p>
-              Mother seemed to bring us all together this summer very spontaneously! And over the
-              last couple of months, we have already started working together. As a result we have
-              been able to offer more opportunities to seekers to join live collective meditations
-              and to receive guidance in their meditation practice through mentorship. All courses
-              have had considerable success in bringing seekers to collectives around the world.
+              Mother has seemed to bring us all together this summer very spontaneously! By
+              combining our efforts over the past few months we are able to offer more opportunities
+              to seekers to join live collective meditations and to receive guidance in their
+              meditation practice through mentorship. All courses have had considerable success in
+              bringing seekers to collectives around the world.
             </p>
-            <p>The three courses are:</p>
+            <p>These courses are:</p>
             <ul>
               <li>
                 <a href="/projects/wemeditate" target="_blank" rel="noopener noreferrer">
@@ -134,11 +131,9 @@ export default function Page() {
               src="https://www.veed.io/embed/a4713139-8e9a-4503-bbe8-8ee95f4b74c1"
               width="80%"
               height="100%"
-              frameborder="0"
+              frameBorder="0"
               title="Collaboration Announcement"
-              webkitallowfullscreen
-              mozallowfullscreen
-              allowfullscreen
+              allowFullScreen
             ></iframe>
           </div>
         </div>
@@ -163,7 +158,7 @@ export default function Page() {
         </div>
 
         <div className="space-y-4">
-          <h2>Your support is also very much needed!</h2>
+          <h2 className="text-2xl font-bold">Your support is also needed!</h2>
           <div className="space-y-4 text-muted-foreground">
             <p>
               Some of you may already be supporting one or more of these courses. It is now possible
@@ -183,11 +178,9 @@ export default function Page() {
               In this way, we will be able to reach many more seekers.&nbsp;
             </p>
             <p>
-              {/* <strong> */}
-              <button>
-                <a href="/jobs">Join our teams!</a>
-              </button>{' '}
-              {/* </strong> */}
+              <a href="/jobs" className="underline">
+                <strong>Join our teams!</strong>
+              </a>{' '}
               Equally importantly, our teams are always in much need of additional helping hands -
               whether to help guide a meditation, give a presentation, mentor a seeker, or to help
               behind the scenes with organisation or marketing.
