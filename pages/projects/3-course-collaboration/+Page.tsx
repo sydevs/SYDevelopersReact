@@ -127,15 +127,13 @@ export default function Page() {
               </li>
             </ul>
             <p>Here is a short video outlining the different courses and this initiative:</p>
-            <div>
-              <iframe
-                src="https://customer-aorobtik2fce41s5.cloudflarestream.com/f15a9e58cd1ddcd6ab3e18a19e137406/iframe?poster=https%3A%2F%2Fcustomer-aorobtik2fce41s5.cloudflarestream.com%2Ff15a9e58cd1ddcd6ab3e18a19e137406%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
-                loading="lazy"
-                className="border-none rounded-lg shadow position-relative top-0 left-0 h-80 w-full"
-                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                allowFullScreen
-              ></iframe>
-            </div>
+            <iframe
+              src="https://customer-aorobtik2fce41s5.cloudflarestream.com/f15a9e58cd1ddcd6ab3e18a19e137406/iframe?poster=https%3A%2F%2Fcustomer-aorobtik2fce41s5.cloudflarestream.com%2Ff15a9e58cd1ddcd6ab3e18a19e137406%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+              loading="lazy"
+              className="border-none rounded-lg shadow position-relative top-0 left-0 h-80 w-full"
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
 
