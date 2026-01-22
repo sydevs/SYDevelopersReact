@@ -128,11 +128,11 @@ export default function Page() {
             </ul>
             <p>Here is a short video outlining the different courses and this initiative:</p>
             <iframe
-              src="https://customer-aorobtik2fce41s5.cloudflarestream.com/f15a9e58cd1ddcd6ab3e18a19e137406/iframe?poster=https%3A%2F%2Fcustomer-aorobtik2fce41s5.cloudflarestream.com%2Ff15a9e58cd1ddcd6ab3e18a19e137406%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
-              loading="lazy"
-              className="border-none rounded-lg shadow position-relative top-0 left-0 h-80 w-full"
-              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-              allowFullScreen
+              src="https://player.vimeo.com/video/1156929590?h=f529f7f755&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              className="border-none position-relative top-0 left-0 h-80 w-full"
+              title="Draft Collaboration Announcement"
             ></iframe>
           </div>
         </div>
