@@ -16,7 +16,7 @@ export default function Page() {
   return (
     <div className="container max-w-4xl mx-auto px-4 py-8 space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-6">
+      <div className="flex flex-col sm:flex-row items-center gap-6">
         <div className="flex -space-x-8 rtl:space-x-reverse">
           <Avatar className="w-20 h-20">
             <AvatarImage src="/images/21daymeditation/logo.webp" alt="21 Day Meditation Logo" />
@@ -31,13 +31,13 @@ export default function Page() {
             <AvatarImage src="/images/wemeditate/logo.webp" alt="We Meditate Logo" />
           </Avatar>
         </div>
-        <div className="space-y-1">
+        <div className="space-y-1 text-center sm:text-left">
           <h1 className="text-3xl font-bold">3-Course Collaboration</h1>
           <a
             href="https://shrimatajifoundation.org/3-course-collaboration"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary hover:underline flex items-center gap-1"
+            className="text-primary hover:underline flex justify-center sm:justify-start items-center gap-1"
           >
             shrimatajifoundation.org
             <ExternalLink className="h-4 w-4" />
