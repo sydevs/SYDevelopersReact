@@ -143,7 +143,7 @@ export default function Page() {
             <a className="underline" href="mailto:contact@sydevelopers.com">
               contact@sydevelopers.com
             </a>{' '}
-            if you need you need to cancel a monthly donation.
+            if you need to cancel a monthly donation.
           </p>
         </CardContent>
       </Card>

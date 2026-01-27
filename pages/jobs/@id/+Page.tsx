@@ -29,12 +29,8 @@ export default function Page() {
       <div className="space-y-4">
         <div className="flex items-center gap-3 flex-wrap">
           <Badge>{job.category}</Badge>
-          {job.priority === 'Critical' && (
-            <Badge variant="destructive">Critical</Badge>
-          )}
-          {job.priority === 'Important' && (
-            <Badge variant="secondary">Important</Badge>
-          )}
+          {job.priority === 'Critical' && <Badge variant="destructive">Critical</Badge>}
+          {job.priority === 'Important' && <Badge variant="secondary">Important</Badge>}
         </div>
 
         {/* Project Icons Row */}
@@ -54,18 +50,14 @@ export default function Page() {
                     </AvatarFallback>
                   )}
                 </Avatar>
-                <span className="text-sm text-muted-foreground">
-                  {project.name}
-                </span>
+                <span className="text-sm text-muted-foreground">{project.name}</span>
               </div>
             ))}
           </div>
         )}
 
         <h1 className="text-3xl md:text-4xl font-bold">{job.name}</h1>
-        {job.brief && (
-          <p className="text-lg text-muted-foreground">{job.brief}</p>
-        )}
+        {job.brief && <p className="text-lg text-muted-foreground">{job.brief}</p>}
       </div>
 
       {/* Description */}
@@ -81,8 +73,8 @@ export default function Page() {
         <AlertTitle>Interested in this position?</AlertTitle>
         <AlertDescription className="mt-2 flex flex-col gap-4">
           <p>
-            If you&apos;d like to apply for this role, please email us with your
-            background and why you&apos;d be a good fit.
+            If you&apos;d like to apply for this role, please email us with your background and why
+            you&apos;d be a good fit.
           </p>
           <a
             href={`mailto:${contactEmail}`}
