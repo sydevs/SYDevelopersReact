@@ -63,14 +63,14 @@ export function Navigation() {
                 variant="outline"
                 className="cursor-pointer w-full"
               >
-                Web Funding
+                App/Web Costs
               </Button>
               <Button
                 onClick={() => handleNavigation('course_collaboration')}
                 variant="outline"
                 className="cursor-pointer w-full"
               >
-                3-Course Colab
+                Course Marketing
               </Button>
             </div>
           </PopoverContent>
