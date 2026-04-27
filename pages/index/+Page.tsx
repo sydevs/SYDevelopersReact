@@ -54,9 +54,11 @@ export default function Page() {
       <div className="flex flex-col text-center sm:flex-row gap-4 justify-center items-center sm:items-start">
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="secondary" className="flex items-center gap-2 cursor-pointer">
-              <Heart className="h-4 w-4" />
-              <span>Donate</span>
+            <Button asChild variant="default" size="lg" className="cursor-pointer">
+              <span>
+                <Heart className="mr-2 h-5 w-5" />
+                Donate
+              </span>
             </Button>
           </PopoverTrigger>
           {/*     </Button> */}
