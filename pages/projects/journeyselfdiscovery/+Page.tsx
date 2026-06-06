@@ -47,6 +47,46 @@ export default function Page() {
               course designed to open the heart and satisfy the enquiring mind.
             </p>
             <p>
+              All course materials - extracts of Shri Mataji&apos;s talks,
+              powerpoint presentations and pre-recorded examples, plus background
+              information - are available for use by Sahaja Yoga collectives at{' '}
+              <a
+                href="https://100.sahajayoga.pl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                100.sahajayoga.pl
+              </a>
+              . Watch a video about the course on{' '}
+              <a
+                href="https://www.amruta.org/sahaja-yoga-meditation-course/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                amruta.org
+              </a>
+              .
+            </p>
+            <p>
+              Please contact Rafael Reina (
+              <a
+                href="mailto:r.reina108@gmail.com"
+                className="text-primary hover:underline"
+              >
+                r.reina108@gmail.com
+              </a>
+              ) or Vanessa Goad (
+              <a
+                href="mailto:vanessagoad@gmail.com"
+                className="text-primary hover:underline"
+              >
+                vanessagoad@gmail.com
+              </a>
+              ) for further information about the course and materials.
+            </p>
+            <p>
               This successful series of 12-week courses for beginner,
               intermediate and advanced meditators, has been developed and
               fine-tuned in Amsterdam over the last eight and a half years by an
@@ -126,12 +166,22 @@ export default function Page() {
           <div className="flex flex-col gap-2">
             <Button asChild variant="outline" className="justify-start">
               <a
+                href="https://100.sahajayoga.pl"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink className="mr-2 h-4 w-4" />
+                Journey of Self-discovery course materials
+              </a>
+            </Button>
+            <Button asChild variant="outline" className="justify-start">
+              <a
                 href="https://www.amruta.org/sahaja-yoga-meditation-course/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <ExternalLink className="mr-2 h-4 w-4" />
-                Journey of Self-Discovery Website (Amruta)
+                Watch video about Journey of Self-discovery course
               </a>
             </Button>
             <Button asChild variant="outline" className="justify-start">
