@@ -128,11 +128,12 @@ export default function Page() {
             </ul>
             <p>Here is a short video outlining the different courses and this initiative:</p>
             <iframe
-              src="https://player.vimeo.com/video/1156929590?h=f529f7f755&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              className="border-none position-relative top-0 left-0 h-80 w-full"
-              title="Draft Collaboration Announcement"
+            src="https://www.youtube.com/embed/IAyWFTioB5s?si=4Kiqy-wGgFkcit8f"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            className="border-none position-relative top-0 left-0 h-80 w-full"
+            title="Collaboration Announcementr"
             ></iframe>
           </div>
         </div>
