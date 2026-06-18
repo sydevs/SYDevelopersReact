@@ -146,7 +146,7 @@ export default function Page() {
               donation and by highlighting the collaboration on the World Foundation website, where
               you can{' '}
               <a
-                href="https://shrimatajifoundation.org/3-course-collaboration"
+                href="https://shrimatajifoundation.org/spreading-sahaja-yoga/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
