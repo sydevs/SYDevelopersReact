@@ -142,9 +142,9 @@ export default function Page() {
           <h2 className="text-2xl font-bold">World Foundation support</h2>
           <div className="space-y-4 text-muted-foreground">
             <p>
-              The World Foundation has kindly agreed to support us, both with an initial financial
-              donation and by highlighting the collaboration on the World Foundation website, where
-              you can{' '}
+              The World Foundation has generously agreed to fully support this initiative and help
+              advance our mission. This collaboration will also be featured on the World Foundation
+              website, where you can{' '}
               <a
                 href="https://shrimatajifoundation.org/spreading-sahaja-yoga/"
                 target="_blank"
@@ -152,7 +152,7 @@ export default function Page() {
               >
                 find out more
               </a>
-              .&nbsp;
+              .
             </p>
           </div>
         </div>
