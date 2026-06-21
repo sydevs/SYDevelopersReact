@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Heart, Briefcase, ExternalLink } from 'lucide-react'
 import { fetchDonationStats, calculateFunding } from '@/lib/stripe-client'
 import type { DonationStats } from '@/types/stripe'
@@ -51,19 +52,37 @@ export default function Page() {
 
       {/* Primary CTAs */}
       <div className="flex flex-col text-center sm:flex-row gap-4 justify-center items-center sm:items-start">
-        <div>
-          <Button asChild variant="default" size="lg">
-            <a href="/funds">
-              <Heart className="mr-2 h-5 w-5" />
-              Donate
-            </a>
-          </Button>
-          {!loading && stats && (
-            <div className="text-sm italic text-muted-foreground mt-2">
-              {fundingPercent}% funded
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button asChild variant="default" size="lg" className="cursor-pointer">
+              <span>
+                <Heart className="mr-2 h-5 w-5" />
+                Donate
+              </span>
+            </Button>
+          </PopoverTrigger>
+          {/*     </Button> */}
+          <PopoverContent className="w-45">
+            <div className="space-y-2">
+              <Button asChild variant="outline" className="cursor-pointer w-full">
+                <a href="/funds">App/Web Costs</a>
+              </Button>
+              {!loading && stats && (
+                <div className="text-sm italic text-muted-foreground mt-2">
+                  {fundingPercent}% funded
+                </div>
+              )}
+
+              <Button asChild variant="outline" className="cursor-pointer w-full">
+                <a href="/projects/3-course-collaboration">Course Marketing</a>
+              </Button>
             </div>
-          )}
-        </div>
+          </PopoverContent>
+        </Popover>
+        {!loading && stats && (
+          <div className="text-sm italic text-muted-foreground mt-2">{fundingPercent}% funded</div>
+        )}
+
         <div>
           <Button asChild variant="secondary" size="lg">
             <a href="/jobs">
