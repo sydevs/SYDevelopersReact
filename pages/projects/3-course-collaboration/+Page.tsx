@@ -102,11 +102,10 @@ export default function Page() {
           <h2 className="text-2xl font-bold">Three Online Courses Join Forces!</h2>
           <div className="space-y-4 text-muted-foreground">
             <p>
-              Mother has seemed to bring us all together this summer very spontaneously! By
-              combining our efforts over the past few months we are able to offer more opportunities
-              to seekers to join live collective meditations and to receive guidance in their
-              meditation practice through mentorship. All courses have had considerable success in
-              bringing seekers to collectives around the world.
+              By combining our efforts over the past few months we have been able to offer more
+              opportunities to meditators to join live collective meditations and to receive
+              guidance in their meditation practice through mentorship. All courses have had
+              considerable success in bringing seekers to Sahaj Yoga collectives around the world.
             </p>
             <p>These courses are:</p>
             <ul>
@@ -128,12 +127,12 @@ export default function Page() {
             </ul>
             <p>Here is a short video outlining the different courses and this initiative:</p>
             <iframe
-            src="https://www.youtube.com/embed/IAyWFTioB5s?si=4Kiqy-wGgFkcit8f"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            className="border-none position-relative top-0 left-0 h-80 w-full"
-            title="Collaboration Announcementr"
+              src="https://www.youtube.com/embed/IAyWFTioB5s?si=4Kiqy-wGgFkcit8f"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              className="border-none position-relative top-0 left-0 h-80 w-full"
+              title="Collaboration Announcementr"
             ></iframe>
           </div>
         </div>

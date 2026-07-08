@@ -15,7 +15,7 @@ export default function Page() {
           />
         </Avatar>
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold">Journey of Self-Discovery</h1>
+          <h1 className="text-3xl font-bold">Journey of Self-discovery course</h1>
           <a
             href="https://www.amruta.org/sahaja-yoga-meditation-course/"
             target="_blank"
