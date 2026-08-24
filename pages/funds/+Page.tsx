@@ -37,8 +37,8 @@ export default function Page() {
 
   const handleDonation = (type: 'monthly' | 'onetime') => {
     const donationLinks = {
-      monthly: 'https://donate.stripe.com/14A14ogjdfoI6zjfut33W03',
-      onetime: 'https://donate.stripe.com/eVqdRa9UP90kaPzeqp33W02',
+      monthly: 'https://donate.stripe.com/14A14n7ig7XVdx20hjcwg06',
+      onetime: 'https://donate.stripe.com/6oE7ts9g58NLfjW146',
     }
     window.open(donationLinks[type], '_blank', 'noopener,noreferrer')
   }
