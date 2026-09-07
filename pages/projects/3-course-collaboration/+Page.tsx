@@ -5,12 +5,8 @@ import { ExternalLink } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function Page() {
-  const handleDonation = (type: 'monthly' | 'onetime') => {
-    const donationLinks = {
-      monthly: 'https://donate.stripe.com/cNi9AVb3c8MM73V9n4fAc00',
-      onetime: 'https://donate.stripe.com/3cI14p3AK3ssfAr6aSfAc01',
-    }
-    window.open(donationLinks[type], '_blank', 'noopener,noreferrer')
+  const handleDonation = () => {
+    window.open('https://donate.josd.workers.dev', '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -75,26 +71,10 @@ export default function Page() {
                   onClick={() => handleDonation('monthly')}
                   variant="default"
                 >
-                  Monthly Donation
-                </Button>
-                <Button
-                  size="lg"
-                  className="cursor-pointer w-full text-lg h-12"
-                  onClick={() => handleDonation('onetime')}
-                  variant="outline"
-                >
-                  One-Time Donation
+                  Donate
                 </Button>
               </div>
             </div>
-
-            <p className="text-sm text-muted-foreground text-center">
-              Contact us at{' '}
-              <a className="underline" href="mailto:finances@sahajayoga.nl">
-                finances@sahajayoga.nl
-              </a>{' '}
-              if you need to cancel a monthly donation.
-            </p>
           </CardContent>
         </Card>
 
