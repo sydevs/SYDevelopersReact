@@ -68,7 +68,7 @@ export default function Page() {
                 <Button
                   size="lg"
                   className="cursor-pointer w-full text-lg h-12"
-                  onClick={() => handleDonation('monthly')}
+                  onClick={() => handleDonation()}
                   variant="default"
                 >
                   Donate
@@ -194,7 +194,11 @@ export default function Page() {
               </a>
             </Button>
             <Button asChild variant="outline" className="justify-start">
-              <a href="https://us.sahajayoga.org" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.freemeditation.com.au/Online/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <ExternalLink className="mr-2 h-4 w-4" />
                 21 Day Course
               </a>
