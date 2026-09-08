@@ -223,14 +223,14 @@ export default function Page() {
               <li>
                 Journey of Self-Discovery:
                 <br />
-                Rafael Reina:{' '}
-                <a href="mailto:r.reina108@gmail.com" className="text-primary hover:underline">
-                  r.reina108@gmail.com
+                Sander Notenbaert:{' '}
+                <a href="mailto:sander@sahajayoga.nl" className="text-primary hover:underline">
+                  sander@sahajayoga.nl
+                  <br />
                 </a>
-                <br />
-                Vanessa Goad:{' '}
-                <a href="mailto:vanessagoad@gmail.com" className="text-primary hover:underline">
-                  vanessagoad@gmail.com
+                Ganesh Jakob:{' '}
+                <a href="mailto:ganeshjakob@gmail.com" className="text-primary hover:underline">
+                  ganeshjakob@gmail.com
                 </a>
               </li>
             </ul>
