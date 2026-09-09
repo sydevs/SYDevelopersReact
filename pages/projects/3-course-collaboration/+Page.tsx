@@ -5,12 +5,8 @@ import { ExternalLink } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function Page() {
-  const handleDonation = (type: 'monthly' | 'onetime') => {
-    const donationLinks = {
-      monthly: 'https://donate.stripe.com/cNi9AVb3c8MM73V9n4fAc00',
-      onetime: 'https://donate.stripe.com/3cI14p3AK3ssfAr6aSfAc01',
-    }
-    window.open(donationLinks[type], '_blank', 'noopener,noreferrer')
+  const handleDonation = () => {
+    window.open('https://donate.josd.workers.dev', '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -72,29 +68,13 @@ export default function Page() {
                 <Button
                   size="lg"
                   className="cursor-pointer w-full text-lg h-12"
-                  onClick={() => handleDonation('monthly')}
+                  onClick={() => handleDonation()}
                   variant="default"
                 >
-                  Monthly Donation
-                </Button>
-                <Button
-                  size="lg"
-                  className="cursor-pointer w-full text-lg h-12"
-                  onClick={() => handleDonation('onetime')}
-                  variant="outline"
-                >
-                  One-Time Donation
+                  Donate
                 </Button>
               </div>
             </div>
-
-            <p className="text-sm text-muted-foreground text-center">
-              Contact us at{' '}
-              <a className="underline" href="mailto:finances@sahajayoga.nl">
-                finances@sahajayoga.nl
-              </a>{' '}
-              if you need to cancel a monthly donation.
-            </p>
           </CardContent>
         </Card>
 
@@ -214,7 +194,11 @@ export default function Page() {
               </a>
             </Button>
             <Button asChild variant="outline" className="justify-start">
-              <a href="https://us.sahajayoga.org" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.freemeditation.com.au/Online/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <ExternalLink className="mr-2 h-4 w-4" />
                 21 Day Course
               </a>
@@ -243,14 +227,14 @@ export default function Page() {
               <li>
                 Journey of Self-Discovery:
                 <br />
-                Rafael Reina:{' '}
-                <a href="mailto:r.reina108@gmail.com" className="text-primary hover:underline">
-                  r.reina108@gmail.com
+                Sander Notenbaert:{' '}
+                <a href="mailto:sander@sahajayoga.nl" className="text-primary hover:underline">
+                  sander@sahajayoga.nl
+                  <br />
                 </a>
-                <br />
-                Vanessa Goad:{' '}
-                <a href="mailto:vanessagoad@gmail.com" className="text-primary hover:underline">
-                  vanessagoad@gmail.com
+                Ganesh Jakob:{' '}
+                <a href="mailto:ganeshjakob@gmail.com" className="text-primary hover:underline">
+                  ganeshjakob@gmail.com
                 </a>
               </li>
             </ul>
